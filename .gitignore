@@ -4,3 +4,9 @@ __pycache__/
 .env
 .env.*
 emotion_graph.png
+.env
+.env.*
+.venv/
+__pycache__/
+*.pyc
+emotion_graph.png
