@@ -1,0 +1,2313 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 멀티에이전트 상담 시스템</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .main-container {
+            display: flex;
+            height: 100vh;
+            background: white;
+        }
+
+        .sidebar {
+            width: 250px;
+            min-width: 150px;
+            max-width: 500px;
+            background: #f8f9fa;
+            border-right: 1px solid #e1e5e9;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: auto;
+        }
+
+        .sidebar-resize-handle {
+            position: absolute;
+            top: 0;
+            right: -3px;
+            width: 6px;
+            height: 100%;
+            background: transparent;
+            cursor: col-resize;
+            z-index: 10;
+        }
+
+        .sidebar-resize-handle:hover {
+            background: #667eea;
+        }
+
+        .sidebar-resize-handle:active {
+            background: #5a6fd8;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+
+        .sidebar-section {
+            padding: 20px;
+            border-bottom: 1px solid #e1e5e9;
+        }
+
+        .sidebar-section h3 {
+            margin: 0 0 15px 0;
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        .session-item {
+            padding: 12px;
+            margin: 5px 0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid #e1e5e9;
+            position: relative;
+        }
+
+        .session-item:hover {
+            background: #f8f9fa;
+            border-color: #667eea;
+        }
+
+        .session-item.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .session-title {
+            font-weight: 500;
+            margin-bottom: 4px;
+            font-size: 0.9em;
+        }
+
+        .session-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8em;
+            opacity: 0.7;
+        }
+
+        .message-count {
+            background: rgba(0,0,0,0.1);
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 0.75em;
+        }
+
+        .session-item.active .message-count {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .new-session-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .new-session-btn:hover {
+            background: #5a6fd8;
+        }
+
+        .session-actions {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            display: none;
+        }
+
+        .session-item:hover .session-actions {
+            display: block;
+        }
+
+        .session-action-btn {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-size: 0.7em;
+        }
+
+        .session-action-btn:hover {
+            background: rgba(0,0,0,0.1);
+        }
+
+        .agent-status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .agent-status:last-child {
+            border-bottom: none;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #28a745;
+        }
+
+        .status-indicator.inactive {
+            background: #6c757d;
+        }
+
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: white;
+        }
+
+        .right-sidebar {
+            width: 300px;
+            min-width: 200px;
+            max-width: 600px;
+            background: #f8f9fa;
+            border-left: 1px solid #e1e5e9;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: auto;
+        }
+
+        .right-sidebar-resize-handle {
+            position: absolute;
+            top: 0;
+            left: -3px;
+            width: 6px;
+            height: 100%;
+            background: transparent;
+            cursor: col-resize;
+            z-index: 10;
+        }
+
+        .right-sidebar-resize-handle:hover {
+            background: #667eea;
+        }
+
+        .right-sidebar-resize-handle:active {
+            background: #5a6fd8;
+        }
+
+        .sidebar-tabs {
+            display: flex;
+            background: white;
+            border-bottom: 1px solid #e1e5e9;
+        }
+
+        .sidebar-tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .sidebar-tab.active {
+            border-bottom-color: #667eea;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .sidebar-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .emotion-graph-container {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .emotion-graph-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        /* 보고서 스타일 */
+        .report-container {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .report-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e1e5e9;
+        }
+
+        .report-header h3 {
+            margin: 0;
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        .generate-report-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .generate-report-btn:hover {
+            background: #5a6fd8;
+        }
+
+        .generate-report-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .report-content {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .report-placeholder {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+        }
+
+        .placeholder-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .placeholder-text h4 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+
+        .placeholder-text p {
+            margin: 5px 0;
+            line-height: 1.5;
+        }
+
+        .placeholder-subtext {
+            font-size: 0.9em;
+            color: #999;
+            font-style: italic;
+        }
+
+        .report-text {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            line-height: 1.6;
+            font-size: 0.9em;
+            color: #333;
+            white-space: pre-line;
+        }
+        
+        /* 마크다운 스타일링 */
+        .report-text h1, .report-text h2, .report-text h3, .report-text h4, .report-text h5, .report-text h6 {
+            color: #667eea;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        .report-text h1 {
+            font-size: 24px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 5px;
+        }
+        
+        .report-text h2 {
+            font-size: 20px;
+            border-bottom: 1px solid #667eea;
+            padding-bottom: 3px;
+        }
+        
+        .report-text h3 {
+            font-size: 18px;
+        }
+        
+        .report-text ul, .report-text ol {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+        
+        .report-text li {
+            margin: 3px 0;
+        }
+        
+        .report-text p {
+            margin: 5px 0;
+        }
+        
+        .report-text strong {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .report-text em {
+            font-style: italic;
+        }
+        
+        .report-text code {
+            background: #f1f3f4;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+        }
+        
+        .report-text blockquote {
+            border-left: 4px solid #667eea;
+            margin: 8px 0;
+            padding: 8px 12px;
+            background: #f8f9fa;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .report-loading {
+            text-align: center;
+            padding: 40px 20px;
+            color: #667eea;
+        }
+
+        .report-loading .spinner {
+            width: 30px;
+            height: 30px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* 전체화면 보고서 모달 */
+        .report-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .report-modal.show {
+            display: flex;
+        }
+
+        .report-modal-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 90%;
+            max-height: 90%;
+            width: 800px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            animation: slideIn 0.5s ease-out;
+            overflow-y: auto;
+        }
+
+        .report-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e1e5e9;
+        }
+
+        .report-modal-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+        }
+
+        .report-modal-close {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background 0.3s;
+        }
+
+        .report-modal-close:hover {
+            background: #c82333;
+        }
+
+        .report-modal-body {
+            line-height: 1.8;
+            font-size: 1.1em;
+            color: #333;
+            white-space: pre-line;
+        }
+
+        .fullscreen-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: background 0.3s;
+        }
+
+        .fullscreen-btn:hover {
+            background: #218838;
+        }
+
+        .fullscreen-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .pdf-download-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: background 0.3s;
+        }
+
+        .pdf-download-btn:hover {
+            background: #c82333;
+        }
+
+        .pdf-download-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message.assistant {
+            justify-content: flex-start;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            word-wrap: break-word;
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+
+        .message.assistant .message-content {
+            background: white;
+            color: #333;
+            border: 1px solid #e1e5e9;
+            border-bottom-left-radius: 5px;
+        }
+
+        .message.special {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        .message.mindfulness {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .message.roleplay {
+            background: #cce5ff;
+            border: 1px solid #99d6ff;
+            color: #004085;
+        }
+
+        .message.emotion {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            font-size: 0.9em;
+        }
+
+        /* 마인드풀니스 팝업 스타일 */
+        .mindfulness-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .mindfulness-popup.show {
+            display: flex;
+        }
+
+        .mindfulness-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .mindfulness-title {
+            font-size: 2em;
+            color: #667eea;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .breathing-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 30px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5em;
+            font-weight: bold;
+            animation: breathe 4s ease-in-out infinite;
+        }
+
+        .breathing-text {
+            font-size: 1.2em;
+            color: #333;
+            margin: 20px 0;
+            line-height: 1.6;
+        }
+
+        .timer-display {
+            font-size: 3em;
+            color: #667eea;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .breathing-instruction {
+            font-size: 1.1em;
+            color: #666;
+            margin: 10px 0;
+            font-style: italic;
+        }
+
+        .mindfulness-close {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+
+        .mindfulness-close:hover {
+            transform: translateY(-2px);
+        }
+
+        .mindfulness-close:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { 
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes breathe {
+            0%, 100% { 
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            50% { 
+                transform: scale(1.1);
+                opacity: 1;
+            }
+        }
+
+        .chat-input {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e1e5e9;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 25px;
+            outline: none;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .chat-input input:focus {
+            border-color: #667eea;
+        }
+
+        .chat-input button {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        .chat-input button:hover {
+            transform: translateY(-2px);
+        }
+
+        .chat-input button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .controls {
+            padding: 10px 20px;
+            background: #f8f9fa;
+            border-top: 1px solid #e1e5e9;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .controls button {
+            padding: 8px 16px;
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .controls button:hover {
+            background: #5a6268;
+        }
+
+        .controls button.primary {
+            background: #28a745;
+        }
+
+        .controls button.primary:hover {
+            background: #218838;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 10px;
+            color: #667eea;
+        }
+
+        .typing-indicator {
+            display: none;
+            padding: 10px;
+            color: #666;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+            }
+            
+            .sidebar, .right-sidebar {
+                width: 100%;
+                height: auto;
+                max-height: 200px;
+                resize: none;
+            }
+            
+            .sidebar-resize-handle, .right-sidebar-resize-handle {
+                display: none;
+            }
+            
+            .sidebar {
+                order: 1;
+            }
+            
+            .chat-container {
+                order: 2;
+                height: calc(100vh - 400px);
+            }
+            
+            .right-sidebar {
+                order: 3;
+                max-height: 300px;
+            }
+            
+            .message-content {
+                max-width: 85%;
+            }
+            
+            .emotion-graph-container {
+                padding: 10px;
+            }
+            
+            #emotionChart {
+                width: 200px !important;
+                height: 200px !important;
+            }
+            
+            .emotion-graph-container {
+                height: 250px;
+            }
+            
+            .report-modal-content {
+                width: 95%;
+                max-width: 95%;
+                padding: 20px;
+            }
+            
+            .report-modal-body {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- 왼쪽 사이드바 -->
+        <div class="sidebar" id="leftSidebar">
+            <div class="sidebar-resize-handle" id="leftResizeHandle"></div>
+            <div class="sidebar-header">
+                MindAgents
+            </div>
+            
+            <div class="sidebar-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h3 style="margin: 0;">상담 내역</h3>
+                    <button onclick="startNewSession()" class="new-session-btn">+ 새 상담</button>
+                </div>
+                <div id="sessionList">
+                    <div class="session-item active" data-session-id="current">
+                        <div class="session-title">현재 상담</div>
+                        <div class="session-meta">
+                            <span class="message-count">16</span>
+                            <span class="session-time">방금 전</span>
+                        </div>
+                    </div>
+                    <div class="session-item" data-session-id="session-1">
+                        <div class="session-title">스트레스 상담</div>
+                        <div class="session-meta">
+                            <span class="message-count">24</span>
+                            <span class="session-time">2시간 전</span>
+                        </div>
+                    </div>
+                    <div class="session-item" data-session-id="session-2">
+                        <div class="session-title">인간관계 고민</div>
+                        <div class="session-meta">
+                            <span class="message-count">18</span>
+                            <span class="session-time">어제</span>
+                        </div>
+                    </div>
+                    <div class="session-item" data-session-id="session-3">
+                        <div class="session-title">직장 스트레스</div>
+                        <div class="session-meta">
+                            <span class="message-count">31</span>
+                            <span class="session-time">3일 전</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3>Agents Status</h3>
+                <div class="agent-status">
+                    <span>상담</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <div class="agent-status">
+                    <span>감정</span>
+                    <div class="status-indicator"></div>
+                </div>
+                <div class="agent-status">
+                    <span>역할극</span>
+                    <div class="status-indicator inactive"></div>
+                </div>
+                <div class="agent-status">
+                    <span>마인드풀니스</span>
+                    <div class="status-indicator inactive"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 중앙 채팅 영역 -->
+    <div class="chat-container">
+        <div class="chat-header">
+                <div>상담 대화</div>
+                <div style="font-size: 0.9em; opacity: 0.9;">실시간 감정 분석 및 AI 상담</div>
+        </div>
+        
+        <div class="chat-messages" id="chatMessages">
+            <div class="message assistant">
+                <div class="message-content">
+                    안녕하세요! 저는 AI 상담사입니다. 어떤 이야기든 편하게 나눠주세요. 
+                    마음이 무겁거나 힘든 일이 있으시면 언제든 말씀해 주세요. 😊
+                </div>
+            </div>
+        </div>
+        
+        <div class="typing-indicator" id="typingIndicator">
+            상담사가 답변을 준비하고 있습니다...
+        </div>
+        
+        <div class="loading" id="loading">
+            <div>처리 중...</div>
+        </div>
+        
+        <div class="controls">
+            <button onclick="triggerRoleplay()">🎭 롤플레잉 시작</button>
+            <button onclick="endSession()" class="primary">📊 세션 종료</button>
+        </div>
+        
+        <div class="chat-input">
+            <input type="text" id="messageInput" placeholder="메시지를 입력하세요..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()" id="sendButton">전송</button>
+        </div>
+    </div>
+
+        <!-- 오른쪽 사이드바 -->
+        <div class="right-sidebar" id="rightSidebar">
+            <div class="right-sidebar-resize-handle" id="rightResizeHandle"></div>
+            <div class="sidebar-tabs">
+                <div class="sidebar-tab active" onclick="switchTab('emotions')">Emotions</div>
+                <div class="sidebar-tab" onclick="switchTab('report')">Report</div>
+                <div class="sidebar-tab" onclick="switchTab('controls')">Controls</div>
+            </div>
+            
+            <div class="sidebar-content">
+                <div id="emotionsTab" class="tab-content">
+                    <div class="emotion-graph-container">
+                        <div class="emotion-graph-title">감정 변화 추이</div>
+                        <div style="flex: 1; position: relative;">
+                            <canvas id="emotionChart" width="250" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="reportTab" class="tab-content" style="display: none;">
+                    <div class="report-container">
+                        <div class="report-header">
+                            <h3>📊 상담 보고서</h3>
+                            <div>
+                                <button onclick="generateReport()" class="generate-report-btn" id="generateReportBtn">
+                                    보고서 생성
+                                </button>
+                                <button onclick="openFullscreenReport()" class="fullscreen-btn" id="fullscreenBtn" disabled>
+                                    🔍 전체화면
+                                </button>
+                                <button onclick="downloadPDF()" class="pdf-download-btn" id="pdfDownloadBtn" disabled>
+                                    📄 PDF 다운로드
+                                </button>
+                            </div>
+                        </div>
+                        <div class="report-content" id="reportContent">
+                            <div class="report-placeholder">
+                                <div class="placeholder-icon">📋</div>
+                                <div class="placeholder-text">
+                                    <h4>상담 보고서</h4>
+                                    <p>현재 상담의 감정 변화와 주요 내용을 분석하여<br>종합적인 보고서를 생성합니다.</p>
+                                    <p class="placeholder-subtext">"보고서 생성" 버튼을 클릭하세요</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="controlsTab" class="tab-content" style="display: none;">
+                    <div style="text-align: center; color: #666; padding: 40px 20px;">
+                        🎛️ 컨트롤 패널
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 마인드풀니스 팝업 -->
+    <div class="mindfulness-popup" id="mindfulnessPopup">
+        <div class="mindfulness-content">
+            <div class="mindfulness-title">🧘 마인드풀니스</div>
+            <div class="breathing-circle" id="breathingCircle">
+                <span id="breathingText">호흡</span>
+            </div>
+            <div class="timer-display" id="timerDisplay">5</div>
+            <div class="breathing-instruction" id="breathingInstruction">
+                천천히 깊게 숨을 들이마시고 내쉬세요
+            </div>
+            <div class="breathing-text">
+                잠시만요... 마음을 차분히 정리하는 시간을 가져보세요.
+            </div>
+            <button class="mindfulness-close" id="mindfulnessClose" onclick="closeMindfulnessPopup()" disabled>
+                계속하기
+            </button>
+        </div>
+    </div>
+
+    <!-- 전체화면 보고서 모달 -->
+    <div class="report-modal" id="reportModal">
+        <div class="report-modal-content">
+            <div class="report-modal-header">
+                <h2 class="report-modal-title">📊 상담 보고서</h2>
+                <button class="report-modal-close" onclick="closeFullscreenReport()">닫기</button>
+            </div>
+            <div class="report-modal-body" id="reportModalBody">
+                보고서 내용이 여기에 표시됩니다.
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart.js 라이브러리 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- jsPDF 라이브러리 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <!-- 한글 폰트 지원을 위한 추가 라이브러리 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.plugin.standard_fonts_metrics.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.plugin.split_text_to_size.min.js"></script>
+    
+    <!-- html2canvas 라이브러리 (HTML을 이미지로 변환) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <!-- marked.js 라이브러리 (마크다운 렌더링) -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <!-- 한글 폰트 로드 -->
+    <script>
+        // 한글 폰트 로드 (로컬 폰트 사용)
+        function loadKoreanFont() {
+            return new Promise((resolve) => {
+                // 시스템 폰트 사용
+                const systemFonts = [
+                    'Malgun Gothic',
+                    '맑은 고딕', 
+                    'Apple SD Gothic Neo',
+                    'Noto Sans CJK KR',
+                    'Arial Unicode MS',
+                    'sans-serif'
+                ];
+                
+                // 폰트 로드 시도
+                const font = new FontFace('KoreanFont', `local("${systemFonts[0]}")`);
+                font.load().then(() => {
+                    document.fonts.add(font);
+                    console.log('한글 폰트 로드 성공');
+                    resolve();
+                }).catch(() => {
+                    console.log('한글 폰트 로드 실패 - 기본 폰트 사용');
+                    resolve();
+                });
+            });
+        }
+    </script>
+
+    <script>
+        let isProcessing = false;
+        let roleplayActive = false;
+        let mindfulnessTimer = null;
+        let mindfulnessCountdown = 5;
+        
+        // 감정 데이터 저장 (빈 그래프로 초기화)
+        let emotionData = {
+            labels: [],
+            datasets: [
+                {
+                    label: '슬픔',
+                    data: [],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    tension: 0.4,
+                    pointStyle: 'circle'
+                },
+                {
+                    label: '불안',
+                    data: [],
+                    borderColor: '#f97316',
+                    backgroundColor: 'rgba(249, 115, 22, 0.1)',
+                    tension: 0.4,
+                    pointStyle: 'rect'
+                },
+                {
+                    label: '분노',
+                    data: [],
+                    borderColor: '#ef4444',
+                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                    tension: 0.4,
+                    pointStyle: 'triangle'
+                }
+            ]
+        };
+        
+        let emotionChart = null;
+        let currentSessionId = 'current';
+        
+        // 사이드바 크기 조정 관련 변수
+        let isResizing = false;
+        let resizeTarget = null;
+        let startX = 0;
+        let startWidth = 0;
+        let sessionHistory = [
+            {
+                id: 'current',
+                title: '현재 상담',
+                messageCount: 0,
+                lastActivity: '방금 전',
+                messages: [],
+                titleGenerated: false,
+                emotionData: {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: '슬픔',
+                            data: [],
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            tension: 0.4,
+                            pointStyle: 'circle'
+                        },
+                        {
+                            label: '불안',
+                            data: [],
+                            borderColor: '#f97316',
+                            backgroundColor: 'rgba(249, 115, 22, 0.1)',
+                            tension: 0.4,
+                            pointStyle: 'rect'
+                        },
+                        {
+                            label: '분노',
+                            data: [],
+                            borderColor: '#ef4444',
+                            backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                            tension: 0.4,
+                            pointStyle: 'triangle'
+                        }
+                    ]
+                }
+            }
+        ];
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        }
+
+        function showTyping() {
+            document.getElementById('typingIndicator').style.display = 'block';
+        }
+
+        function hideTyping() {
+            document.getElementById('typingIndicator').style.display = 'none';
+        }
+
+        function showLoading() {
+            document.getElementById('loading').style.display = 'block';
+        }
+
+        function hideLoading() {
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        function addMessage(content, type = 'assistant') {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            
+            if (type === 'special') {
+                contentDiv.className += ` ${content.type}`;
+            }
+            
+            contentDiv.textContent = content.content || content;
+            messageDiv.appendChild(contentDiv);
+            messagesContainer.appendChild(messageDiv);
+            
+            // 스크롤을 맨 아래로
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function addUserMessage(message) {
+            addMessage(message, 'user');
+        }
+
+        function addSystemMessage(message, type) {
+            addMessage({content: message, type: type}, 'special');
+        }
+
+        async function sendMessage() {
+            if (isProcessing) return;
+            
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // 사용자 메시지 추가
+            addUserMessage(message);
+            input.value = '';
+            
+            // 첫 번째 사용자 메시지인지 확인하고 제목 자동 생성
+            const currentSession = sessionHistory.find(s => s.id === currentSessionId);
+            console.log('현재 세션:', currentSession);
+            console.log('메시지 개수:', currentSession ? currentSession.messages.length : '세션 없음');
+            
+            console.log('제목 생성 조건 체크:');
+            console.log('- currentSession 존재:', !!currentSession);
+            console.log('- title === "현재 상담":', currentSession?.title === '현재 상담');
+            console.log('- messages.length >= 1:', currentSession?.messages.length >= 1);
+            console.log('- !titleGenerated:', !currentSession?.titleGenerated);
+            
+            if (currentSession && currentSession.title === '현재 상담' && currentSession.messages.length >= 1 && !currentSession.titleGenerated) {
+                console.log('✅ 제목 생성 조건 만족 - 제목 생성 시작');
+                // 현재 상담 제목이면 제목 자동 생성
+                currentSession.titleGenerated = true; // 중복 실행 방지
+                setTimeout(() => {
+                    generateCurrentSessionTitle();
+                }, 2000);
+            } else {
+                console.log('❌ 제목 생성 조건 불만족');
+            }
+            
+            isProcessing = true;
+            showTyping();
+            
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: message })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // 응답들 처리
+                    data.responses.forEach(response => {
+                        switch(response.type) {
+                            case 'emotion':
+                                // 감정 분석 결과를 그래프에 업데이트
+                                updateEmotionData(response.content.emotion_class, response.content.emotion_score);
+                                break;
+                            case 'mindfulness':
+                                // 마인드풀니스 팝업만 표시 (채팅창 메시지는 제거)
+                                setTimeout(() => {
+                                    showMindfulnessPopup();
+                                }, 500);
+                                break;
+                            case 'roleplay':
+                                addSystemMessage(`🎭 롤플레잉: ${response.content}`, 'roleplay');
+                                break;
+                            case 'assistant':
+                                addMessage(response.content, 'assistant');
+                                break;
+                            case 'error':
+                                addSystemMessage(`❌ 오류: ${response.content}`, 'error');
+                                break;
+                        }
+                    });
+                    
+                    roleplayActive = data.roleplay_active;
+                } else {
+                    addSystemMessage(`❌ 오류: ${data.error}`, 'error');
+                }
+            } catch (error) {
+                addSystemMessage(`❌ 네트워크 오류: ${error.message}`, 'error');
+            } finally {
+                isProcessing = false;
+                hideTyping();
+                
+                // 현재 세션에 메시지 저장
+                saveCurrentSession();
+            }
+        }
+
+        async function triggerRoleplay() {
+            if (isProcessing) return;
+            
+            const topic = prompt('롤플레잉 주제를 입력하세요 (예: 갈등 상황 대화 연습):');
+            if (!topic) return;
+            
+            isProcessing = true;
+            showLoading();
+            
+            try {
+                const response = await fetch('/trigger_roleplay', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ topic: topic })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    addSystemMessage(`🎭 ${data.message}`, 'roleplay');
+                    roleplayActive = true;
+                } else {
+                    addSystemMessage(`❌ 오류: ${data.error}`, 'error');
+                }
+            } catch (error) {
+                addSystemMessage(`❌ 네트워크 오류: ${error.message}`, 'error');
+            } finally {
+                isProcessing = false;
+                hideLoading();
+            }
+        }
+
+        async function endSession() {
+            if (isProcessing) return;
+            
+            if (!confirm('세션을 종료하고 요약 보고서를 생성하시겠습니까?')) return;
+            
+            isProcessing = true;
+            showLoading();
+            
+            try {
+                const response = await fetch('/end_session', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // 오른쪽 사이드바 Report 탭으로 전환하고 보고서 자동 생성
+                    switchToReportTab();
+                    await generateReport();
+                    
+                    // 세션 초기화
+                    roleplayActive = false;
+                } else {
+                    addSystemMessage(`❌ 오류: ${data.error}`, 'error');
+                }
+            } catch (error) {
+                addSystemMessage(`❌ 네트워크 오류: ${error.message}`, 'error');
+            } finally {
+                isProcessing = false;
+                hideLoading();
+            }
+        }
+
+        // Report 탭으로 전환
+        function switchToReportTab() {
+            // 오른쪽 사이드바의 Report 탭 활성화
+            const reportTab = document.querySelector('.sidebar-tab[onclick="switchTab(\'report\')"]');
+            if (reportTab) {
+                reportTab.click();
+            }
+        }
+
+        // 현재 상담의 제목 자동 생성
+        async function generateCurrentSessionTitle() {
+            try {
+                console.log('generateCurrentSessionTitle 함수 시작');
+                const currentSession = sessionHistory.find(s => s.id === currentSessionId);
+                console.log('찾은 세션:', currentSession);
+                
+                if (!currentSession || currentSession.messages.length === 0) {
+                    console.log('세션이 없거나 메시지가 없음');
+                    return;
+                }
+
+                console.log('제목 생성 API 호출 시작');
+                const response = await fetch('/generate_session_title', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        messages: currentSession.messages
+                    })
+                });
+
+                const data = await response.json();
+                console.log('API 응답:', data);
+                
+                if (data.success && data.title) {
+                    console.log('제목 생성 성공:', data.title);
+                    // 현재 세션의 제목 업데이트
+                    currentSession.title = data.title;
+                    
+                    // 상담 내역 목록 업데이트
+                    updateSessionList();
+                    
+                    console.log('현재 상담 제목이 자동으로 생성되었습니다:', data.title);
+                } else {
+                    console.error('제목 생성 실패:', data.error);
+                }
+            } catch (error) {
+                console.error('제목 생성 중 오류:', error);
+            }
+        }
+
+        // 완료된 세션의 제목 자동 생성
+        async function generateSessionTitleForCompletedSession(sessionId) {
+            try {
+                const session = sessionHistory.find(s => s.id === sessionId);
+                if (!session || session.messages.length === 0) {
+                    return;
+                }
+
+                const response = await fetch('/generate_session_title', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        messages: session.messages
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.success && data.title) {
+                    // 완료된 세션의 제목 업데이트
+                    session.title = data.title;
+                    
+                    // 상담 내역 목록 업데이트
+                    updateSessionList();
+                    
+                    console.log('완료된 세션 제목이 자동으로 생성되었습니다:', data.title);
+                } else {
+                    console.error('제목 생성 실패:', data.error);
+                }
+            } catch (error) {
+                console.error('제목 생성 중 오류:', error);
+            }
+        }
+
+        // 세션 제목 자동 생성 (기존 함수 유지)
+        async function generateSessionTitle() {
+            try {
+                const currentSession = sessionHistory.find(s => s.id === currentSessionId);
+                if (!currentSession || currentSession.messages.length === 0) {
+                    return;
+                }
+
+                const response = await fetch('/generate_session_title', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        messages: currentSession.messages
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.success && data.title) {
+                    // 현재 세션의 제목 업데이트
+                    currentSession.title = data.title;
+                    
+                    // 상담 내역 목록 업데이트
+                    updateSessionList();
+                    
+                    console.log('세션 제목이 자동으로 생성되었습니다:', data.title);
+                } else {
+                    console.error('제목 생성 실패:', data.error);
+                }
+            } catch (error) {
+                console.error('제목 생성 중 오류:', error);
+            }
+        }
+
+        // 마인드풀니스 팝업 관련 함수들
+        function showMindfulnessPopup() {
+            const popup = document.getElementById('mindfulnessPopup');
+            const timerDisplay = document.getElementById('timerDisplay');
+            const breathingText = document.getElementById('breathingText');
+            const breathingInstruction = document.getElementById('breathingInstruction');
+            const closeButton = document.getElementById('mindfulnessClose');
+            
+            // 초기화
+            mindfulnessCountdown = 5;
+            timerDisplay.textContent = mindfulnessCountdown;
+            breathingText.textContent = '호흡';
+            breathingInstruction.textContent = '천천히 깊게 숨을 들이마시고 내쉬세요';
+            closeButton.disabled = true;
+            closeButton.textContent = '계속하기';
+            
+            // 팝업 표시
+            popup.classList.add('show');
+            
+            // 타이머 시작
+            startMindfulnessTimer();
+        }
+
+        function startMindfulnessTimer() {
+            const timerDisplay = document.getElementById('timerDisplay');
+            const breathingText = document.getElementById('breathingText');
+            const breathingInstruction = document.getElementById('breathingInstruction');
+            const closeButton = document.getElementById('mindfulnessClose');
+            
+            mindfulnessTimer = setInterval(() => {
+                mindfulnessCountdown--;
+                timerDisplay.textContent = mindfulnessCountdown;
+                
+                // 호흡 가이드 텍스트 변경
+                if (mindfulnessCountdown > 3) {
+                    breathingText.textContent = '들숨';
+                    breathingInstruction.textContent = '천천히 깊게 숨을 들이마시세요';
+                } else if (mindfulnessCountdown > 1) {
+                    breathingText.textContent = '날숨';
+                    breathingInstruction.textContent = '천천히 숨을 내쉬세요';
+                } else {
+                    breathingText.textContent = '완료';
+                    breathingInstruction.textContent = '잘하셨습니다! 마음이 차분해졌나요?';
+                }
+                
+                if (mindfulnessCountdown <= 0) {
+                    clearInterval(mindfulnessTimer);
+                    closeButton.disabled = false;
+                    closeButton.textContent = '계속하기';
+                }
+            }, 1000);
+        }
+
+        function closeMindfulnessPopup() {
+            const popup = document.getElementById('mindfulnessPopup');
+            popup.classList.remove('show');
+            
+            if (mindfulnessTimer) {
+                clearInterval(mindfulnessTimer);
+                mindfulnessTimer = null;
+            }
+            
+            // 팝업이 닫힌 후 입력 필드에 포커스
+            setTimeout(() => {
+                document.getElementById('messageInput').focus();
+            }, 300);
+        }
+
+        // 탭 전환 함수
+        function switchTab(tabName) {
+            // 모든 탭 비활성화
+            document.querySelectorAll('.sidebar-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.style.display = 'none';
+            });
+            
+            // 선택된 탭 활성화
+            event.target.classList.add('active');
+            document.getElementById(tabName + 'Tab').style.display = 'block';
+        }
+
+        // 감정 그래프 초기화
+        function initEmotionChart() {
+            const ctx = document.getElementById('emotionChart').getContext('2d');
+            const currentSession = sessionHistory.find(s => s.id === currentSessionId);
+            const data = currentSession ? currentSession.emotionData : emotionData;
+            
+            emotionChart = new Chart(ctx, {
+                type: 'line',
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    aspectRatio: 1,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 1.0,
+                            ticks: {
+                                stepSize: 0.2
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 15,
+                                font: {
+                                    size: 11
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // 감정 데이터 업데이트
+        function updateEmotionData(emotionClass, emotionScore) {
+            const currentSession = sessionHistory.find(s => s.id === currentSessionId);
+            if (!currentSession) return;
+            
+            // 감정 점수를 0.0~1.0 범위로 제한
+            const normalizedScore = Math.min(Math.max(emotionScore, 0.0), 1.0);
+            
+            // 새로운 데이터 포인트 추가
+            const newLabel = `#${currentSession.emotionData.labels.length + 1}`;
+            currentSession.emotionData.labels.push(newLabel);
+            
+            // 각 감정 데이터셋에 새 값 추가
+            currentSession.emotionData.datasets.forEach(dataset => {
+                if (dataset.label === emotionClass) {
+                    dataset.data.push(normalizedScore);
+                } else {
+                    // 다른 감정은 이전 값 유지
+                    const lastValue = dataset.data[dataset.data.length - 1] || 0;
+                    dataset.data.push(lastValue);
+                }
+            });
+            
+            // 최대 10개 데이터 포인트만 유지
+            if (currentSession.emotionData.labels.length > 10) {
+                currentSession.emotionData.labels.shift();
+                currentSession.emotionData.datasets.forEach(dataset => {
+                    dataset.data.shift();
+                });
+            }
+            
+            // 그래프 업데이트
+            if (emotionChart) {
+                emotionChart.data = currentSession.emotionData;
+                emotionChart.update();
+            }
+        }
+
+        // 새 상담 시작
+        function startNewSession() {
+            const newSessionId = 'session-' + Date.now();
+            const newSession = {
+                id: newSessionId,
+                title: '새 상담',
+                messageCount: 0,
+                lastActivity: '방금 전',
+                messages: [],
+                titleGenerated: false,
+                emotionData: {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: '슬픔',
+                            data: [],
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            tension: 0.4,
+                            pointStyle: 'circle'
+                        },
+                        {
+                            label: '불안',
+                            data: [],
+                            borderColor: '#f97316',
+                            backgroundColor: 'rgba(249, 115, 22, 0.1)',
+                            tension: 0.4,
+                            pointStyle: 'rect'
+                        },
+                        {
+                            label: '분노',
+                            data: [],
+                            borderColor: '#ef4444',
+                            backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                            tension: 0.4,
+                            pointStyle: 'triangle'
+                        }
+                    ]
+                }
+            };
+            
+            sessionHistory.unshift(newSession);
+            currentSessionId = newSessionId;
+            
+            // UI 업데이트
+            updateSessionList();
+            clearChatMessages();
+            updateEmotionChart();
+            
+            // 새 상담 시작 메시지
+            addMessage('새로운 상담을 시작합니다. 어떤 이야기든 편하게 나눠주세요. 😊', 'assistant');
+        }
+
+        // 상담 내역 목록 업데이트
+        function updateSessionList() {
+            const sessionList = document.getElementById('sessionList');
+            sessionList.innerHTML = '';
+            
+            sessionHistory.forEach(session => {
+                const sessionItem = document.createElement('div');
+                sessionItem.className = `session-item ${session.id === currentSessionId ? 'active' : ''}`;
+                sessionItem.setAttribute('data-session-id', session.id);
+                sessionItem.onclick = () => switchSession(session.id);
+                
+                sessionItem.innerHTML = `
+                    <div class="session-title">${session.title}</div>
+                    <div class="session-meta">
+                        <span class="message-count">${session.messageCount}</span>
+                        <span class="session-time">${session.lastActivity}</span>
+                    </div>
+                    <div class="session-actions">
+                        <button class="session-action-btn" onclick="editSessionTitle('${session.id}')" title="제목 편집">✏️</button>
+                        <button class="session-action-btn" onclick="deleteSession('${session.id}')" title="삭제">🗑️</button>
+                    </div>
+                `;
+                
+                sessionList.appendChild(sessionItem);
+            });
+        }
+
+        // 상담 세션 전환
+        function switchSession(sessionId) {
+            if (sessionId === currentSessionId) return;
+            
+            // 현재 세션 저장
+            saveCurrentSession();
+            
+            // 새 세션으로 전환
+            currentSessionId = sessionId;
+            const session = sessionHistory.find(s => s.id === sessionId);
+            
+            if (session) {
+                // 채팅 메시지 초기화
+                clearChatMessages();
+                
+                // 세션 메시지 로드
+                loadSessionMessages(session);
+                
+                // 감정 그래프 업데이트
+                updateEmotionChart();
+                
+                // UI 업데이트
+                updateSessionList();
+            }
+        }
+
+        // 감정 그래프 업데이트
+        function updateEmotionChart() {
+            if (emotionChart) {
+                const currentSession = sessionHistory.find(s => s.id === currentSessionId);
+                if (currentSession) {
+                    emotionChart.data = currentSession.emotionData;
+                    emotionChart.update();
+                }
+            }
+        }
+
+        // 현재 세션 저장
+        function saveCurrentSession() {
+            const session = sessionHistory.find(s => s.id === currentSessionId);
+            if (session) {
+                const messages = document.querySelectorAll('#chatMessages .message');
+                session.messages = Array.from(messages).map(msg => ({
+                    type: msg.classList.contains('user') ? 'user' : 'assistant',
+                    content: msg.querySelector('.message-content').textContent
+                }));
+                session.messageCount = session.messages.length;
+                session.lastActivity = '방금 전';
+            }
+        }
+
+        // 세션 메시지 로드
+        function loadSessionMessages(session) {
+            session.messages.forEach(msg => {
+                addMessage(msg.content, msg.type);
+            });
+        }
+
+        // 채팅 메시지 초기화
+        function clearChatMessages() {
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML = '';
+        }
+
+        // 세션 제목 편집
+        function editSessionTitle(sessionId) {
+            const session = sessionHistory.find(s => s.id === sessionId);
+            if (session) {
+                const newTitle = prompt('새 제목을 입력하세요:', session.title);
+                if (newTitle && newTitle.trim()) {
+                    session.title = newTitle.trim();
+                    updateSessionList();
+                }
+            }
+        }
+
+        // 세션 삭제
+        function deleteSession(sessionId) {
+            if (sessionId === currentSessionId) {
+                alert('현재 진행 중인 상담은 삭제할 수 없습니다.');
+                return;
+            }
+            
+            if (confirm('이 상담 내역을 삭제하시겠습니까?')) {
+                sessionHistory = sessionHistory.filter(s => s.id !== sessionId);
+                updateSessionList();
+            }
+        }
+
+        // 보고서 생성
+        async function generateReport() {
+            const reportBtn = document.getElementById('generateReportBtn');
+            const fullscreenBtn = document.getElementById('fullscreenBtn');
+            const pdfDownloadBtn = document.getElementById('pdfDownloadBtn');
+            const reportContent = document.getElementById('reportContent');
+            
+            // 버튼 비활성화 및 로딩 표시
+            reportBtn.disabled = true;
+            reportBtn.textContent = '생성 중...';
+            fullscreenBtn.disabled = true;
+            pdfDownloadBtn.disabled = true;
+            
+            reportContent.innerHTML = `
+                <div class="report-loading">
+                    <div class="spinner"></div>
+                    <p>상담 내용을 분석하여 보고서를 생성하고 있습니다...</p>
+                </div>
+            `;
+            
+            try {
+                // 현재 세션 데이터 수집
+                const currentSession = sessionHistory.find(s => s.id === currentSessionId);
+                if (!currentSession || currentSession.messages.length === 0) {
+                    throw new Error('상담 내용이 없습니다. 먼저 상담을 진행해주세요.');
+                }
+                
+                // 보고서 데이터 준비
+                const reportData = {
+                    sessionTitle: currentSession.title,
+                    messageCount: currentSession.messageCount,
+                    emotionData: currentSession.emotionData,
+                    messages: currentSession.messages
+                };
+                
+                // 서버로 보고서 생성 요청
+                const response = await fetch('/generate_report', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(reportData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // 보고서 표시
+                    // 마크다운을 HTML로 변환
+                    const htmlReport = marked.parse(result.report);
+                    reportContent.innerHTML = `
+                        <div class="report-text">${htmlReport}</div>
+                    `;
+                    
+                    // 전체화면 버튼 활성화
+                    fullscreenBtn.disabled = false;
+                    
+                    // PDF 다운로드 버튼 활성화
+                    pdfDownloadBtn.disabled = false;
+                    
+                    // 보고서 내용을 전역 변수에 저장
+                    window.currentReport = result.report;
+                } else {
+                    throw new Error(result.error || '보고서 생성에 실패했습니다.');
+                }
+                
+            } catch (error) {
+                reportContent.innerHTML = `
+                    <div class="report-placeholder">
+                        <div class="placeholder-icon">❌</div>
+                        <div class="placeholder-text">
+                            <h4>보고서 생성 실패</h4>
+                            <p>${error.message}</p>
+                            <p class="placeholder-subtext">다시 시도해주세요</p>
+                        </div>
+                    </div>
+                `;
+                fullscreenBtn.disabled = true;
+                pdfDownloadBtn.disabled = true;
+            } finally {
+                // 버튼 복원
+                reportBtn.disabled = false;
+                reportBtn.textContent = '보고서 생성';
+            }
+        }
+
+        // 전체화면 보고서 열기
+        function openFullscreenReport() {
+            if (!window.currentReport) {
+                alert('먼저 보고서를 생성해주세요.');
+                return;
+            }
+            
+            const modal = document.getElementById('reportModal');
+            const modalBody = document.getElementById('reportModalBody');
+            
+            // 마크다운을 HTML로 변환하여 표시
+            const htmlReport = marked.parse(window.currentReport);
+            modalBody.innerHTML = htmlReport;
+            modal.classList.add('show');
+            
+            // ESC 키로 닫기
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeFullscreenReport();
+                }
+            });
+        }
+
+        // 전체화면 보고서 닫기
+        function closeFullscreenReport() {
+            const modal = document.getElementById('reportModal');
+            modal.classList.remove('show');
+        }
+
+        // PDF 다운로드 (브라우저 인쇄 기능 사용)
+        async function downloadPDF() {
+            if (!window.currentReport) {
+                alert('먼저 보고서를 생성해주세요.');
+                return;
+            }
+
+            try {
+                // 감정 그래프를 이미지로 변환
+                const chartImage = getChartImage();
+                
+                // 새 창에서 PDF용 HTML 생성
+                const printWindow = window.open('', '_blank', 'width=800,height=600');
+                const currentDate = new Date().toLocaleDateString('ko-KR');
+                const currentTime = new Date().toLocaleTimeString('ko-KR');
+                
+                printWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>상담 보고서</title>
+                        <style>
+                            @page {
+                                size: A4;
+                                margin: 20mm;
+                            }
+                            
+                            body {
+                                font-family: 'Malgun Gothic', '맑은 고딕', 'Apple SD Gothic Neo', sans-serif;
+                                line-height: 1.6;
+                                margin: 0;
+                                padding: 20px;
+                                color: #333;
+                                background: white;
+                            }
+                            
+                            .header {
+                                text-align: center;
+                                margin-bottom: 30px;
+                                border-bottom: 3px solid #667eea;
+                                padding-bottom: 20px;
+                            }
+                            
+                            .title {
+                                font-size: 28px;
+                                font-weight: bold;
+                                color: #667eea;
+                                margin-bottom: 10px;
+                            }
+                            
+                            .subtitle {
+                                font-size: 16px;
+                                color: #666;
+                            }
+                            
+                            .chart-section {
+                                margin: 30px 0;
+                                text-align: center;
+                                page-break-inside: avoid;
+                            }
+                            
+                            .chart-title {
+                                font-size: 20px;
+                                font-weight: bold;
+                                color: #667eea;
+                                margin-bottom: 15px;
+                            }
+                            
+                            .chart-image {
+                                max-width: 100%;
+                                height: auto;
+                                border: 2px solid #ddd;
+                                border-radius: 8px;
+                                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                            }
+                            
+                            .content {
+                                font-size: 14px;
+                                white-space: pre-line;
+                                line-height: 1.8;
+                            }
+                            
+                            .content h2 {
+                                color: #667eea;
+                                font-size: 18px;
+                                margin-top: 30px;
+                                margin-bottom: 15px;
+                                border-bottom: 2px solid #667eea;
+                                padding-bottom: 5px;
+                            }
+                            
+                            .content h3 {
+                                color: #333;
+                                font-size: 16px;
+                                margin-top: 20px;
+                                margin-bottom: 10px;
+                            }
+                            
+                            .footer {
+                                margin-top: 40px;
+                                padding-top: 20px;
+                                border-top: 2px solid #ddd;
+                                font-size: 12px;
+                                color: #666;
+                                text-align: center;
+                            }
+                            
+                            @media print {
+                                body { 
+                                    margin: 0; 
+                                    padding: 15mm;
+                                }
+                                .header { 
+                                    page-break-after: avoid; 
+                                }
+                                .chart-section { 
+                                    page-break-inside: avoid; 
+                                }
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="header">
+                            <div class="title">📊 상담 보고서</div>
+                            <div class="subtitle">AI 멀티에이전트 상담 시스템</div>
+                        </div>
+                        
+                        <div class="chart-section">
+                            <div class="chart-title">📈 감정 변화 추이</div>
+                            <img src="${chartImage}" alt="감정 변화 추이 그래프" class="chart-image">
+                        </div>
+                        
+                        <div class="content">${marked.parse(window.currentReport)}</div>
+                        
+                        <div class="footer">
+                            생성일: ${currentDate} ${currentTime} | AI Multi-agent Counseling System
+                        </div>
+                    </body>
+                    </html>
+                `);
+                
+                printWindow.document.close();
+                
+                // 페이지 로드 완료 후 인쇄 다이얼로그 열기
+                printWindow.onload = function() {
+                    setTimeout(() => {
+                        printWindow.print();
+                        // 인쇄 후 창 닫기
+                        setTimeout(() => {
+                            printWindow.close();
+                        }, 1000);
+                    }, 500);
+                };
+                
+            } catch (error) {
+                console.error('PDF 생성 중 오류:', error);
+                alert('PDF 생성 중 오류가 발생했습니다: ' + error.message);
+            }
+        }
+
+        // 감정 그래프를 이미지로 변환하는 함수
+        function getChartImage() {
+            if (!emotionChart) {
+                return '';
+            }
+            
+            try {
+                // Chart.js 캔버스를 이미지로 변환
+                const canvas = emotionChart.canvas;
+                return canvas.toDataURL('image/png');
+            } catch (error) {
+                console.error('그래프 이미지 변환 중 오류:', error);
+                return '';
+            }
+        }
+
+        // 한글 텍스트를 영문으로 변환하는 함수
+        function convertKoreanToEnglish(text) {
+            // 기본적인 한글-영문 매핑
+            const translations = {
+                '상담 보고서': 'Consultation Report',
+                '상담 개요': '1. Consultation Overview',
+                '감정 상태 분석': '2. Emotional State Analysis',
+                '상담 진행 과정': '3. Counseling Process',
+                '종합 평가 및 제언': '4. Comprehensive Assessment and Recommendations',
+                '상담자': 'Counselor',
+                '사용자': 'User',
+                '감정': 'Emotion',
+                '분석': 'Analysis',
+                '상태': 'State',
+                '과정': 'Process',
+                '평가': 'Assessment',
+                '제언': 'Recommendations',
+                '생성일': 'Generated',
+                'AI 멀티에이전트 상담 시스템': 'AI Multi-agent Counseling System'
+            };
+            
+            let result = text;
+            
+            // 번역 적용
+            Object.keys(translations).forEach(korean => {
+                const english = translations[korean];
+                result = result.replace(new RegExp(korean, 'g'), english);
+            });
+            
+            return result;
+        }
+
+        // 사이드바 크기 조정 시작
+        function startResize(event, target) {
+            isResizing = true;
+            resizeTarget = target;
+            startX = event.clientX;
+            startWidth = target.offsetWidth;
+            
+            document.addEventListener('mousemove', handleResize);
+            document.addEventListener('mouseup', stopResize);
+            
+            // 드래그 중 시각적 피드백
+            document.body.style.cursor = 'col-resize';
+            document.body.style.userSelect = 'none';
+            
+            event.preventDefault();
+        }
+
+        // 사이드바 크기 조정 중
+        function handleResize(event) {
+            if (!isResizing || !resizeTarget) return;
+            
+            const deltaX = event.clientX - startX;
+            let newWidth;
+            
+            // 왼쪽 사이드바는 오른쪽으로 드래그할 때 크기 증가
+            if (resizeTarget === document.getElementById('leftSidebar')) {
+                newWidth = startWidth + deltaX; // 정방향
+            } else {
+                // 오른쪽 사이드바는 왼쪽으로 드래그할 때 크기 증가
+                newWidth = startWidth - deltaX; // 반대 방향
+            }
+            
+            // 최소/최대 너비 제한
+            const minWidth = resizeTarget === document.getElementById('leftSidebar') ? 150 : 200;
+            const maxWidth = resizeTarget === document.getElementById('leftSidebar') ? 500 : 600;
+            
+            const constrainedWidth = Math.max(minWidth, Math.min(maxWidth, newWidth));
+            resizeTarget.style.width = constrainedWidth + 'px';
+            
+            event.preventDefault();
+        }
+
+        // 사이드바 크기 조정 종료
+        function stopResize() {
+            isResizing = false;
+            resizeTarget = null;
+            
+            document.removeEventListener('mousemove', handleResize);
+            document.removeEventListener('mouseup', stopResize);
+            
+            // 시각적 피드백 제거
+            document.body.style.cursor = '';
+            document.body.style.userSelect = '';
+            
+            // 크기 저장
+            saveSidebarSizes();
+        }
+
+        // 사이드바 크기 저장
+        function saveSidebarSizes() {
+            const leftSidebar = document.getElementById('leftSidebar');
+            const rightSidebar = document.getElementById('rightSidebar');
+            
+            if (leftSidebar && rightSidebar) {
+                localStorage.setItem('leftSidebarWidth', leftSidebar.style.width);
+                localStorage.setItem('rightSidebarWidth', rightSidebar.style.width);
+            }
+        }
+
+        // 사이드바 크기 복원
+        function restoreSidebarSizes() {
+            const leftSidebar = document.getElementById('leftSidebar');
+            const rightSidebar = document.getElementById('rightSidebar');
+            
+            const leftWidth = localStorage.getItem('leftSidebarWidth');
+            const rightWidth = localStorage.getItem('rightSidebarWidth');
+            
+            if (leftWidth && leftSidebar) {
+                leftSidebar.style.width = leftWidth;
+            }
+            if (rightWidth && rightSidebar) {
+                rightSidebar.style.width = rightWidth;
+            }
+        }
+
+        // 페이지 로드 시 입력 필드에 포커스
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('messageInput').focus();
+            initEmotionChart();
+            updateSessionList();
+            restoreSidebarSizes();
+            
+            // 드래그 핸들 이벤트 리스너 추가
+            const leftHandle = document.getElementById('leftResizeHandle');
+            const rightHandle = document.getElementById('rightResizeHandle');
+            
+            if (leftHandle) {
+                leftHandle.addEventListener('mousedown', (e) => startResize(e, document.getElementById('leftSidebar')));
+            }
+            if (rightHandle) {
+                rightHandle.addEventListener('mousedown', (e) => startResize(e, document.getElementById('rightSidebar')));
+            }
+        });
+    </script>
+</body>
+</html>

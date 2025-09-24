@@ -2,8 +2,9 @@ from __future__ import annotations
 from typing import Dict, List, Any, Tuple
 from openai import OpenAI
 import os
-# matplotlib은 선택적으로 import
-MATPLOTLIB_AVAILABLE = False
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 from collections import Counter
 from datetime import datetime
 import re, json
@@ -233,168 +234,45 @@ class MindfulnessAgent:
         return state
 
 class RoleplayAgent:
-    """대화형 롤플레잉을 진행한다."""
+    """짧은 역할극 스크립트를 생성하여 사용자의 연습을 돕는다."""
     def run(self, state: Dict[str, Any]) -> Dict[str, Any]:
         user_text = state["messages"][-1]["content"]
-        
-        # 롤플레잉 상태 초기화 (첫 시작)
-        if not state.get("roleplay_active"):
-            topic = state.get("roleplay_topic")
-            if not topic:
-                if "면접" in user_text:
-                    topic = "면접 답변 연습"
-                elif "갈등" in user_text or "싸웠" in user_text or "다퉜" in user_text:
-                    topic = "갈등 상황 대화 연습"
-                else:
-                    topic = "불안 완화 대화 연습"
-            
-            # 롤플레잉 시작
-            state["roleplay_active"] = True
-            state["roleplay_topic"] = topic
-            state["roleplay_turn"] = 0
+        topic = state.get("roleplay_topic")
+        if not topic:
+            if "면접" in user_text:
+                topic = "면접 답변 연습"
+            elif "갈등" in user_text or "싸웠" in user_text or "다퉜" in user_text:
+                topic = "갈등 상황 대화 연습"
+            else:
+                topic = "불안 완화 대화 연습"
+
+        prompt = f"""
+        다음 주제에 대해 사용자가 따라 읽을 수 있는 6~8줄 내외의 역할극 스크립트를 만들어 주세요.
+        - 주제: {topic}
+        - 말투: 친절하고 구체적, 문장은 짧게.
+        - 형식: "상황:", "상담자:", "나:" 라벨을 사용. 마지막 줄은 "나:"로 끝내서 사용자가 말하도록 유도.
+
+        사용자 최근 발화: "{user_text}"
+        """
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": "너는 CBT 코치이자 역할극 진행자다. 안전하고 구체적인 스크립트를 제공해라."},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.7
+        )
+        script = response.choices[0].message.content.strip()
+
+        state["roleplay_count"] = state.get("roleplay_count", 0) + 1
+        if not state.get("roleplay_logs"):
             state["roleplay_logs"] = []
-            
-            # 사용자의 상담 내용을 기반으로 시나리오 생성
-            # 전체 세션의 상담 내용 수집 (사용자 메시지만 필터링)
-            user_messages = [msg for msg in state["messages"] if msg["role"] == "user"]
-            conversation_context = "\n".join([f"사용자: {msg['content']}" for msg in user_messages])
-            
-            # 감정 분석 결과도 포함
-            emotion_summary = []
-            for msg in state["messages"]:
-                if msg.get("emotion"):
-                    emotion_summary.append(f"감정: {msg['emotion']['class']} (점수: {msg['emotion']['score']})")
-            
-            emotion_context = "\n".join(emotion_summary[-5:]) if emotion_summary else "감정 정보 없음"
-            
-            # 상황 설정
-            situation_prompt = f"""
-            다음 주제로 롤플레잉을 시작합니다: {topic}
-            
-            사용자의 전체 상담 내용을 바탕으로 현실적인 시나리오를 만들어주세요:
-            
-            사용자의 상담 내용 (전체 세션):
-            {conversation_context}
-            
-            사용자의 감정 변화:
-            {emotion_context}
-            
-            위 상담 내용을 종합적으로 분석하여:
-            1. 사용자가 실제로 겪고 있는 문제나 상황을 파악하세요
-            2. 그 문제와 관련된 구체적인 상대방 역할을 설정하세요 (예: 친구, 동료, 가족, 상사 등)
-            3. 그 역할의 성격, 말투, 관계를 구체적으로 설정하세요
-            4. 구체적이고 현실적인 롤플레잉 상황을 만들어주세요
-            5. 설정된 역할을 맡아서 첫 번째 말을 해주세요
-            
-            출력 형식:
-            "상황: [구체적인 상황 설명]"
-            "상대방 역할: [구체적인 역할과 성격 설명]"
-            "상대방: [대화 내용]"
-            
-            사용자 최근 발화: "{user_text}"
-            """
-            
-            response = client.chat.completions.create(
-                model="gpt-4o-mini",
-                messages=[
-                    {"role": "system", "content": "당신은 롤플레잉 상황극의 상대방 역할을 맡습니다. 자연스럽고 현실적인 대화를 이끌어가세요."},
-                    {"role": "user", "content": situation_prompt}
-                ],
-                temperature=0.7
-            )
-            reply = response.choices[0].message.content.strip()
-            
-            state["roleplay_turn"] += 1
-            state["roleplay_logs"].append({
-                "turn": state["roleplay_turn"],
-                "role": "상대방",
-                "content": reply,
-                "at": datetime.now().isoformat(timespec="seconds")
-            })
-            state["messages"].append({"role": "assistant", "content": reply})
-            
-            # 구체적인 역할 정보 저장 (첫 번째 응답에서 추출)
-            if state["roleplay_turn"] == 1:
-                # 역할 정보 추출 및 저장
-                if "상대방 역할:" in reply:
-                    role_info = reply.split("상대방 역할:")[1].split("상대방:")[0].strip()
-                    state["roleplay_role"] = role_info
-            
-        else:
-            # 롤플레잉 진행 중 - 상대방 응답 생성
-            roleplay_logs = state.get("roleplay_logs", [])
-            conversation_history = "\n".join([f"{log['role']}: {log['content']}" for log in roleplay_logs[-5:]])  # 최근 5턴만
-            
-            # 사용자의 전체 상담 내용을 고려
-            user_messages = [msg for msg in state["messages"] if msg["role"] == "user"]
-            conversation_context = "\n".join([f"사용자: {msg['content']}" for msg in user_messages])
-            
-            # 감정 분석 결과도 포함
-            emotion_summary = []
-            for msg in state["messages"]:
-                if msg.get("emotion"):
-                    emotion_summary.append(f"감정: {msg['emotion']['class']} (점수: {msg['emotion']['score']})")
-            
-            emotion_context = "\n".join(emotion_summary[-5:]) if emotion_summary else "감정 정보 없음"
-            
-            # 저장된 역할 정보 활용
-            role_info = state.get("roleplay_role", "일반적인 상대방")
-            
-            response_prompt = f"""
-            롤플레잉 주제: {state.get('roleplay_topic', '일반 대화')}
-            
-            설정된 상대방 역할: {role_info}
-            
-            사용자의 전체 상담 내용:
-            {conversation_context}
-            
-            사용자의 감정 변화:
-            {emotion_context}
-            
-            롤플레잉 대화 기록:
-            {conversation_history}
-            
-            사용자 최근 응답: "{user_text}"
-            
-            위에서 설정된 상대방 역할을 유지하면서 자연스럽게 응답해주세요.
-            - 사용자의 전체 상담 내용과 감정 변화를 종합적으로 고려하세요
-            - 사용자가 실제로 겪고 있는 문제나 상황을 이해하고 그 맥락에서 응답하세요
-            - 설정된 역할의 성격, 말투, 관계를 일관되게 유지하세요
-            - 대화를 자연스럽게 이어가세요
-            - 2-3문장 정도로 간결하게
-            - 형식: "상대방: [응답 내용]"
-            """
-            
-            response = client.chat.completions.create(
-                model="gpt-4o-mini",
-                messages=[
-                    {"role": "system", "content": "당신은 롤플레잉의 상대방 역할입니다. 자연스럽고 현실적인 대화를 이어가세요."},
-                    {"role": "user", "content": response_prompt}
-                ],
-                temperature=0.7
-            )
-            reply = response.choices[0].message.content.strip()
-            
-            state["roleplay_turn"] += 1
-            state["roleplay_logs"].append({
-                "turn": state["roleplay_turn"],
-                "role": "상대방",
-                "content": reply,
-                "at": datetime.now().isoformat(timespec="seconds")
-            })
-            state["messages"].append({"role": "assistant", "content": reply})
-            
-            # 롤플레잉 종료 조건 체크 (사용자가 명시적으로 종료할 때만)
-            if any(keyword in user_text.lower() for keyword in ["종료", "끝", "그만", "나가기", "exit", "롤플종료", "롤플끝", "시뮬레이션종료"]):
-                state["roleplay_active"] = False
-                state["next_node"] = "assistant"
-                state["trigger_roleplay"] = False
-                state["roleplay_count"] = state.get("roleplay_count", 0) + 1
-                # 롤플레잉 종료 메시지 추가
-                state["messages"].append({"role": "assistant", "content": "롤플레잉이 종료되었습니다. 일반 상담으로 돌아갑니다."})
-                print("\n[A] 롤플레잉이 종료되었습니다. 일반 상담으로 돌아갑니다.")
-            # 롤플레잉은 emotion_branch에서 자동으로 계속 진행됨
-        
+        state["roleplay_logs"].append({"topic": topic, "script": script, "at": datetime.now().isoformat(timespec="seconds")})
+        state["messages"].append({"role": "assistant", "content": script})
+
+        # 다음 턴 일반 대화 복귀 + (중요) 외부 트리거 1회성 해제
+        state["next_node"] = "assistant"
+        state["trigger_roleplay"] = False
         return state
 
 class MemoryAgent:
@@ -422,24 +300,17 @@ class MemoryAgent:
 
         top_keywords = [word for word, _ in Counter(user_keywords).most_common(10)]
 
-        # 감정 추이 그래프 저장 (matplotlib이 사용 가능한 경우에만)
-        graph_path = None
-        if MATPLOTLIB_AVAILABLE and emotion_scores:
-            try:
-                plt.figure()
-                plt.plot(range(len(emotion_scores)), emotion_scores, marker='o')
-                plt.axhline(0.7, linestyle='--')
-                plt.axhline(0.9, linestyle='--')
-                plt.title("Emotion Intensity Over Time")
-                plt.xlabel("Turn Index")
-                plt.ylabel("Emotion Score")
-                plt.tight_layout()
-                plt.savefig("emotion_graph.png")
-                plt.close()
-                graph_path = "emotion_graph.png"
-            except Exception as e:
-                print(f"Warning: Could not generate emotion graph: {e}")
-                graph_path = None
+        # 감정 추이 그래프 저장
+        plt.figure()
+        plt.plot(range(len(emotion_scores)), emotion_scores, marker='o')
+        plt.axhline(0.7, linestyle='--')
+        plt.axhline(0.9, linestyle='--')
+        plt.title("Emotion Intensity Over Time")
+        plt.xlabel("Turn Index")
+        plt.ylabel("Emotion Score")
+        plt.tight_layout()
+        plt.savefig("emotion_graph.png")
+        plt.close()
 
         # 대화 요약 (GPT)
         transcript = "\n".join([f"{m['role']}: {m['content']}" for m in messages])
@@ -486,7 +357,7 @@ class MemoryAgent:
                 "tags": list(set(emotion_tags)),
                 "score_trend": emotion_scores,
                 "high_emotion_moments": high_emotion_moments,
-                "graph_path": graph_path
+                "graph_path": "emotion_graph.png"
             },
             "counseling_summary": parsed
         }
@@ -515,7 +386,7 @@ def analyze_and_update_state(state: Dict[str, Any]) -> Tuple[Dict[str, Any], Dic
     state["extreme_keywords"] = result.get("extreme_terms", [])
 
     # 1) 위험/고감정이면 마인드풀니스
-    if result["extreme"] or result["emotion_score"] > 0.85:
+    if result["extreme"] or result["emotion_score"] > 0.75:
         state["interventions"].append({
             "type": "safety_or_high_emotion",
             "content": "안정화 안내가 필요합니다."
@@ -536,10 +407,6 @@ def analyze_and_update_state(state: Dict[str, Any]) -> Tuple[Dict[str, Any], Dic
     return state, result
 
 def emotion_branch(state: Dict[str, Any]) -> str:
-    # 롤플레잉이 활성화되어 있으면 항상 롤플레잉 실행
-    if state.get("roleplay_active", False):
-        return "roleplay"
-    
     route = state.get("next_node", "assistant")
     return route if route in ("assistant", "mindfulness", "roleplay") else "assistant"
 
@@ -564,9 +431,6 @@ if __name__ == "__main__":
         "roleplay_count": 0,
         "roleplay_logs": None,      # 실제 실행 전까지 None
         "next_node": "assistant",
-        # 롤플레잉 상태 관리
-        "roleplay_active": False,   # 롤플레잉 진행 중인지
-        "roleplay_turn": 0,         # 롤플레잉 턴 수
     }
 
     assistant = AssistantAgent()
@@ -604,28 +468,15 @@ if __name__ == "__main__":
             state = mindfulness.run(state)
             print("\n[Mindfulness]")
             print(state["messages"][-1]["content"])
-            
-            # 롤플레잉 중에 마인드풀니스가 개입된 경우, 롤플레잉 계속 진행
-            if state.get("roleplay_active", False):
-                state = roleplay.run(state)
-                print("\n[Roleplay]")
-                print(state["messages"][-1]["content"])
-                continue
-            
         elif route == "roleplay":
             state = roleplay.run(state)
             print("\n[Roleplay]")
             print(state["messages"][-1]["content"])
-            
-            # 롤플레잉 중이면 일반 상담 응답은 하지 않음
-            if state.get("roleplay_active", False):
-                continue
 
-        # assistant 응답 생성 (+ 즉시 출력) - 롤플레잉 중이 아닐 때만
-        if not state.get("roleplay_active", False):
-            try:
-                reply = assistant.reply(text)
-                state["messages"].append({"role": "assistant", "content": reply})
-                print("\n[A]", reply)
-            except Exception as e:
-                print("[warn] assistant reply failed:", e)
+        # assistant 응답 생성 (+ 즉시 출력)
+        try:
+            reply = assistant.reply(text)
+            state["messages"].append({"role": "assistant", "content": reply})
+            print("\n[A]", reply)
+        except Exception as e:
+            print("[warn] assistant reply failed:", e)
