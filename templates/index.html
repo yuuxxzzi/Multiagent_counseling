@@ -8,15 +8,16 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            /* Color System - 따뜻한 파스텔 톤 */
-            --primary: #81d4fa;
-            --primary-dark: #4fc3f7;
-            --primary-light: #b3e5fc;
-            --secondary: #a5d6a7;
-            --accent: #80cbc4;
-            --success: #a5d6a7;
-            --warning: #ffcc80;
-            --error: #ffab91;
+            /* 전문적인 색상 팔레트 */
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #3b82f6;
+            --secondary: #7c3aed;
+            --secondary-light: #8b5cf6;
+            --accent: #06b6d4;
+            --success: #059669;
+            --warning: #d97706;
+            --error: #dc2626;
             
             /* 채팅 색상 */
             --user-bubble: #ffffff;
@@ -40,11 +41,12 @@
             --glass-border: rgba(255, 255, 255, 0.2);
             --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             
-            /* Shadows */
-            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+            /* Material Design 3 스타일 그림자 */
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+            --shadow-md: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+            --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+            --shadow-xl: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+            --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.25);
             
             /* Border Radius */
             --radius-sm: 0.375rem;
@@ -73,7 +75,7 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f0f8ff;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
             height: 100vh;
             margin: 0;
             padding: 0;
@@ -101,7 +103,7 @@
             width: 280px;
             min-width: 200px;
             max-width: 500px;
-            background: var(--glass-bg);
+            background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-right: 1px solid var(--glass-border);
@@ -109,8 +111,27 @@
             flex-direction: column;
             position: relative;
             overflow: auto;
-            box-shadow: var(--glass-shadow);
+            box-shadow: var(--shadow-xl);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar.minimized {
+            width: 60px;
+            min-width: 60px;
+            max-width: 60px;
+        }
+
+        .sidebar.minimized .sidebar-header {
+            justify-content: center;
+            padding: var(--space-4);
+        }
+
+        .sidebar.minimized .sidebar-header .sidebar-title {
+            display: none;
+        }
+
+        .sidebar.minimized .sidebar-section {
+            display: none;
         }
 
         .sidebar:hover {
@@ -149,9 +170,69 @@
             box-shadow: var(--shadow-md);
         }
 
+        .sidebar-title {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            flex: 1;
+        }
+
         .sidebar-header i {
             font-size: 1.5rem;
             opacity: 0.9;
+        }
+
+        .sidebar-icon {
+            font-size: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .sidebar-toggle-btn {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: var(--space-2);
+            border-radius: var(--radius-md);
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+
+        .sidebar-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.1);
+            opacity: 1;
+        }
+
+        /* 사이드바 닫힘 상태에서 토글 버튼 숨기기 */
+        .sidebar.minimized .sidebar-toggle-btn {
+            display: none;
+        }
+
+        /* 사이드바 닫힘 상태에서 뇌 아이콘을 클릭 가능하게 */
+        .sidebar.minimized .sidebar-icon {
+            cursor: pointer;
+            padding: var(--space-2);
+        }
+
+        .sidebar.minimized .sidebar-icon:hover {
+            background: none;
+            transform: none;
+        }
+
+        /* 사이드바 닫힘 상태에서 호버 시 ☰ 아이콘으로 변경 */
+        .sidebar.minimized .sidebar-icon {
+            color: white;
+        }
+
+        .sidebar.minimized .sidebar-icon:hover {
+            font-size: 0; /* Hide the brain icon */
+        }
+
+        .sidebar.minimized .sidebar-icon:hover::before {
+            content: '\f0c9'; /* FontAwesome bars icon */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: white;
+            font-size: 1.5rem;
         }
 
         .sidebar-section {
@@ -244,6 +325,14 @@
             gap: var(--space-2);
         }
 
+        .new-session-btn i {
+            color: white;
+        }
+
+        .sidebar.minimized .new-session-btn i {
+            color: #000;
+        }
+
         .new-session-btn:hover {
             background: var(--primary-dark);
             transform: translateY(-1px);
@@ -319,7 +408,7 @@
             width: 320px;
             min-width: 250px;
             max-width: 600px;
-            background: var(--glass-bg);
+            background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-left: 1px solid var(--glass-border);
@@ -327,7 +416,7 @@
             flex-direction: column;
             position: relative;
             overflow: auto;
-            box-shadow: var(--glass-shadow);
+            box-shadow: var(--shadow-xl);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -715,14 +804,41 @@
             background: var(--primary);
             color: white;
             padding: var(--space-4) var(--space-6);
-            text-align: center;
             font-size: 1.25rem;
             font-weight: 600;
             box-shadow: var(--shadow-md);
             display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+
+        .sidebar-toggle-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: var(--space-2) var(--space-3);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 40px;
+            height: 40px;
+        }
+
+        .sidebar-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .chat-title {
+            display: flex;
             flex-direction: column;
             align-items: center;
-            gap: var(--space-2);
+            text-align: center;
+            flex: 1;
         }
 
         .chat-header .subtitle {
@@ -781,46 +897,66 @@
         }
 
         .message.user .message-content {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
             border-bottom-right-radius: var(--radius-sm);
-            box-shadow: var(--shadow-md);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .message.assistant .message-content {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             color: var(--gray-800);
             border: 1px solid var(--glass-border);
             border-bottom-left-radius: var(--radius-sm);
+            box-shadow: var(--shadow-lg);
+            border-left: 4px solid var(--primary);
         }
 
         .message.special {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            border-radius: 10px;
-            padding: 10px;
-            margin: 10px 0;
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 1px solid #f59e0b;
+            border-radius: var(--radius-lg);
+            padding: var(--space-4);
+            margin: var(--space-3) 0;
+            box-shadow: var(--shadow-md);
+            border-left: 4px solid var(--warning);
         }
 
         .message.mindfulness {
-            background: #d4edda;
-            border: 1px solid #c3e6cb;
-            color: #155724;
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border: 1px solid var(--success);
+            color: #065f46;
+            border-radius: var(--radius-lg);
+            padding: var(--space-4);
+            margin: var(--space-3) 0;
+            box-shadow: var(--shadow-md);
+            border-left: 4px solid var(--success);
         }
 
         .message.roleplay {
-            background: #cce5ff;
-            border: 1px solid #99d6ff;
-            color: #004085;
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border: 1px solid var(--secondary);
+            color: #1e40af;
+            border-radius: var(--radius-lg);
+            padding: var(--space-4);
+            margin: var(--space-3) 0;
+            box-shadow: var(--shadow-md);
+            border-left: 4px solid var(--secondary);
         }
 
         .message.emotion {
-            background: #f8d7da;
-            border: 1px solid #f5c6cb;
-            color: #721c24;
+            background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%);
+            border: 1px solid var(--error);
+            color: #991b1b;
             font-size: 0.9em;
+            border-radius: var(--radius-lg);
+            padding: var(--space-4);
+            margin: var(--space-3) 0;
+            box-shadow: var(--shadow-md);
+            border-left: 4px solid var(--error);
         }
 
         /* 위기 상황 감지 팝업 스타일 */
@@ -1325,7 +1461,7 @@
 
         .chat-input button {
             padding: var(--space-4) var(--space-6);
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
             border: none;
             border-radius: var(--radius-2xl);
@@ -1333,10 +1469,12 @@
             font-weight: 600;
             font-size: 1rem;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: var(--shadow-md);
+            box-shadow: var(--shadow-lg);
             display: flex;
             align-items: center;
             gap: var(--space-2);
+            position: relative;
+            overflow: hidden;
         }
 
         .chat-input button:hover {
@@ -1367,25 +1505,27 @@
         }
 
         .controls button {
-            padding: var(--space-3) var(--space-5);
-            background: var(--gray-500);
+            padding: var(--space-4) var(--space-6);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
             border: none;
-            border-radius: var(--radius-xl);
+            border-radius: var(--radius-lg);
             cursor: pointer;
             font-size: 0.875rem;
-            font-weight: 500;
+            font-weight: 600;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: var(--shadow-sm);
+            box-shadow: var(--shadow-md);
             display: flex;
             align-items: center;
-            gap: var(--space-2);
+            gap: var(--space-3);
+            position: relative;
+            overflow: hidden;
         }
 
         .controls button:hover {
-            background: var(--gray-600);
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-md);
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
         }
 
         .controls button.primary {
@@ -1554,8 +1694,9 @@
         <div class="sidebar" id="leftSidebar">
             <div class="sidebar-resize-handle" id="leftResizeHandle"></div>
             <div class="sidebar-header">
-                <i class="fas fa-brain"></i>
-                MindAgents
+                <i class="fas fa-brain sidebar-icon" onclick="toggleSidebar()"></i>
+                <div class="sidebar-title">MindAgents</div>
+                <i class="fas fa-bars sidebar-toggle-btn" onclick="toggleSidebar()" id="sidebarToggleBtn"></i>
             </div>
             
             <div class="sidebar-section">
@@ -1622,8 +1763,10 @@
         <!-- 중앙 채팅 영역 -->
     <div class="chat-container">
         <div class="chat-header">
-                <div><i class="fas fa-comments"></i> 상담 대화</div>
-                <div class="subtitle">실시간 감정 분석 및 AI 상담</div>
+                <div class="chat-title">
+                    <div><i class="fas fa-comments"></i> 상담 대화</div>
+                    <div class="subtitle">실시간 감정 분석 및 AI 상담</div>
+                </div>
         </div>
         
         <div class="chat-messages" id="chatMessages">
@@ -1883,6 +2026,7 @@
         let resizeTarget = null;
         let startX = 0;
         let startWidth = 0;
+        let sidebarMinimized = false;
         let sessionHistory = [
             {
                 id: 'current',
@@ -2598,6 +2742,24 @@
                 emotionChart.resize();
                 emotionChart.update();
             }
+        }
+
+        // 사이드바 토글 기능
+        function toggleSidebar() {
+            const sidebar = document.getElementById('leftSidebar');
+            
+            sidebarMinimized = !sidebarMinimized;
+            
+            if (sidebarMinimized) {
+                sidebar.classList.add('minimized');
+            } else {
+                sidebar.classList.remove('minimized');
+            }
+            
+            // 감정 그래프 크기 재계산
+            setTimeout(() => {
+                resizeEmotionChart();
+            }, 300);
         }
 
         // 현재 세션 저장
