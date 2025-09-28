@@ -405,6 +405,8 @@
             padding: var(--space-6);
             box-shadow: var(--shadow-lg);
             height: 320px;
+            min-height: 200px;
+            max-height: 400px;
             display: flex;
             flex-direction: column;
             border: 1px solid var(--glass-border);
@@ -712,7 +714,7 @@
         .chat-header {
             background: var(--primary);
             color: white;
-            padding: var(--space-6);
+            padding: var(--space-4) var(--space-6);
             text-align: center;
             font-size: 1.25rem;
             font-weight: 600;
@@ -1467,11 +1469,15 @@
             .emotion-graph-container {
                 padding: var(--space-4);
                 height: 250px;
+                min-height: 200px;
+                max-height: 300px;
             }
             
             #emotionChart {
-                width: 200px !important;
-                height: 200px !important;
+                width: 100% !important;
+                height: auto !important;
+                max-width: 250px;
+                max-height: 250px;
             }
             
             .chat-input {
@@ -1505,7 +1511,7 @@
             }
             
             .chat-header {
-                padding: var(--space-4);
+                padding: var(--space-3) var(--space-4);
                 font-size: 1.125rem;
             }
             
@@ -1674,10 +1680,6 @@
                     <i class="fas fa-chart-line" aria-hidden="true"></i>
                     Report
                 </div>
-                <div class="sidebar-tab" onclick="switchTab('controls')" role="tab" aria-selected="false" aria-controls="controlsTab">
-                    <i class="fas fa-cog" aria-hidden="true"></i>
-                    Controls
-                </div>
             </div>
             
             <div class="sidebar-content">
@@ -1722,11 +1724,6 @@
                     </div>
                 </div>
                 
-                <div id="controlsTab" class="tab-content" style="display: none;">
-                    <div style="text-align: center; color: #666; padding: 40px 20px;">
-                        🎛️ 컨트롤 패널
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -2579,6 +2576,30 @@
             }
         }
 
+        // 감정 그래프 크기 재계산
+        function resizeEmotionChart() {
+            if (emotionChart) {
+                const canvas = emotionChart.canvas;
+                const container = canvas.parentElement;
+                const containerWidth = container.clientWidth;
+                const containerHeight = container.clientHeight;
+                
+                // 컨테이너 크기에 맞게 캔버스 크기 조정
+                const size = Math.min(containerWidth - 20, containerHeight - 20, 250);
+                
+                canvas.width = size;
+                canvas.height = size;
+                
+                // Chart.js 옵션 업데이트
+                emotionChart.options.responsive = true;
+                emotionChart.options.maintainAspectRatio = false;
+                
+                // 그래프 다시 그리기
+                emotionChart.resize();
+                emotionChart.update();
+            }
+        }
+
         // 현재 세션 저장
         function saveCurrentSession() {
             const session = sessionHistory.find(s => s.id === currentSessionId);
@@ -3011,6 +3032,11 @@
             
             // 크기 저장
             saveSidebarSizes();
+            
+            // 감정 그래프 크기 재계산
+            setTimeout(() => {
+                resizeEmotionChart();
+            }, 100);
         }
 
         // 사이드바 크기 저장
@@ -3083,6 +3109,13 @@
             if (rightHandle) {
                 rightHandle.addEventListener('mousedown', (e) => startResize(e, document.getElementById('rightSidebar')));
             }
+            
+            // 윈도우 크기 변경 시 그래프 크기 재계산
+            window.addEventListener('resize', () => {
+                setTimeout(() => {
+                    resizeEmotionChart();
+                }, 100);
+            });
         });
     </script>
 </body>
