@@ -1,0 +1,4100 @@
+[
+  {
+    "id": "TRIG-B-INTERVIEW-01",
+    "title": "면접 긴장 상황 대비 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "job",
+        "future"
+      ],
+      "min_intensity": 1.5
+    },
+    "roles": {
+      "rp_agent_role": "면접관",
+      "user_role": "지원자"
+    },
+    "scene_setup": "중요한 취업 면접 당일, 대기실에서 불안감을 느끼는 상황",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-PRESENT-01",
+    "title": "발표 불안 극복 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "Psychodrama",
+      "CBT"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "presentation",
+        "future"
+      ],
+      "min_intensity": 1.8
+    },
+    "roles": {
+      "rp_agent_role": "청중",
+      "user_role": "발표자"
+    },
+    "scene_setup": "교수님과 동기들이 지켜보는 발표 시간",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-EXAM-01",
+    "title": "시험 불안 관리 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Exposure"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "exam",
+        "future"
+      ],
+      "min_intensity": 2.5
+    },
+    "roles": {
+      "rp_agent_role": "시험 감독관",
+      "user_role": "응시자"
+    },
+    "scene_setup": "중요한 시험 시작 직전 긴장이 올라오는 상황",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-SOCIAL-01",
+    "title": "첫 모임 낯가림 극복 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "Nonviolent Communication",
+      "CBT"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "social",
+        "future"
+      ],
+      "min_intensity": 1.6
+    },
+    "roles": {
+      "rp_agent_role": "새로운 친구",
+      "user_role": "참석자"
+    },
+    "scene_setup": "동아리 첫 모임에서 새로운 사람들과 인사해야 하는 상황",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-CONFLICT-01",
+    "title": "갈등 상황 사전 연습 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Mindfulness"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "conflict",
+        "future"
+      ],
+      "min_intensity": 1.5
+    },
+    "roles": {
+      "rp_agent_role": "친구",
+      "user_role": "본인"
+    },
+    "scene_setup": "친구와 갈등이 예상되는 대화 직전 상황",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-TRAVEL-01",
+    "title": "여행 낯선 상황 대처 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "travel",
+        "future"
+      ],
+      "min_intensity": 1.8
+    },
+    "roles": {
+      "rp_agent_role": "현지인",
+      "user_role": "여행자"
+    },
+    "scene_setup": "해외에서 길을 잃고 현지인에게 길을 물어야 하는 상황",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-HEALTH-01",
+    "title": "병원 진료 질문 연습 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "Nonviolent Communication",
+      "CBT"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "health",
+        "future"
+      ],
+      "min_intensity": 2.3
+    },
+    "roles": {
+      "rp_agent_role": "의사",
+      "user_role": "환자"
+    },
+    "scene_setup": "병원 진료에서 의사에게 질문해야 하지만 망설이는 상황",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-ROMANCE-01",
+    "title": "연애 고백 연습 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "Nonviolent Communication",
+      "CBT"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "nervous",
+        "hopeful"
+      ],
+      "topic_tags": [
+        "romance",
+        "future"
+      ],
+      "min_intensity": 1.8
+    },
+    "roles": {
+      "rp_agent_role": "호감 상대",
+      "user_role": "고백자"
+    },
+    "scene_setup": "호감 있는 사람에게 고백하려는 직전",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-TEAM-01",
+    "title": "팀 프로젝트 질의응답 대비 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "Nonviolent Communication",
+      "CBT"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "teamwork",
+        "future"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "교수님",
+      "user_role": "팀 대표"
+    },
+    "scene_setup": "팀 프로젝트 발표에서 대표로 질문을 받아야 하는 상황",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-CUSTOMER-01",
+    "title": "고객 응대 스트레스 대비 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Mindfulness"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "service",
+        "future"
+      ],
+      "min_intensity": 2.3
+    },
+    "roles": {
+      "rp_agent_role": "고객",
+      "user_role": "상담원"
+    },
+    "scene_setup": "고객센터에서 까다로운 문의를 응대해야 하는 상황",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-NEGOTIATE-01",
+    "title": "협상/가격 제안 연습 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "negotiation",
+        "future"
+      ],
+      "min_intensity": 2.5
+    },
+    "roles": {
+      "rp_agent_role": "거래처 담당자",
+      "user_role": "담당자"
+    },
+    "scene_setup": "가격 인상/할인 조건을 협의해야 하는 상황",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-EMERGENCY-01",
+    "title": "비상상황 도움 요청 연습 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Exposure"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "safety",
+        "future"
+      ],
+      "min_intensity": 2.4
+    },
+    "roles": {
+      "rp_agent_role": "119 접수자",
+      "user_role": "신고자"
+    },
+    "scene_setup": "갑작스런 사고 현장에서 도움을 요청해야 하는 상황",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-ROOMMATE-01",
+    "title": "룸메이트 생활 규칙 합의 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "Psychodrama",
+      "CBT"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "living",
+        "future"
+      ],
+      "min_intensity": 1.9
+    },
+    "roles": {
+      "rp_agent_role": "룸메이트",
+      "user_role": "본인"
+    },
+    "scene_setup": "생활 소음/청소 문제를 합의하려는 상황",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-PROFEMAIL-01",
+    "title": "교수님 메일/면담 요청 연습 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Exposure"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "school",
+        "future"
+      ],
+      "min_intensity": 2.7
+    },
+    "roles": {
+      "rp_agent_role": "교수님",
+      "user_role": "학생"
+    },
+    "scene_setup": "메일 또는 면담으로 연구/성적 관련 요청을 해야 하는 상황",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-PARTTIME-01",
+    "title": "알바 근무 조건 조율 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "Psychodrama",
+      "CBT"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "parttime",
+        "future"
+      ],
+      "min_intensity": 1.6
+    },
+    "roles": {
+      "rp_agent_role": "점장",
+      "user_role": "알바생"
+    },
+    "scene_setup": "스케줄/시급 관련 조율이 필요한 상황",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-FAMILY-01",
+    "title": "가족과의 계획 조율 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Mindfulness"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "family",
+        "future"
+      ],
+      "min_intensity": 1.6
+    },
+    "roles": {
+      "rp_agent_role": "부모님",
+      "user_role": "자녀"
+    },
+    "scene_setup": "가족 행사 일정/진로 문제를 조율해야 하는 상황",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-FINANCE-01",
+    "title": "개인 재정상담 질문 연습 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "Psychodrama",
+      "CBT"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "finance",
+        "future"
+      ],
+      "min_intensity": 2.3
+    },
+    "roles": {
+      "rp_agent_role": "재무 상담가",
+      "user_role": "의뢰인"
+    },
+    "scene_setup": "예산/저축 계획을 상담받는 상황",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-MENTOR-01",
+    "title": "멘토링 질문 정리 연습 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "career",
+        "future"
+      ],
+      "min_intensity": 2.4
+    },
+    "roles": {
+      "rp_agent_role": "멘토",
+      "user_role": "멘티"
+    },
+    "scene_setup": "멘토링 자리에서 질문을 정리해 전달해야 하는 상황",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-DORM-01",
+    "title": "기숙사/행정 민원 제기 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "Nonviolent Communication",
+      "CBT"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "admin",
+        "future"
+      ],
+      "min_intensity": 1.7
+    },
+    "roles": {
+      "rp_agent_role": "행정 담당자",
+      "user_role": "학생"
+    },
+    "scene_setup": "기숙사/행정 문제를 공식적으로 문의해야 하는 상황",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-HEALTHYBOUND-01",
+    "title": "경계 설정(무리한 부탁 거절) #1",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Mindfulness"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "boundary",
+        "future"
+      ],
+      "min_intensity": 1.6
+    },
+    "roles": {
+      "rp_agent_role": "지인",
+      "user_role": "본인"
+    },
+    "scene_setup": "지인의 무리한 부탁을 예의 있게 거절해야 하는 상황",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-ONLINEHATE-01",
+    "title": "온라인 악성댓글 대응 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "Psychodrama",
+      "CBT"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "online",
+        "future"
+      ],
+      "min_intensity": 2.6
+    },
+    "roles": {
+      "rp_agent_role": "운영자/상대",
+      "user_role": "본인"
+    },
+    "scene_setup": "온라인에서 악성댓글에 대응해야 하는 상황",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-MEETING-01",
+    "title": "회의 발언/반대 의견 제시 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "Nonviolent Communication",
+      "CBT"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "meeting",
+        "future"
+      ],
+      "min_intensity": 2.7
+    },
+    "roles": {
+      "rp_agent_role": "팀장",
+      "user_role": "팀원"
+    },
+    "scene_setup": "회의에서 반대 의견을 안전하게 제시해야 하는 상황",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-PITCH-01",
+    "title": "아이디어 피칭 1분 스피치 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "Psychodrama",
+      "CBT"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "pitch",
+        "future"
+      ],
+      "min_intensity": 2.3
+    },
+    "roles": {
+      "rp_agent_role": "심사위원",
+      "user_role": "발표자"
+    },
+    "scene_setup": "짧은 시간 안에 핵심을 설득해야 하는 상황",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-STUDYGROUP-01",
+    "title": "스터디 규칙/기여도 논의 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "study",
+        "future"
+      ],
+      "min_intensity": 1.6
+    },
+    "roles": {
+      "rp_agent_role": "스터디 리더",
+      "user_role": "팀원"
+    },
+    "scene_setup": "기여도 불균형을 개선하기 위한 논의",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-THESIS-01",
+    "title": "논문 피드백 질의 정리 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Exposure"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "research",
+        "future"
+      ],
+      "min_intensity": 2.5
+    },
+    "roles": {
+      "rp_agent_role": "지도교수",
+      "user_role": "학생"
+    },
+    "scene_setup": "논문/프로젝트 피드백을 정리해 묻는 상황",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-CODE_REVIEW-01",
+    "title": "코드리뷰 방어/수용 연습 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "software",
+        "future"
+      ],
+      "min_intensity": 2.6
+    },
+    "roles": {
+      "rp_agent_role": "시니어 개발자",
+      "user_role": "주니어 개발자"
+    },
+    "scene_setup": "코드리뷰에서 피드백에 대응하는 상황",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-BUGREPORT-01",
+    "title": "버그 리포트 재현/설명 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "software",
+        "future"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "QA 엔지니어",
+      "user_role": "개발자"
+    },
+    "scene_setup": "버그 재현과 설명을 명확히 해야 하는 상황",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-NETWORKING-01",
+    "title": "네트워킹 자기소개/후속 연락 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Mindfulness"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "network",
+        "future"
+      ],
+      "min_intensity": 2.3
+    },
+    "roles": {
+      "rp_agent_role": "업계인",
+      "user_role": "참가자"
+    },
+    "scene_setup": "행사에서 첫 인사와 팔로업을 준비하는 상황",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-LANG_EXCHANGE-01",
+    "title": "외국어 교환 대화 시작 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "Psychodrama",
+      "CBT"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "language",
+        "future"
+      ],
+      "min_intensity": 1.7
+    },
+    "roles": {
+      "rp_agent_role": "파트너",
+      "user_role": "학습자"
+    },
+    "scene_setup": "외국어 파트너와 첫 대화 시작",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-ROOMRENT-01",
+    "title": "집주인/부동산 문의 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "Psychodrama",
+      "CBT"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "housing",
+        "future"
+      ],
+      "min_intensity": 1.8
+    },
+    "roles": {
+      "rp_agent_role": "중개인",
+      "user_role": "세입 희망자"
+    },
+    "scene_setup": "임대 조건/계약 전 문의 상황",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-MEDIATION-01",
+    "title": "중재 요청(팀 갈등 중립 제안) #1",
+    "locale": "ko-KR",
+    "theory": [
+      "Psychodrama",
+      "CBT"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "mediation",
+        "future"
+      ],
+      "min_intensity": 2.4
+    },
+    "roles": {
+      "rp_agent_role": "갈등 당사자A",
+      "user_role": "중재자"
+    },
+    "scene_setup": "팀 내 갈등을 중립적으로 중재 제안",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-DIET-01",
+    "title": "식습관/운동 상담 질문 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "wellbeing",
+        "future"
+      ],
+      "min_intensity": 2.3
+    },
+    "roles": {
+      "rp_agent_role": "영양/트레이너",
+      "user_role": "의뢰인"
+    },
+    "scene_setup": "맞춤 계획을 위한 질문 정리",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-SLEEP-01",
+    "title": "수면 문제 진료 준비 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Exposure"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "sleep",
+        "future"
+      ],
+      "min_intensity": 2.2
+    },
+    "roles": {
+      "rp_agent_role": "수면의학 전문의",
+      "user_role": "환자"
+    },
+    "scene_setup": "수면 문제를 체계적으로 설명해야 하는 상황",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-PANIC-01",
+    "title": "패닉 전조 대처 스크립트 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Exposure"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "mental",
+        "future"
+      ],
+      "min_intensity": 1.7
+    },
+    "roles": {
+      "rp_agent_role": "안심 파트너",
+      "user_role": "본인"
+    },
+    "scene_setup": "패닉 전조 감지 시 대처 연습",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-BULLY-01",
+    "title": "(학교/직장) 괴롭힘 신고 절차 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Mindfulness"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "safety",
+        "future"
+      ],
+      "min_intensity": 1.9
+    },
+    "roles": {
+      "rp_agent_role": "상담사",
+      "user_role": "피해자"
+    },
+    "scene_setup": "괴롭힘 신고/기록 절차를 안내받는 상황",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-IMMIGRATION-01",
+    "title": "출입국/비자 문의 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "Nonviolent Communication",
+      "CBT"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "immigration",
+        "future"
+      ],
+      "min_intensity": 1.8
+    },
+    "roles": {
+      "rp_agent_role": "직원",
+      "user_role": "민원인"
+    },
+    "scene_setup": "비자/체류 관련 문의 상황",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-BANK-01",
+    "title": "은행 창구 업무/문의 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "Psychodrama",
+      "CBT"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "finance",
+        "future"
+      ],
+      "min_intensity": 2.6
+    },
+    "roles": {
+      "rp_agent_role": "은행원",
+      "user_role": "고객"
+    },
+    "scene_setup": "계좌/수수료/해외송금 문의",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-AIRPORT-01",
+    "title": "공항 체크인/수하물 이슈 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "travel",
+        "future"
+      ],
+      "min_intensity": 1.8
+    },
+    "roles": {
+      "rp_agent_role": "항공사 직원",
+      "user_role": "승객"
+    },
+    "scene_setup": "수하물 규정/지연 이슈 문의",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-RETURNS-01",
+    "title": "반품/교환 CS 대응 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "ecommerce",
+        "future"
+      ],
+      "min_intensity": 2.5
+    },
+    "roles": {
+      "rp_agent_role": "CS 담당자",
+      "user_role": "고객"
+    },
+    "scene_setup": "반품/교환 절차 안내",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-VOLUNTEER-01",
+    "title": "봉사활동 신청/조율 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Mindfulness"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "volunteer",
+        "future"
+      ],
+      "min_intensity": 1.8
+    },
+    "roles": {
+      "rp_agent_role": "기관 담당자",
+      "user_role": "지원자"
+    },
+    "scene_setup": "시간/업무 조율 문의",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-CLUBLEAD-01",
+    "title": "동아리 운영 공지/건의 수렴 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Exposure"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "club",
+        "future"
+      ],
+      "min_intensity": 2.7
+    },
+    "roles": {
+      "rp_agent_role": "부원",
+      "user_role": "회장"
+    },
+    "scene_setup": "운영 방침 공지와 의견 수렴",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-SCHOLAR-01",
+    "title": "장학금/지원금 문의 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "Nonviolent Communication",
+      "CBT"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "scholarship",
+        "future"
+      ],
+      "min_intensity": 2.6
+    },
+    "roles": {
+      "rp_agent_role": "행정 담당자",
+      "user_role": "학생"
+    },
+    "scene_setup": "선발 기준/서류 문의",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-MENTALHEALTH-01",
+    "title": "상담 초기접수 질문 준비 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "Psychodrama",
+      "CBT"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "counseling",
+        "future"
+      ],
+      "min_intensity": 1.8
+    },
+    "roles": {
+      "rp_agent_role": "상담사",
+      "user_role": "내담자"
+    },
+    "scene_setup": "초기 접수에서 정보 제공과 질문",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-JOBOFFER-01",
+    "title": "오퍼 협상(연봉/근무형태) #1",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Mindfulness"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "job",
+        "future"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "HR 담당자",
+      "user_role": "지원자"
+    },
+    "scene_setup": "오퍼 조건 협상",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-ONBOARD-01",
+    "title": "온보딩 첫 주 일정/관계 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Mindfulness"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "job",
+        "future"
+      ],
+      "min_intensity": 1.7
+    },
+    "roles": {
+      "rp_agent_role": "팀 선임",
+      "user_role": "신입"
+    },
+    "scene_setup": "첫 주 업무/관계 형성 질문",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-PERFORMANCE-01",
+    "title": "성과 면담 대비 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Exposure"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "job",
+        "future"
+      ],
+      "min_intensity": 1.8
+    },
+    "roles": {
+      "rp_agent_role": "매니저",
+      "user_role": "직원"
+    },
+    "scene_setup": "성과/목표/개선점 대화",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-REFLECTION-01",
+    "title": "실전 전 긍정 자기암시 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "Nonviolent Communication",
+      "CBT"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "nervous",
+        "hopeful"
+      ],
+      "topic_tags": [
+        "mindset",
+        "future"
+      ],
+      "min_intensity": 2.2
+    },
+    "roles": {
+      "rp_agent_role": "코치",
+      "user_role": "본인"
+    },
+    "scene_setup": "중요 이벤트 전 자기암시 스크립트",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-TIME-01",
+    "title": "시간관리/우선순위 설명 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "Nonviolent Communication",
+      "CBT"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "productivity",
+        "future"
+      ],
+      "min_intensity": 2.1
+    },
+    "roles": {
+      "rp_agent_role": "상사",
+      "user_role": "직원"
+    },
+    "scene_setup": "우선순위/일정 조정 설득",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-ETHICS-01",
+    "title": "윤리적 딜레마 논의 #1",
+    "locale": "ko-KR",
+    "theory": [
+      "Nonviolent Communication",
+      "CBT"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "ethics",
+        "future"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "슈퍼바이저",
+      "user_role": "본인"
+    },
+    "scene_setup": "보고/갈등 상황에서의 선택 논의",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  },
+  {
+    "id": "TRIG-B-INTERVIEW-02",
+    "title": "면접 긴장 상황 대비 #2",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Exposure"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "fear",
+        "stress"
+      ],
+      "topic_tags": [
+        "job",
+        "future"
+      ],
+      "min_intensity": 2.8
+    },
+    "roles": {
+      "rp_agent_role": "면접관",
+      "user_role": "지원자"
+    },
+    "scene_setup": "중요한 취업 면접 당일, 대기실에서 불안감을 느끼는 상황",
+    "objectives": [
+      "예상 상황 리허설",
+      "대응 문장/전략 생성",
+      "자신감 강화 문장 1개 생성"
+    ],
+    "constraints": [
+      "RP 에이전트는 역할 시점 유지",
+      "비난/낙인 금지",
+      "주제 이탈 시 주제복귀 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "상황·감정 단서 확인",
+        "rp": "상황 시작 신호/인사"
+      },
+      {
+        "stage": "practice",
+        "coach": "대응 전략 1~2개 유도",
+        "rp": "관련 질문/반응"
+      },
+      {
+        "stage": "reframe",
+        "coach": "대안적 해석·자신감 문장 생성",
+        "rp": "긍정/중립 피드백"
+      },
+      {
+        "stage": "close",
+        "coach": "핵심 요약·다음 행동 계획",
+        "rp": "격려성 마무리"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "시간/장소/핵심맥락",
+      "key_sentence_user": "사용자 핵심 발화",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.0로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "confidence_gain",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책/비난 금지, 자해/자살 유도 금지, 과도한 압박 질문 금지"
+  }
+]

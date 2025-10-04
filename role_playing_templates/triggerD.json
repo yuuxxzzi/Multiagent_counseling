@@ -1,0 +1,4312 @@
+[
+  {
+    "id": "SELF-D01",
+    "title": "차분한 대화 연습",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anger",
+        "hurt"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "상대방이 화를 내는 상황에서 침착하게 대처한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'차분한 대화 연습' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D02",
+    "title": "자기 주장 연습",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "회의나 수업에서 자신의 의견을 분명히 표현한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'자기 주장 연습' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D03",
+    "title": "자신감 있는 발표",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "sadness"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "많은 사람 앞에서 당당하게 발표한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'자신감 있는 발표' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "청중 앞에서 어떤 모습으로 말하고 싶으신가요?",
+        "rp": "발표 태도·목소리 설명"
+      },
+      {
+        "stage": "simulate",
+        "coach": "이상적 발표 장면을 시뮬레이션해 보세요.",
+        "rp": "자신감 있게 말하기"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D04",
+    "title": "거절하기 연습",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "fear"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "부담되는 부탁을 정중히 거절한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'거절하기 연습' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "상대방을 존중하며 거절한다면 어떤 말을 할 수 있을까요?",
+        "rp": "정중한 거절 대사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 말을 실제로 연습해보세요.",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D05",
+    "title": "긍정적 자기 대화",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "shame"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "실수를 했을 때 자신을 비난하지 않고 격려한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'긍정적 자기 대화' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D06",
+    "title": "감정 조절 훈련",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anger"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "분노가 치밀 때 이성적으로 반응한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'감정 조절 훈련' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D07",
+    "title": "성장형 사고 훈련",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "sadness"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "‘나는 못 해’라는 생각 대신 성장 가능성에 집중한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'성장형 사고 훈련' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D08",
+    "title": "책임감 있게 행동하기",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "guilt"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "중요한 약속을 지키고 성실히 행동한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'책임감 있게 행동하기' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D09",
+    "title": "도움 요청하기",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "혼자 감당하기 힘든 문제에서 용기 있게 도움을 요청한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'도움 요청하기' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "도움을 요청할 때 어떤 말이 자연스러울까요?",
+        "rp": "도움 요청 문장"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 말을 직접 해보는 연습을 해보세요.",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D10",
+    "title": "미래 자기 역할 연습",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "hope"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "앞으로 되고 싶은 모습으로 대화한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'미래 자기 역할 연습' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D11",
+    "title": "경청 태도 강화",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anger",
+        "hurt"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "상대방의 말을 끊지 않고 끝까지 듣는다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'경청 태도 강화' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D12",
+    "title": "갈등 해결 훈련",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "의견 충돌 시 평화적으로 해결한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'갈등 해결 훈련' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "감정이 올라올 때 어떤 선택을 하고 싶으신가요?",
+        "rp": "대안적 반응 제시"
+      },
+      {
+        "stage": "simulate",
+        "coach": "상대방과 차분히 대화하는 모습을 상상해보세요.",
+        "rp": "차분한 대화 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D13",
+    "title": "시간 관리 습관",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "sadness"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "일정을 지켜 효율적으로 행동한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'시간 관리 습관' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D14",
+    "title": "스트레스 완화",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "fear"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "압박감 속에서도 침착함을 유지한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'스트레스 완화' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D15",
+    "title": "팀워크 발휘",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "shame"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "팀에서 협동적인 태도를 유지한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'팀워크 발휘' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D16",
+    "title": "긍정적 피드백 주기",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anger"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "상대방에게 긍정적 피드백을 제공한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'긍정적 피드백 주기' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D17",
+    "title": "집중력 향상 훈련",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "sadness"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "공부나 업무에 집중하는 습관을 기른다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'집중력 향상 훈련' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D18",
+    "title": "규칙적인 생활",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "guilt"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "규칙적인 수면과 생활을 유지한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'규칙적인 생활' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D19",
+    "title": "실수 수용하기",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "실수를 성장의 기회로 받아들인다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'실수 수용하기' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D20",
+    "title": "배려심 키우기",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "hope"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "타인의 입장을 고려한 배려를 실천한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'배려심 키우기' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D21",
+    "title": "감사 표현하기",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anger",
+        "hurt"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "감사한 마음을 말로 표현한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'감사 표현하기' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D22",
+    "title": "건강한 생활습관",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "운동과 식습관을 통해 건강을 지킨다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'건강한 생활습관' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D23",
+    "title": "목표 설정",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "sadness"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "단기·장기 목표를 세우고 실행한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'목표 설정' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "오늘 또는 앞으로의 목표를 어떻게 설정하시겠습니까?",
+        "rp": "구체적 목표 설명"
+      },
+      {
+        "stage": "simulate",
+        "coach": "이 목표를 실현하는 하루를 상상해보세요.",
+        "rp": "미래 자기 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D24",
+    "title": "회복탄력성 훈련",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "fear"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "어려움에도 다시 일어나는 태도를 가진다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'회복탄력성 훈련' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D25",
+    "title": "자기 통제 연습",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "shame"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "즉각적인 반응 대신 스스로를 통제한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'자기 통제 연습' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D26",
+    "title": "냉정한 판단 연습",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anger"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "감정적 상황에서도 이성적 판단을 내린다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'냉정한 판단 연습' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D27",
+    "title": "지속적 학습 습관",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "sadness"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "꾸준히 배우고 성장하는 습관을 갖는다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'지속적 학습 습관' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D28",
+    "title": "공감 표현",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "guilt"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "상대방의 감정을 이해하며 공감한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'공감 표현' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D29",
+    "title": "용기 있게 도전",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "두려워도 도전하는 용기를 낸다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'용기 있게 도전' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D30",
+    "title": "자기 관리 루틴",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "hope"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "자기 관리 루틴을 만든다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'자기 관리 루틴' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D31",
+    "title": "갈등 완화 대화",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anger",
+        "hurt"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "갈등 상황에서 차분히 대화한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'갈등 완화 대화' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "감정이 올라올 때 어떤 선택을 하고 싶으신가요?",
+        "rp": "대안적 반응 제시"
+      },
+      {
+        "stage": "simulate",
+        "coach": "상대방과 차분히 대화하는 모습을 상상해보세요.",
+        "rp": "차분한 대화 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D32",
+    "title": "협력적 태도",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "협력적 태도로 문제를 해결한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'협력적 태도' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D33",
+    "title": "적극적 참여",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "sadness"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "수업이나 회의에 적극적으로 참여한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'적극적 참여' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D34",
+    "title": "불안 다루기",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "fear"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "불안을 조절하며 안정적으로 행동한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'불안 다루기' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D35",
+    "title": "신뢰 쌓기",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "shame"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "신뢰를 얻을 수 있는 행동을 실천한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'신뢰 쌓기' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D36",
+    "title": "계획적 행동",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anger"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "계획적으로 업무를 수행한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'계획적 행동' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D37",
+    "title": "유연성 발휘",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "sadness"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "예상치 못한 상황에서 유연하게 대처한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'유연성 발휘' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D38",
+    "title": "리더십 실천",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "guilt"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "리더십을 발휘해 팀을 이끈다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'리더십 실천' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D39",
+    "title": "실패 재해석",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "실패를 재해석해 성장으로 연결한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'실패 재해석' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D40",
+    "title": "감정 기록하기",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "hope"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "감정을 기록해 자기 이해를 높인다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'감정 기록하기' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D41",
+    "title": "효율적 의사소통",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anger",
+        "hurt"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "명확하고 효율적인 의사소통을 한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'효율적 의사소통' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D42",
+    "title": "솔직한 자기 표현",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "솔직하고 단호하게 자기 생각을 말한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'솔직한 자기 표현' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D43",
+    "title": "자기 위로",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "sadness"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "스스로를 위로하는 연습을 한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'자기 위로' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D44",
+    "title": "긍정적 기대 설정",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "fear"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "현실적인 기대를 설정하고 긍정적으로 바라본다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'긍정적 기대 설정' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D45",
+    "title": "자기 효능감 강화",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "shame"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "목표 달성 능력을 강화한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'자기 효능감 강화' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D46",
+    "title": "자기 성찰하기",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anger"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "하루를 돌아보며 성찰한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'자기 성찰하기' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "오늘 또는 앞으로의 목표를 어떻게 설정하시겠습니까?",
+        "rp": "구체적 목표 설명"
+      },
+      {
+        "stage": "simulate",
+        "coach": "이 목표를 실현하는 하루를 상상해보세요.",
+        "rp": "미래 자기 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D47",
+    "title": "타인 존중",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety",
+        "sadness"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "타인의 의견과 권리를 존중한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'타인 존중' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D48",
+    "title": "자기 개발 계획",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "guilt"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "자기 개발을 위한 계획을 세운다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'자기 개발 계획' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D49",
+    "title": "작은 성공 축하",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "anxiety"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "작은 성공도 소중히 여기고 축하한다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'작은 성공 축하' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "그 상황에서 어떤 행동을 선택하시겠습니까?",
+        "rp": "이상적 행동 묘사"
+      },
+      {
+        "stage": "simulate",
+        "coach": "그 행동을 실제로 연습해본다면 어떤 장면일까요?",
+        "rp": "역할 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  },
+  {
+    "id": "SELF-D50",
+    "title": "매일 성찰하기",
+    "locale": "ko-KR",
+    "theory": [
+      "CBT",
+      "Socratic",
+      "Psychodrama"
+    ],
+    "preconditions": {
+      "emotion_tags": [
+        "hope"
+      ],
+      "topic_tags": [
+        "self_efficacy",
+        "behavior_practice"
+      ],
+      "min_intensity": 2.0
+    },
+    "roles": {
+      "rp_agent_role": "counselor",
+      "user_role": "self"
+    },
+    "scene_setup": "매일 성찰하며 성장 방향을 찾는다.",
+    "objectives": [
+      "자기효능감 강화",
+      "새로운 행동 패턴 연습",
+      "이상적 자아 시도"
+    ],
+    "constraints": [
+      "RP 에이전트는 'coach' 시점만 발화",
+      "비난/낙인 금지, 비자살계획 유도 금지",
+      "주제 이탈 시 '주제복귀' 프롬프트 실행"
+    ],
+    "dialogue_flow": [
+      {
+        "stage": "open",
+        "coach": "'매일 성찰하기' 상황을 떠올려 보세요.",
+        "rp": "자기 경험 간단히 표현"
+      },
+      {
+        "stage": "explore",
+        "coach": "오늘 또는 앞으로의 목표를 어떻게 설정하시겠습니까?",
+        "rp": "구체적 목표 설명"
+      },
+      {
+        "stage": "simulate",
+        "coach": "이 목표를 실현하는 하루를 상상해보세요.",
+        "rp": "미래 자기 시뮬레이션"
+      },
+      {
+        "stage": "reframe",
+        "coach": "실패가 두렵더라도 이 경험을 성장 과정으로 본다면 어떤 의미가 있나요?",
+        "rp": "긍정적 자기 암시"
+      },
+      {
+        "stage": "close",
+        "coach": "내일부터 바로 실천할 작은 변화를 정해봅시다.",
+        "rp": "자기 다짐"
+      }
+    ],
+    "slot_schema": {
+      "event_detail": "상황/장소/시간",
+      "key_sentence_user": "사용자 핵심 문장",
+      "key_sentence_rp": "역할 핵심 응답"
+    },
+    "escalation_rules": {
+      "if_risk": "마인드풀니스 에이전트 호출→호흡/안정 스크립트",
+      "exit_conditions": [
+        "강도<1.5로 감소",
+        "사용자 종료 요청"
+      ]
+    },
+    "report_hooks": {
+      "capture": [
+        "key_sentence_user",
+        "emotion_trajectory",
+        "intervention_used"
+      ]
+    },
+    "version": "1.0.0",
+    "reviewed_by": [
+      "psychology_student"
+    ],
+    "safety_notes": "자책 유도 금지, 자해 콘텐츠 금지"
+  }
+]
