@@ -20,6 +20,11 @@ load_dotenv(override=True)
 api_key = os.getenv("OPENAI_API_KEY")
 if not api_key:
     raise RuntimeError("OPENAI_API_KEY 가 설정되어 있지 않습니다.")
+
+# 파인튜닝된 모델 사용 (환경변수에서 가져오거나 기본값 사용)
+OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+print(f"[Info] 사용할 모델: {OPENAI_MODEL}")
+
 client = OpenAI(api_key=api_key)
 
 
@@ -131,7 +136,7 @@ def gpt_emotion_analysis(text: str) -> Dict[str, Any]:
 
     try:
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model=OPENAI_MODEL,
             messages=[
                 {"role": "system", "content": "당신은 공감 기반 감정 분석 전문가입니다. 반드시 JSON 형식으로만 응답하세요."},
                 {"role": "user", "content": prompt}
@@ -178,26 +183,179 @@ def load_all_templates_from_directory(dir_path: str) -> List[Dict]:
 
 
 # 프로그램 시작 시 모든 템플릿 로드
-ROLE_PLAYING_TEMPLATES_DIR = "role_playing_templates"
+ROLE_PLAYING_TEMPLATES_DIR = "../role_playing_templates"
 ALL_TEMPLATES = load_all_templates_from_directory(ROLE_PLAYING_TEMPLATES_DIR)
 
 
 def retrieve_best_template(slots: Dict[str, str]) -> Dict[str, Any]:
     """통합된 전체 템플릿 리스트 내에서 슬롯과 가장 일치하는 최적의 템플릿을 찾습니다."""
     if not ALL_TEMPLATES:
-        return {"template_id": "default", "prompt_template": "상황: {event}에 대해 이야기해 봅시다."}
+        return {"template_id": "default", "scene_setup": "상황: {event}에 대해 이야기해 봅시다."}
 
-    content_for_search = " ".join(str(v) for v in slots.values() if v)
-    best_template = ALL_TEMPLATES[0]  # 기본값
+    # 슬롯 정보를 종합하여 상황 분석
+    event = slots.get('event', '')
+    character = slots.get('character', '')
+    emotion = slots.get('emotion', '')
+    goal = slots.get('goal', '')
+    
+    # 상황에 따른 롤플레잉 유형 우선순위 결정
+    situation_keywords = f"{event} {character} {emotion} {goal}".lower()
+    
+    # 유형별 우선순위 점수 계산
+    type_scores = {"A": 0, "B": 0, "C": 0, "D": 0}
+    
+    # B 유형 (미래 상황 연습) 우선순위 키워드
+    future_keywords = ["연습", "준비", "대비", "미래", "앞으로", "다음에", "확인하고", "말하고", "대화하고"]
+    if any(keyword in situation_keywords for keyword in future_keywords):
+        type_scores["B"] += 3
+    
+    # A 유형 (과거 상황 재현) 우선순위 키워드  
+    past_keywords = ["재현", "다시", "그때", "과거", "이미", "벌써", "상처", "트라우마"]
+    if any(keyword in situation_keywords for keyword in past_keywords):
+        type_scores["A"] += 3
+    
+    # C 유형 (관계 역할 바꾸기) 우선순위 키워드
+    empathy_keywords = ["이해", "생각", "입장", "관점", "바꿔", "상대방"]
+    if any(keyword in situation_keywords for keyword in empathy_keywords):
+        type_scores["C"] += 3
+    
+    # D 유형 (이상적 자아 연습) 우선순위 키워드
+    ideal_keywords = ["되고", "바라는", "이상", "자신감", "효능감", "새로운"]
+    if any(keyword in situation_keywords for keyword in ideal_keywords):
+        type_scores["D"] += 3
+    
+    # 기본적으로 B 유형(미래 상황 연습)을 선호 (상담에서 더 유용)
+    type_scores["B"] += 1
+    
+    # 가장 높은 점수의 유형 선택
+    best_type = max(type_scores, key=type_scores.get)
+    
+    # 선택된 유형의 템플릿들 중에서 최적의 템플릿 찾기
+    best_template = None
     max_score = -1
-
+    
     for template in ALL_TEMPLATES:
-        score = sum(1 for keyword in template.get("keywords", []) if keyword in content_for_search)
+        template_id = template.get('id', '')
+        
+        # 유형별 템플릿 필터링
+        is_target_type = False
+        if best_type == "A" and template_id.startswith('TRIG-A-'):
+            is_target_type = True
+        elif best_type == "B" and template_id.startswith('TRIG-B-'):
+            is_target_type = True
+        elif best_type == "C" and template_id.startswith('TRIG-C-'):
+            is_target_type = True
+        elif best_type == "D" and template_id.startswith('SELF-D'):
+            is_target_type = True
+            
+        if not is_target_type:
+            continue
+            
+        # 템플릿 매칭 점수 계산
+        template_text = ""
+        if "title" in template:
+            template_text += template["title"] + " "
+        if "scene_setup" in template:
+            template_text += template["scene_setup"] + " "
+        if "preconditions" in template and "topic_tags" in template["preconditions"]:
+            template_text += " ".join(template["preconditions"]["topic_tags"]) + " "
+        
+        score = 0
+        for keyword in situation_keywords.split():
+            if keyword in template_text.lower():
+                score += 1
+        
         if score > max_score:
             max_score = score
             best_template = template
-
+    
+    # 매칭 점수가 낮으면 (2점 미만) 시나리오 생성
+    if max_score < 2:
+        print(f"[Info] 상황 분석: {situation_keywords}")
+        print(f"[Info] 유형 점수: {type_scores}")
+        print(f"[Info] 선택된 유형: {best_type}")
+        print(f"[Info] 적합한 템플릿이 없어 시나리오를 생성합니다.")
+        
+        # 유형에 따른 기본 시나리오 생성
+        generated_template = generate_scenario_by_type(best_type, slots)
+        return generated_template
+    
+    print(f"[Info] 상황 분석: {situation_keywords}")
+    print(f"[Info] 유형 점수: {type_scores}")
+    print(f"[Info] 선택된 유형: {best_type}")
+    print(f"[Info] 매칭 점수: {max_score}")
+    
     return best_template
+
+
+def generate_scenario_by_type(roleplay_type: str, slots: Dict[str, str]) -> Dict[str, Any]:
+    """유형에 따라 사용자 상황에 맞는 시나리오를 생성합니다."""
+    event = slots.get('event', '상황')
+    character = slots.get('character', '상대방')
+    emotion = slots.get('emotion', '감정')
+    goal = slots.get('goal', '목표')
+    
+    if roleplay_type == "A":  # 과거 상황 재현
+        return {
+            "id": "GENERATED-A",
+            "title": f"{event} 재현",
+            "roles": {
+                "rp_agent_role": character,
+                "user_role": "본인"
+            },
+            "scene_setup": f"{event} 상황을 안전하게 재현하여 다른 관점에서 바라보는 연습",
+            "objectives": ["과거 상황 재현", "다른 관점에서 바라보기", "감정 정리"],
+            "constraints": ["안전한 환경 유지", "감정 조절", "건설적 대화"]
+        }
+    elif roleplay_type == "B":  # 미래 상황 연습
+        return {
+            "id": "GENERATED-B", 
+            "title": f"{event} 대응 연습",
+            "roles": {
+                "rp_agent_role": character,
+                "user_role": "본인"
+            },
+            "scene_setup": f"{event} 상황에 대한 대응 방법을 연습하여 자신감을 기르는 시간",
+            "objectives": ["대응 방법 연습", "자신감 향상", "실전 준비"],
+            "constraints": ["현실적인 상황", "건설적 피드백", "안전한 연습 환경"]
+        }
+    elif roleplay_type == "C":  # 관계 역할 바꾸기
+        return {
+            "id": "GENERATED-C",
+            "title": f"{character} 입장에서 생각해보기",
+            "roles": {
+                "rp_agent_role": character,
+                "user_role": "본인"
+            },
+            "scene_setup": f"{character}의 입장에서 {event} 상황을 바라보며 서로의 관점을 이해하는 시간",
+            "objectives": ["상대방 입장 이해", "공감 능력 향상", "관계 개선"],
+            "constraints": ["객관적 관점 유지", "상호 존중", "건설적 소통"]
+        }
+    elif roleplay_type == "D":  # 이상적 자아 연습
+        return {
+            "id": "GENERATED-D",
+            "title": f"이상적인 {event} 대응",
+            "roles": {
+                "rp_agent_role": character,
+                "user_role": "본인"
+            },
+            "scene_setup": f"{event} 상황에서 바라는 모습으로 행동하며 새로운 대응 방식을 연습",
+            "objectives": ["이상적 자아 연습", "새로운 행동 패턴", "자기효능감 증진"],
+            "constraints": ["현실적 목표 설정", "점진적 변화", "긍정적 자아상"]
+        }
+    else:
+        # 기본 시나리오
+        return {
+            "id": "GENERATED-DEFAULT",
+            "title": f"{event} 상황 대화",
+            "roles": {
+                "rp_agent_role": character,
+                "user_role": "본인"
+            },
+            "scene_setup": f"{event}에 대해 {character}와 대화하며 상황을 해결해보는 시간",
+            "objectives": ["상황 해결", "의사소통 개선", "관계 회복"],
+            "constraints": ["건설적 대화", "상호 존중", "문제 해결 중심"]
+        }
 
 
 def update_scenario_slots(state: Dict[str, Any]) -> Dict[str, Any]:
@@ -232,7 +390,7 @@ def update_scenario_slots(state: Dict[str, Any]) -> Dict[str, Any]:
     """
     try:
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model=OPENAI_MODEL,
             messages=[
                 {"role": "system", "content": "당신은 상담 내용에서 역할극 시나리오의 구체적인 요소를 '추출'하는 분석가입니다. JSON만 반환하세요."},
                 {"role": "user", "content": prompt}
@@ -258,9 +416,25 @@ def update_scenario_slots(state: Dict[str, Any]) -> Dict[str, Any]:
 
 def generate_rag_prompt(slots: Dict[str, str], template: Dict[str, Any]) -> str:
     """조회된 템플릿과 채워진 슬롯을 결합하여 최종 프롬프트를 생성합니다."""
-    prompt = template["prompt_template"]
+    # 템플릿에서 사용할 수 있는 키들을 확인하고 적절한 프롬프트 생성
+    if "scene_setup" in template:
+        base_prompt = template["scene_setup"]
+    elif "title" in template:
+        base_prompt = template["title"]
+    else:
+        base_prompt = "상황극을 시작합니다."
+    
+    # 슬롯 정보를 추가하여 최종 프롬프트 생성
+    slot_info = []
     for key, value in slots.items():
-        prompt = prompt.replace(f"{{{key}}}", str(value if value else f"[{key} 정보 없음]"))
+        if value:
+            slot_info.append(f"{key}: {value}")
+    
+    if slot_info:
+        prompt = f"{base_prompt}\n\n상황 정보: {', '.join(slot_info)}"
+    else:
+        prompt = base_prompt
+        
     return prompt
 
 
@@ -271,6 +445,11 @@ ROLEPLAY_KEYWORDS = ("롤플", "롤플레", "상황극", "역할극", "대화연
 
 
 def should_trigger_roleplay(user_text: str, state: Dict[str, Any]) -> Tuple[bool, str]:
+    # 최소 입력 개수 조건 확인 (5개 미만이면 롤플레잉 실행 안 함)
+    user_message_count = len([msg for msg in state.get("messages", []) if msg.get("role") == "user"])
+    if user_message_count < 5:
+        return False, f"최소 입력 개수 미달 (현재: {user_message_count}/5)"
+    
     t = user_text.strip().lower()
     if any(k in t for k in ROLEPLAY_KEYWORDS):
         return True, "사용자 요청 기반 롤플레잉"
@@ -294,7 +473,7 @@ class AssistantAgent:
     def reply(self, user_text: str) -> str:
         prompt = f"사용자의 발화: \"{user_text}\"\n공감하며, 소크라틱 질문을 사용해 대화를 이어가세요."
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model=OPENAI_MODEL,
             messages=[
                 {"role": "system", "content": "당신은 공감과 소크라틱 질문에 능한 전문 상담자입니다."},
                 {"role": "user", "content": prompt}
@@ -326,47 +505,87 @@ class RoleplayAgent:
 
             slots = state["scenario_slots"]
             best_template = retrieve_best_template(slots)
-            print(f"[Info] 선택된 템플릿 ID: '{best_template.get('template_id', 'N/A')}'")
+            
+            # 롤플레잉 유형 결정 및 표시
+            template_id = best_template.get('id', 'N/A')
+            roleplay_type = "Unknown"
+            type_description = ""
+            
+            if template_id.startswith('TRIG-A-'):
+                roleplay_type = "A"
+                type_description = "과거 상황 재현 (트라우마/상처 재현, 다른 관점에서 바라보기)"
+            elif template_id.startswith('TRIG-B-'):
+                roleplay_type = "B" 
+                type_description = "미래 상황 연습 (어려운 상황 미리 연습, 자신감 향상)"
+            elif template_id.startswith('TRIG-C-'):
+                roleplay_type = "C"
+                type_description = "관계 역할 바꾸기 (상대방 입장에서 생각, 공감 능력 향상)"
+            elif template_id.startswith('SELF-D'):
+                roleplay_type = "D"
+                type_description = "이상적 자아 연습 (되고 싶은 모습으로 행동, 자기효능감 증진)"
+            
+            print(f"[Info] 선택된 템플릿 ID: '{template_id}'")
+            print(f"[Info] 롤플레잉 유형: {roleplay_type} - {type_description}")
+            
             situation_prompt = generate_rag_prompt(slots, best_template)
 
-            response = client.chat.completions.create(
-                model="gpt-4o",
-                messages=[
-                    {"role": "system",
-                     "content": "당신은 롤플레잉 상황극의 상대방 역할을 맡습니다. 주어진 상황과 역할에 몰입하여 현실적인 첫 대사를 시작해주세요."},
-                    {"role": "user", "content": situation_prompt}
-                ],
-                temperature=0.75
-            )
-            reply = response.choices[0].message.content.strip()
-            state["roleplay_role"] = slots.get('character', '상대방')
+            # 롤플레잉 상황 제시 (AI가 바로 대화하지 않고 상황만 설명)
+            user_role = best_template.get('roles', {}).get('user_role', '본인')
+            ai_role = best_template.get('roles', {}).get('rp_agent_role', '상대방')
+            
+            situation_description = f"""
+🎭 롤플레잉을 시작합니다!
+
+📋 상황: {situation_prompt}
+
+👥 역할 분담:
+- 당신: {user_role}
+- AI: {ai_role}
+
+💡 이제 상황에 맞게 자연스럽게 대화를 시작해주세요!
+({user_role} 역할로 첫 마디를 해주세요)
+"""
+            
+            reply = situation_description
+            state["roleplay_role"] = best_template.get('roles', {}).get('rp_agent_role', '상대방')
+            state["user_role"] = best_template.get('roles', {}).get('user_role', '본인')
+            state["roleplay_situation"] = situation_prompt
 
         else:
             # --- 롤플레잉 진행 중 ---
             roleplay_logs = state.get("roleplay_logs", [])
             conversation_history = "\n".join([f"{log['role']}: {log['content']}" for log in roleplay_logs[-5:]])
-            role_info = state.get("roleplay_role", "설정된 역할")
+            ai_role = state.get("roleplay_role", "상대방")
+            user_role = state.get("user_role", "본인")
+            situation = state.get("roleplay_situation", "")
 
+            # AI가 상대방 역할로 자연스럽게 응답
             response_prompt = f"""
-            당신은 "{role_info}" 역할을 계속 수행해야 합니다.
-            역할의 성격, 말투, 관계를 일관되게 유지하면서 아래의 대화에 자연스럽게 응답해주세요.
+            당신은 "{ai_role}" 역할을 맡고 있습니다.
+            상황: {situation}
+            
+            {ai_role}로서 다음을 고려하여 자연스럽게 응답해주세요:
+            - {ai_role}의 성격과 말투를 일관되게 유지
+            - 실제 사람처럼 자연스러운 반응
+            - 상황에 맞는 적절한 감정 표현
+            - 대화의 맥락을 고려한 응답
 
             [최근 대화 기록]
             {conversation_history}
 
-            [사용자 최근 응답]
+            [{user_role}의 최근 응답]
             "{user_text}"
 
-            [당신의 응답] (2-3 문장으로 간결하게)
+            [{ai_role}의 자연스러운 응답]
             """
             response = client.chat.completions.create(
-                model="gpt-4o-mini",
+                model=OPENAI_MODEL,
                 messages=[
-                    {"role": "system",
-                     "content": f"당신은 {role_info} 역할을 맡은 연기자입니다. 역할을 유지하며 자연스럽게 대화를 이어가세요."},
+                    {"role": "system", 
+                     "content": f"당신은 {ai_role} 역할을 맡은 전문 연기자입니다. 실제 사람처럼 자연스럽고 현실적인 대화를 이어가세요. 과도하게 연극적이거나 부자연스러운 표현은 피하고, 일상적인 대화처럼 자연스럽게 응답하세요."},
                     {"role": "user", "content": response_prompt}
                 ],
-                temperature=0.7
+                temperature=0.8
             )
             reply = response.choices[0].message.content.strip()
 
@@ -401,7 +620,7 @@ class MemoryAgent:
         prompt = f"다음 상담 대화를 분석하고 요약 보고서를 JSON 형식으로 작성해주세요.\n\n상담:\n{transcript}"
         try:
             response = client.chat.completions.create(
-                model="gpt-4o-mini",
+                model=OPENAI_MODEL,
                 messages=[
                     {"role": "system", "content": "너는 상담 보고서 전문가야. 반드시 JSON만 반환해."},
                     {"role": "user", "content": prompt}
@@ -446,9 +665,9 @@ def analyze_and_update_state(state: Dict[str, Any]) -> Tuple[Dict[str, Any], Dic
     latest_msg["emotion"] = result
     state["emotion_score"] = result["emotion_score"]
 
-    if not state.get("roleplay_active", False):
-        state = update_scenario_slots(state)
-        print(f"[Slots] Completeness: {state['scenario_completeness'] * 100:.0f}% | {state['scenario_slots']}")
+    # 롤플레잉 중에도 슬롯을 계속 업데이트하여 더 정확한 정보 수집
+    state = update_scenario_slots(state)
+    print(f"[Slots] Completeness: {state['scenario_completeness'] * 100:.0f}% | {state['scenario_slots']}")
 
     if result["extreme"] or result["emotion_score"] > 0.85:
         state["next_node"] = "mindfulness"
@@ -520,8 +739,18 @@ if __name__ == "__main__":
 
         if route == "roleplay":
             state = roleplay.run(state)
-            print("\n[Roleplay]")
-            print(state["messages"][-1]["content"])
+            user_role = state.get("user_role", "본인")
+            ai_role = state.get("roleplay_role", "상대방")
+            
+            # 롤플레잉 시작 시에는 상황 설명만 표시
+            if not state.get("roleplay_logs"):
+                print("\n[Roleplay]")
+                print(state["messages"][-1]["content"])
+            else:
+                # 롤플레잉 진행 중에는 AI 응답 표시
+                print(f"\n[{ai_role}]")
+                print(state["messages"][-1]["content"])
+                print(f"\n[{user_role}] 역할로 응답해주세요:")
             continue
 
         if route == "mindfulness":
