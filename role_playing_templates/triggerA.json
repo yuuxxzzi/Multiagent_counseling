@@ -18,7 +18,7 @@
         "family",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.6
     },
     "roles": {
       "rp_agent_role": "부모",
@@ -91,7 +91,7 @@
         "family",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.6
     },
     "roles": {
       "rp_agent_role": "부모",
@@ -164,7 +164,7 @@
         "family",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.6
     },
     "roles": {
       "rp_agent_role": "형/언니",
@@ -237,7 +237,7 @@
         "family",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.6
     },
     "roles": {
       "rp_agent_role": "시어머니/장모",
@@ -310,7 +310,7 @@
         "family",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.6
     },
     "roles": {
       "rp_agent_role": "형제자매",
@@ -383,7 +383,7 @@
         "friend",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.7
     },
     "roles": {
       "rp_agent_role": "친구",
@@ -456,7 +456,7 @@
         "friend",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.7
     },
     "roles": {
       "rp_agent_role": "친구",
@@ -529,7 +529,7 @@
         "friend",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.7
     },
     "roles": {
       "rp_agent_role": "친구(채무자)",
@@ -602,7 +602,7 @@
         "friend",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.7
     },
     "roles": {
       "rp_agent_role": "친구",
@@ -675,7 +675,7 @@
         "friend",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "친구",
@@ -748,7 +748,7 @@
         "romance",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "전 연인",
@@ -821,7 +821,7 @@
         "romance",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "연인A",
@@ -894,7 +894,7 @@
         "romance",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "연인",
@@ -967,7 +967,7 @@
         "romance",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "연인",
@@ -1040,7 +1040,7 @@
         "romance",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "연인",
@@ -1113,7 +1113,7 @@
         "work",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.9
     },
     "roles": {
       "rp_agent_role": "상사",
@@ -1186,7 +1186,7 @@
         "work",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.9
     },
     "roles": {
       "rp_agent_role": "상사",
@@ -1259,7 +1259,7 @@
         "work",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.9
     },
     "roles": {
       "rp_agent_role": "동료",
@@ -1332,7 +1332,7 @@
         "work",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.9
     },
     "roles": {
       "rp_agent_role": "관리자",
@@ -1405,7 +1405,7 @@
         "work",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "상사",
@@ -1478,7 +1478,7 @@
         "school",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "담임교사",
@@ -1551,7 +1551,7 @@
         "school",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "교수",
@@ -1624,7 +1624,7 @@
         "school",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "팀장",
@@ -1697,7 +1697,7 @@
         "school",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "가해 학생",
@@ -1770,7 +1770,7 @@
         "school",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "행정 담당자",
@@ -1842,7 +1842,7 @@
         "health",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "의사",
@@ -1914,7 +1914,7 @@
         "health",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "의사",
@@ -1986,7 +1986,7 @@
         "health",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "간호사",
@@ -2058,7 +2058,7 @@
         "health",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "원무과 직원",
@@ -2130,7 +2130,7 @@
         "health",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "심리사",
@@ -2202,7 +2202,7 @@
         "loss",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "조문객/친지",
@@ -2274,7 +2274,7 @@
         "loss",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "수의사",
@@ -2346,7 +2346,7 @@
         "loss",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "전 연인",
@@ -2418,7 +2418,7 @@
         "loss",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "지인",
@@ -2490,7 +2490,7 @@
         "loss",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "지인",
@@ -2562,7 +2562,7 @@
         "safety",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "119 접수자",
@@ -2634,7 +2634,7 @@
         "safety",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "지인/경찰",
@@ -2706,7 +2706,7 @@
         "safety",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "승무원",
@@ -2778,7 +2778,7 @@
         "safety",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "운전자",
@@ -2850,7 +2850,7 @@
         "safety",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "안전요원",
@@ -2922,7 +2922,7 @@
         "presentation",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "청중(중립)",
@@ -2994,7 +2994,7 @@
         "presentation",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "질문자",
@@ -3066,7 +3066,7 @@
         "presentation",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "참가자",
@@ -3138,7 +3138,7 @@
         "presentation",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "팀 동료",
@@ -3210,7 +3210,7 @@
         "presentation",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "심사자",
@@ -3282,7 +3282,7 @@
         "online",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "악플러",
@@ -3354,7 +3354,7 @@
         "online",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "운영자",
@@ -3426,7 +3426,7 @@
         "online",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "지인",
@@ -3498,7 +3498,7 @@
         "online",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "판매자",
@@ -3570,7 +3570,7 @@
         "online",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "교수",
@@ -3642,7 +3642,7 @@
         "admin",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "집주인",
@@ -3714,7 +3714,7 @@
         "admin",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "행정 담당자",
@@ -3786,7 +3786,7 @@
         "admin",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "보험사 직원",
@@ -3858,7 +3858,7 @@
         "admin",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "HR",
@@ -3930,7 +3930,7 @@
         "admin",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "행정 담당자",
@@ -4002,7 +4002,7 @@
         "living",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "가해 이웃",
@@ -4074,7 +4074,7 @@
         "living",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "룸메이트",
@@ -4146,7 +4146,7 @@
         "living",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "관리인",
@@ -4218,7 +4218,7 @@
         "living",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "이웃",
@@ -4290,7 +4290,7 @@
         "living",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "경비원",
@@ -4362,7 +4362,7 @@
         "finance",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "상담가(중립)",
@@ -4434,7 +4434,7 @@
         "finance",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "동료/하우스메이트",
@@ -4506,7 +4506,7 @@
         "finance",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "부모",
@@ -4578,7 +4578,7 @@
         "finance",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "예비배우자",
@@ -4650,7 +4650,7 @@
         "finance",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "HR/재무",
@@ -4722,7 +4722,7 @@
         "identity",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "멘토",
@@ -4794,7 +4794,7 @@
         "identity",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "동료",
@@ -4866,7 +4866,7 @@
         "identity",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "유학생 멘토",
@@ -4938,7 +4938,7 @@
         "identity",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "교수",
@@ -5010,7 +5010,7 @@
         "identity",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "이웃/커뮤니티",
@@ -5083,7 +5083,7 @@
         "family",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "부모",
@@ -5156,7 +5156,7 @@
         "family",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "부모",
@@ -5229,7 +5229,7 @@
         "family",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "형/언니",
@@ -5302,7 +5302,7 @@
         "family",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "시어머니/장모",
@@ -5375,7 +5375,7 @@
         "family",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "형제자매",
@@ -5448,7 +5448,7 @@
         "friend",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "친구",
@@ -5521,7 +5521,7 @@
         "friend",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "친구",
@@ -5594,7 +5594,7 @@
         "friend",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "친구(채무자)",
@@ -5667,7 +5667,7 @@
         "friend",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "친구",
@@ -5740,7 +5740,7 @@
         "friend",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "친구",
@@ -5813,7 +5813,7 @@
         "romance",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "전 연인",
@@ -5886,7 +5886,7 @@
         "romance",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "연인A",
@@ -5959,7 +5959,7 @@
         "romance",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "연인",
@@ -6032,7 +6032,7 @@
         "romance",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "연인",
@@ -6105,7 +6105,7 @@
         "romance",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "연인",
@@ -6178,7 +6178,7 @@
         "work",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "상사",
@@ -6251,7 +6251,7 @@
         "work",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "상사",
@@ -6324,7 +6324,7 @@
         "work",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "동료",
@@ -6397,7 +6397,7 @@
         "work",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "관리자",
@@ -6470,7 +6470,7 @@
         "work",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "상사",
@@ -6543,7 +6543,7 @@
         "school",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "담임교사",
@@ -6616,7 +6616,7 @@
         "school",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "교수",
@@ -6689,7 +6689,7 @@
         "school",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "팀장",
@@ -6762,7 +6762,7 @@
         "school",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "가해 학생",
@@ -6835,7 +6835,7 @@
         "school",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "행정 담당자",
@@ -6907,7 +6907,7 @@
         "health",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "의사",
@@ -6979,7 +6979,7 @@
         "health",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "의사",
@@ -7051,7 +7051,7 @@
         "health",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "간호사",
@@ -7123,7 +7123,7 @@
         "health",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "원무과 직원",
@@ -7195,7 +7195,7 @@
         "health",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "심리사",
@@ -7267,7 +7267,7 @@
         "loss",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "조문객/친지",
@@ -7339,7 +7339,7 @@
         "loss",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "수의사",
@@ -7411,7 +7411,7 @@
         "loss",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "전 연인",
@@ -7483,7 +7483,7 @@
         "loss",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "지인",
@@ -7555,7 +7555,7 @@
         "loss",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "지인",
@@ -7627,7 +7627,7 @@
         "safety",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "119 접수자",
@@ -7699,7 +7699,7 @@
         "safety",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "지인/경찰",
@@ -7771,7 +7771,7 @@
         "safety",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "승무원",
@@ -7843,7 +7843,7 @@
         "safety",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "운전자",
@@ -7915,7 +7915,7 @@
         "safety",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "안전요원",
@@ -7987,7 +7987,7 @@
         "presentation",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "청중(중립)",
@@ -8059,7 +8059,7 @@
         "presentation",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "질문자",
@@ -8131,7 +8131,7 @@
         "presentation",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "참가자",
@@ -8203,7 +8203,7 @@
         "presentation",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "팀 동료",
@@ -8275,7 +8275,7 @@
         "presentation",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "심사자",
@@ -8347,7 +8347,7 @@
         "online",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "악플러",
@@ -8419,7 +8419,7 @@
         "online",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "운영자",
@@ -8491,7 +8491,7 @@
         "online",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "지인",
@@ -8563,7 +8563,7 @@
         "online",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "판매자",
@@ -8635,7 +8635,7 @@
         "online",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "교수",
@@ -8707,7 +8707,7 @@
         "admin",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "집주인",
@@ -8779,7 +8779,7 @@
         "admin",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "행정 담당자",
@@ -8851,7 +8851,7 @@
         "admin",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "보험사 직원",
@@ -8923,7 +8923,7 @@
         "admin",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "HR",
@@ -8995,7 +8995,7 @@
         "admin",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "행정 담당자",
@@ -9067,7 +9067,7 @@
         "living",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "가해 이웃",
@@ -9139,7 +9139,7 @@
         "living",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "룸메이트",
@@ -9211,7 +9211,7 @@
         "living",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "관리인",
@@ -9283,7 +9283,7 @@
         "living",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "이웃",
@@ -9355,7 +9355,7 @@
         "living",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "경비원",
@@ -9427,7 +9427,7 @@
         "finance",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "상담가(중립)",
@@ -9499,7 +9499,7 @@
         "finance",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "동료/하우스메이트",
@@ -9571,7 +9571,7 @@
         "finance",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "부모",
@@ -9643,7 +9643,7 @@
         "finance",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "예비배우자",
@@ -9715,7 +9715,7 @@
         "finance",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "HR/재무",
@@ -9787,7 +9787,7 @@
         "identity",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "멘토",
@@ -9859,7 +9859,7 @@
         "identity",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "동료",
@@ -9931,7 +9931,7 @@
         "identity",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "유학생 멘토",
@@ -10003,7 +10003,7 @@
         "identity",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "교수",
@@ -10075,7 +10075,7 @@
         "identity",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "이웃/커뮤니티",
@@ -10148,7 +10148,7 @@
         "family",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "부모",
@@ -10221,7 +10221,7 @@
         "family",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "부모",
@@ -10294,7 +10294,7 @@
         "family",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "형/언니",
@@ -10367,7 +10367,7 @@
         "family",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "시어머니/장모",
@@ -10440,7 +10440,7 @@
         "family",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "형제자매",
@@ -10513,7 +10513,7 @@
         "friend",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "친구",
@@ -10586,7 +10586,7 @@
         "friend",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "친구",
@@ -10659,7 +10659,7 @@
         "friend",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "친구(채무자)",
@@ -10732,7 +10732,7 @@
         "friend",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "친구",
@@ -10805,7 +10805,7 @@
         "friend",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "친구",
@@ -10878,7 +10878,7 @@
         "romance",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "전 연인",
@@ -10951,7 +10951,7 @@
         "romance",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "연인A",
@@ -11024,7 +11024,7 @@
         "romance",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "연인",
@@ -11097,7 +11097,7 @@
         "romance",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "연인",
@@ -11170,7 +11170,7 @@
         "romance",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "연인",
@@ -11243,7 +11243,7 @@
         "work",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "상사",
@@ -11316,7 +11316,7 @@
         "work",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "상사",
@@ -11389,7 +11389,7 @@
         "work",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "동료",
@@ -11462,7 +11462,7 @@
         "work",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "관리자",
@@ -11535,7 +11535,7 @@
         "work",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "상사",
@@ -11608,7 +11608,7 @@
         "school",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "담임교사",
@@ -11681,7 +11681,7 @@
         "school",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "교수",
@@ -11754,7 +11754,7 @@
         "school",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "팀장",
@@ -11827,7 +11827,7 @@
         "school",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "가해 학생",
@@ -11900,7 +11900,7 @@
         "school",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "행정 담당자",
@@ -11972,7 +11972,7 @@
         "health",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "의사",
@@ -12044,7 +12044,7 @@
         "health",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "의사",
@@ -12116,7 +12116,7 @@
         "health",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "간호사",
@@ -12188,7 +12188,7 @@
         "health",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "원무과 직원",
@@ -12260,7 +12260,7 @@
         "health",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "심리사",
@@ -12332,7 +12332,7 @@
         "loss",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "조문객/친지",
@@ -12404,7 +12404,7 @@
         "loss",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "수의사",
@@ -12476,7 +12476,7 @@
         "loss",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "전 연인",
@@ -12548,7 +12548,7 @@
         "loss",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "지인",
@@ -12620,7 +12620,7 @@
         "loss",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "지인",
@@ -12692,7 +12692,7 @@
         "safety",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "119 접수자",
@@ -12764,7 +12764,7 @@
         "safety",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "지인/경찰",
@@ -12836,7 +12836,7 @@
         "safety",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "승무원",
@@ -12908,7 +12908,7 @@
         "safety",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "운전자",
@@ -12980,7 +12980,7 @@
         "safety",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "안전요원",
@@ -13052,7 +13052,7 @@
         "presentation",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "청중(중립)",
@@ -13124,7 +13124,7 @@
         "presentation",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "질문자",
@@ -13196,7 +13196,7 @@
         "presentation",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "참가자",
@@ -13268,7 +13268,7 @@
         "presentation",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "팀 동료",
@@ -13340,7 +13340,7 @@
         "presentation",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "심사자",
@@ -13412,7 +13412,7 @@
         "online",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "악플러",
@@ -13484,7 +13484,7 @@
         "online",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "운영자",
@@ -13556,7 +13556,7 @@
         "online",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "지인",
@@ -13628,7 +13628,7 @@
         "online",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "판매자",
@@ -13700,7 +13700,7 @@
         "online",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "교수",
@@ -13772,7 +13772,7 @@
         "admin",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "집주인",
@@ -13844,7 +13844,7 @@
         "admin",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "행정 담당자",
@@ -13916,7 +13916,7 @@
         "admin",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "보험사 직원",
@@ -13988,7 +13988,7 @@
         "admin",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "HR",
@@ -14060,7 +14060,7 @@
         "admin",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "행정 담당자",
@@ -14132,7 +14132,7 @@
         "living",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "가해 이웃",
@@ -14204,7 +14204,7 @@
         "living",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "룸메이트",
@@ -14276,7 +14276,7 @@
         "living",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "관리인",
@@ -14348,7 +14348,7 @@
         "living",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "이웃",
@@ -14420,7 +14420,7 @@
         "living",
         "past"
       ],
-      "min_intensity": 1.2
+      "min_intensity": 0.8
     },
     "roles": {
       "rp_agent_role": "경비원",

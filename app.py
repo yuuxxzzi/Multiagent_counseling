@@ -5,7 +5,7 @@ import os
 from datetime import datetime
 from openai import OpenAI
 from main import (
-    AssistantAgent, MindfulnessAgent, RoleplayAgent, MemoryAgent,
+    AssistantAgent, MindfulnessAgent, RoleplayAgent, MemoryAgent, RoleplaySummaryAgent,
     analyze_and_update_state, emotion_branch, gpt_emotion_analysis
 )
 
@@ -17,6 +17,7 @@ assistant = AssistantAgent()
 mindfulness = MindfulnessAgent()
 roleplay = RoleplayAgent()
 memory = MemoryAgent()
+roleplay_summary = RoleplaySummaryAgent()
 
 # 세션별 상태 저장
 user_sessions = {}

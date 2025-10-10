@@ -444,6 +444,70 @@ def generate_rag_prompt(slots: Dict[str, str], template: Dict[str, Any]) -> str:
 ROLEPLAY_KEYWORDS = ("롤플", "롤플레", "상황극", "역할극", "대화연습", "면접 연습", "면접", "시뮬레이션", "시나리오")
 
 
+def should_exit_roleplay(state: Dict[str, Any], user_text: str) -> Tuple[bool, str]:
+    """롤플레잉 종료 조건을 체크하는 함수"""
+    
+    # 1. 명시적 종료 키워드 체크
+    explicit_exit_keywords = [
+        "종료", "끝", "그만", "나가기", "exit", "롤플종료", "롤플끝", "시뮬레이션종료",
+        "고마워", "감사해", "도움이 됐어", "좋았어", "괜찮아", "이제 됐어",
+        "충분해", "이제 그만", "여기까지", "끝내자", "마무리하자",
+        "다음에 또", "나중에", "이제 그만해", "그만하자", "마무리",
+        "정리하자", "마지막으로", "마지막", "이제 끝", "끝내고 싶어"
+    ]
+    
+    if any(keyword in user_text.lower() for keyword in explicit_exit_keywords):
+        return True, "사용자 명시적 종료 요청"
+    
+    # 2. 롤플레잉 진행 상태 분석
+    roleplay_logs = state.get("roleplay_logs", [])
+    roleplay_turn = state.get("roleplay_turn", 0)
+    
+    # 3. 감정 추이 기반 종료 조건
+    recent_emotions = []
+    for log in roleplay_logs[-5:]:  # 최근 5턴의 감정 분석
+        if "emotion_context" in log:
+            recent_emotions.append(log["emotion_context"])
+    
+    if len(recent_emotions) >= 3:
+        # 감정이 안정화된 경우 (연속 3턴 이상 감정 점수가 0.3 이하)
+        if all(score <= 0.3 for score in recent_emotions[-3:]):
+            return True, "감정 안정화로 인한 자연스러운 종료"
+        
+        # 감정이 급격히 상승한 경우 (연속 2턴 이상 0.8 이상)
+        if all(score >= 0.8 for score in recent_emotions[-2:]):
+            return True, "감정 과부하로 인한 안전 종료"
+    
+    # 4. 대화 구조 기반 종료 조건
+    if roleplay_turn >= 10:  # 10턴 이상 진행된 경우
+        # 최근 3턴에서 감정이 안정적이고 만족스러운 표현이 있는 경우
+        recent_satisfaction = any(
+            keyword in log.get("user_input", "").lower() 
+            for log in roleplay_logs[-3:]
+            for keyword in ["좋아", "도움", "이해", "감사", "괜찮아", "해결", "이제 알겠어"]
+        )
+        if recent_satisfaction:
+            return True, "롤플레잉 목표 달성으로 인한 자연스러운 종료"
+    
+    # 5. 롤플레잉 완료도 기반 종료
+    scenario_completeness = state.get("scenario_completeness", 0.0)
+    if scenario_completeness >= 0.9 and roleplay_turn >= 5:
+        return True, "시나리오 완성도 달성으로 인한 종료"
+    
+    # 6. 대화 주제 이탈 감지
+    if roleplay_turn >= 5:
+        recent_topics = [log.get("user_input", "") for log in roleplay_logs[-3:]]
+        # 롤플레잉 주제와 관련 없는 대화가 연속으로 이어지는 경우
+        topic_drift = all(
+            not any(keyword in topic.lower() for keyword in ["상황", "그때", "그래서", "그러면", "그런데"])
+            for topic in recent_topics
+        )
+        if topic_drift:
+            return True, "대화 주제 이탈로 인한 자연스러운 종료"
+    
+    return False, "롤플레잉 계속 진행"
+
+
 def should_trigger_roleplay(user_text: str, state: Dict[str, Any]) -> Tuple[bool, str]:
     # 최소 입력 개수 조건 확인 (5개 미만이면 롤플레잉 실행 안 함)
     user_message_count = len([msg for msg in state.get("messages", []) if msg.get("role") == "user"])
@@ -554,21 +618,56 @@ class RoleplayAgent:
         else:
             # --- 롤플레잉 진행 중 ---
             roleplay_logs = state.get("roleplay_logs", [])
-            conversation_history = "\n".join([f"{log['role']}: {log['content']}" for log in roleplay_logs[-5:]])
+            # 더 많은 대화 기록을 포함하여 맥락 파악 개선
+            conversation_history = "\n".join([f"{log['role']}: {log['content']}" for log in roleplay_logs[-8:]])
             ai_role = state.get("roleplay_role", "상대방")
             user_role = state.get("user_role", "본인")
             situation = state.get("roleplay_situation", "")
+            
+            # 캐릭터 일관성을 위한 이전 대화 패턴 분석
+            ai_responses = [log['content'] for log in roleplay_logs if log['role'] == '상대방']
+            character_traits = ""
+            if len(ai_responses) >= 2:
+                character_traits = f"""
+                [캐릭터 일관성 유지]
+                - 이전 {ai_role}의 말투와 반응 패턴을 참고하여 일관된 성격 유지
+                - 감정 변화의 자연스러운 흐름을 고려
+                - 대화 스타일의 연속성 유지
+                """
+            
+            # 사용자의 현재 감정 상태 분석
+            current_emotion_score = state.get("emotion_score", 0.0)
+            emotion_context = ""
+            if current_emotion_score > 0.7:
+                emotion_context = """
+                [감정 컨텍스트]
+                - 사용자가 현재 강한 감정 상태에 있으므로 더 신중하고 공감적인 반응 필요
+                - 감정의 강도에 맞는 적절한 반응 패턴 사용
+                """
+            elif current_emotion_score < 0.3:
+                emotion_context = """
+                [감정 컨텍스트]
+                - 사용자가 상대적으로 차분한 상태이므로 자연스러운 대화 진행
+                - 일상적인 대화 톤 유지
+                """
 
             # AI가 상대방 역할로 자연스럽게 응답
             response_prompt = f"""
             당신은 "{ai_role}" 역할을 맡고 있습니다.
             상황: {situation}
             
+            {character_traits}
+            {emotion_context}
+            
             {ai_role}로서 다음을 고려하여 자연스럽게 응답해주세요:
             - {ai_role}의 성격과 말투를 일관되게 유지
             - 실제 사람처럼 자연스러운 반응
             - 상황에 맞는 적절한 감정 표현
             - 대화의 맥락을 고려한 응답
+            - 앞서 대화한 내용을 바탕으로 자연스럽게 연결
+            - 감정적 반응과 몸짓, 표정 등을 자연스럽게 표현
+            - 일상적인 말투와 표현 사용
+            - 이전 대화에서 보여준 성격과 말투의 연속성 유지
 
             [최근 대화 기록]
             {conversation_history}
@@ -582,7 +681,45 @@ class RoleplayAgent:
                 model=OPENAI_MODEL,
                 messages=[
                     {"role": "system", 
-                     "content": f"당신은 {ai_role} 역할을 맡은 전문 연기자입니다. 실제 사람처럼 자연스럽고 현실적인 대화를 이어가세요. 과도하게 연극적이거나 부자연스러운 표현은 피하고, 일상적인 대화처럼 자연스럽게 응답하세요."},
+                     "content": f"""당신은 {ai_role} 역할을 맡은 전문 연기자입니다. 
+                     
+                     다음 원칙을 따라 실제 사람처럼 자연스럽고 현실적인 대화를 이어가세요:
+                     
+                     1. 자연스러운 말투: 일상적인 표현과 말투를 사용하세요
+                        - "어?", "음...", "아", "그렇구나" 등의 자연스러운 감탄사 사용
+                        - "~네", "~어", "~지" 등 친근한 어미 사용
+                        - 말을 끊거나 다시 시작하는 자연스러운 패턴
+                     
+                     2. 감정적 반응: 상황에 맞는 감정을 자연스럽게 표현하세요
+                        - 놀람: "어? 정말?", "와... 그럴 수가"
+                        - 공감: "아... 그럴 수밖에 없었겠다", "정말 힘들었겠어"
+                        - 걱정: "괜찮아?", "어떻게 됐어?"
+                        - 이해: "음... 그럴 수 있지", "당연한 반응이야"
+                     
+                     3. 맥락 이해: 앞서 대화한 내용을 바탕으로 자연스럽게 연결하세요
+                        - 이전에 언급된 내용을 기억하고 언급
+                        - 감정의 흐름을 자연스럽게 이어가기
+                        - 대화의 주제를 자연스럽게 발전시키기
+                     
+                     4. 현실적 반응: 과도하게 연극적이지 않고 실제 사람처럼 반응하세요
+                        - 완벽한 문장보다는 자연스러운 말투
+                        - 감정의 변화를 점진적으로 표현
+                        - 실제 사람의 반응 패턴 모방
+                     
+                     5. 일관성: {ai_role}의 성격과 말투를 일관되게 유지하세요
+                        - 이전 대화에서 보여준 성격 유지
+                        - 말투와 반응 패턴의 연속성
+                        - 캐릭터의 고유한 특성 유지
+                     
+                     6. 몸짓과 표정: 대화 중 자연스러운 몸짓이나 표정 변화도 표현하세요
+                        - "(고개 끄덕이며)", "(한숨을 쉬며)", "(미소를 지으며)" 등
+                        - 상황에 맞는 자연스러운 반응 표현
+                     
+                     예시 응답들:
+                     - "어? 그런 일이 있었구나... 정말 힘들었겠다" (놀란 표정)
+                     - "음... 그럴 수 있지. 누구나 그럴 수 있어" (고개 끄덕이며)
+                     - "아, 그때 정말 힘들었겠다. 지금은 좀 어떠해?" (공감하며)
+                     - "그래? 그럼 어떻게 생각하고 있어?" (관심을 보이며)"""},
                     {"role": "user", "content": response_prompt}
                 ],
                 temperature=0.8
@@ -593,19 +730,108 @@ class RoleplayAgent:
         state["roleplay_turn"] += 1
         state["roleplay_logs"].append({
             "turn": state["roleplay_turn"], "role": "상대방", "content": reply,
-            "at": datetime.now().isoformat(timespec="seconds")
+            "at": datetime.now().isoformat(timespec="seconds"),
+            "emotion_context": state.get("emotion_score", 0.0),
+            "user_input": user_text
         })
         state["messages"].append({"role": "assistant", "content": reply})
 
+        # 명시적 종료 조건 체크
         if any(k in user_text.lower() for k in ["종료", "끝", "그만", "나가기"]):
             state["roleplay_active"] = False
             state["next_node"] = "assistant"
             state["trigger_roleplay"] = False
             state["roleplay_count"] = state.get("roleplay_count", 0) + 1
-            end_message = "롤플레잉이 종료되었습니다. 일반 상담으로 돌아갑니다."
-            state["messages"].append({"role": "assistant", "content": end_message})
-            print(f"\n[System] {end_message}")
+            
+            # 롤플레잉 종료 후 상담 정리 실행
+            roleplay_summary = RoleplaySummaryAgent()
+            state = roleplay_summary.run(state)
+            
+            print(f"\n[System] 롤플레잉이 종료되었습니다. 상담 정리가 완료되었습니다.")
+            return state
 
+        # 자동 종료 조건 체크
+        should_exit, exit_reason = should_exit_roleplay(state, user_text)
+        if should_exit:
+            state["roleplay_active"] = False
+            state["next_node"] = "assistant"
+            state["trigger_roleplay"] = False
+            state["roleplay_count"] = state.get("roleplay_count", 0) + 1
+            
+            # 롤플레잉 종료 후 상담 정리 실행
+            roleplay_summary = RoleplaySummaryAgent()
+            state = roleplay_summary.run(state)
+            
+            print(f"\n[System] 롤플레잉이 자동으로 종료되었습니다: {exit_reason}")
+
+        return state
+
+
+class RoleplaySummaryAgent:
+    """롤플레잉 종료 후 즉시 상담 정리 및 답변 제공"""
+    def run(self, state: Dict[str, Any]) -> Dict[str, Any]:
+        # 롤플레잉 로그에서 핵심 내용 추출
+        roleplay_logs = state.get("roleplay_logs", [])
+        if not roleplay_logs:
+            return state
+            
+        # 롤플레잉 대화 내용 정리
+        roleplay_transcript = "\n".join([
+            f"턴 {log.get('turn', '')}: {log.get('user_input', '')} -> {log.get('agent_response', '')}"
+            for log in roleplay_logs
+        ])
+        
+        # 롤플레잉 시나리오 정보
+        scenario_info = state.get("scenario_slots", {})
+        scenario_title = scenario_info.get("title", "롤플레잉 시나리오")
+        
+        # 상담 정리 프롬프트
+        prompt = f"""
+        방금 진행된 롤플레잉 상담을 바탕으로 다음과 같이 정리해주세요:
+
+        시나리오: {scenario_title}
+        
+        롤플레잉 내용:
+        {roleplay_transcript}
+
+        다음 형식으로 응답해주세요:
+        1. 롤플레잉에서 다룬 핵심 이슈와 감정
+        2. 사용자가 표현한 주요 감정과 반응
+        3. 롤플레잉을 통해 얻은 인사이트나 깨달음
+        4. 앞으로의 상담 방향 제안
+        5. 사용자에게 전달할 격려나 조언
+
+        상담사로서 따뜻하고 전문적인 톤으로 작성해주세요.
+        """
+        
+        try:
+            response = client.chat.completions.create(
+                model=OPENAI_MODEL,
+                messages=[
+                    {"role": "system", "content": "당신은 전문 상담사입니다. 롤플레잉을 통해 얻은 인사이트를 바탕으로 사용자에게 도움이 되는 정리와 조언을 제공해주세요."},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.7
+            )
+            
+            summary_content = response.choices[0].message.content
+            
+            # 롤플레잉 정리 메시지를 대화에 추가
+            state["messages"].append({
+                "role": "assistant", 
+                "content": f"🎭 **롤플레잉 상담 정리**\n\n{summary_content}"
+            })
+            
+            print(f"\n[Roleplay Summary] 롤플레잉 상담 정리 완료")
+            
+        except Exception as e:
+            print(f"롤플레잉 정리 중 오류: {e}")
+            # 오류 시 기본 메시지
+            state["messages"].append({
+                "role": "assistant", 
+                "content": "롤플레잉이 종료되었습니다. 방금 경험하신 내용에 대해 어떤 생각이 드시나요? 어떤 부분이 가장 인상적이었는지, 또는 어떤 감정을 느끼셨는지 말씀해 주세요."
+            })
+        
         return state
 
 
