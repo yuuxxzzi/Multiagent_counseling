@@ -443,8 +443,8 @@
             <div class="hero-nav">
                 <button class="nav-btn" onclick="showFeatures()">기능</button>
                 <button class="nav-btn" onclick="showAbout()">소개</button>
-                <button class="nav-btn" id="loginBtn" onclick="goToLogin()" style="display: none;">로그인</button>
-                <button class="hero-login-btn" id="authBtn" onclick="handleAuthAction()">회원가입</button>
+                <button class="nav-btn" id="loginBtn" onclick="goToSignup()" style="display: none;">회원가입</button>
+                <button class="hero-login-btn" id="authBtn" onclick="handleAuthAction()">로그인</button>
                 </div>
             </div>
             
@@ -526,7 +526,7 @@
             <p>AI와 함께하는 새로운 상담 경험을 만나보세요</p>
             <button class="cta-button" onclick="startCounseling()">
                 <i class="fas fa-arrow-right"></i>
-                상담 시작하기
+                무료 상담 시작하기
             </button>
         </div>
     </div>
@@ -570,8 +570,10 @@
                 loginBtn.style.display = 'none';
             } else {
                 // 로그인되지 않은 상태
-                authBtn.textContent = '회원가입';
-                authBtn.onclick = goToSignup;
+                authBtn.textContent = '로그인';
+                authBtn.onclick = goToLogin;
+                loginBtn.textContent = '회원가입';
+                loginBtn.onclick = goToSignup;
                 loginBtn.style.display = 'inline-block';
             }
         }
@@ -581,7 +583,7 @@
             if (isLoggedIn) {
                 logout();
             } else {
-                goToSignup();
+                goToLogin();
             }
         }
 
@@ -615,15 +617,9 @@
             }
         }
 
-        // 상담 시작 함수 (로그인 체크)
+        // 상담 시작 함수 (로그인 없이도 가능)
         function startCounseling() {
-            if (isLoggedIn) {
-                window.location.href = '/counseling';
-            } else {
-                if (confirm('상담을 시작하려면 로그인이 필요합니다.\n로그인 페이지로 이동하시겠습니까?')) {
-                    goToLogin();
-                }
-            }
+            window.location.href = '/counseling';
         }
 
         function showFeatures() {
@@ -643,15 +639,8 @@
             const message = input.value.trim();
             
             if (message) {
-                if (isLoggedIn) {
-                    // 로그인된 상태: 상담 페이지로 이동하면서 메시지 전달
-                    window.location.href = `/counseling?message=${encodeURIComponent(message)}`;
-                } else {
-                    // 로그인되지 않은 상태: 로그인 페이지로 이동
-                    if (confirm('상담을 시작하려면 로그인이 필요합니다.\n로그인 페이지로 이동하시겠습니까?')) {
-                        goToLogin();
-                    }
-                }
+                // 메시지가 있으면 상담 페이지로 이동하면서 메시지 전달
+                window.location.href = `/counseling?message=${encodeURIComponent(message)}`;
             } else {
                 startCounseling();
             }
