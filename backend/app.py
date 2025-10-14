@@ -4,12 +4,12 @@ import uuid
 import os
 from datetime import datetime
 from openai import OpenAI
-from main import (
+from Multiagent_counseling.main import (
     AssistantAgent, MindfulnessAgent, RoleplayAgent, MemoryAgent, RoleplaySummaryAgent,
     analyze_and_update_state, emotion_branch, gpt_emotion_analysis
 )
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='../frontend/templates')
 app.secret_key = os.getenv('FLASK_SECRET_KEY', 'your-secret-key-here')  # 환경변수에서 시크릿 키 가져오기
 
 # 에이전트 초기화
@@ -47,7 +47,16 @@ def get_or_create_session():
             "next_node": "assistant",
             "roleplay_active": False,
             "roleplay_turn": 0,
-            "roleplay_role": None
+            "roleplay_role": None,
+            "scenario_slots": {
+                "event": "",
+                "character": "",
+                "place": "",
+                "emotion": "",
+                "why": "",
+                "goal": ""
+            },
+            "scenario_completeness": 0.0
         }
     
     return user_sessions[session_id]
@@ -73,6 +82,15 @@ def chat():
         
         # 감정 분석 및 상태 업데이트
         state, emotion_result = analyze_and_update_state(state)
+        
+        # 슬롯 분석 결과 터미널 출력
+        print(f"\n[슬롯 분석 결과]")
+        print(f"완성도: {state.get('scenario_completeness', 0) * 100:.0f}%")
+        print(f"슬롯 내용: {state.get('scenario_slots', {})}")
+        print(f"감정 점수: {emotion_result.get('emotion_score', 0):.2f}")
+        print(f"감정 분류: {emotion_result.get('emotion_class', 'N/A')}")
+        print(f"극단적 감정: {'예' if emotion_result.get('extreme', False) else '아니오'}")
+        print()
         
         # 응답 생성
         responses = []
@@ -118,6 +136,7 @@ def chat():
                     'content': reply
                 })
             except Exception as e:
+                print(f"상담 응답 생성 오류: {str(e)}")
                 responses.append({
                     'type': 'error',
                     'content': f'상담 응답 생성 중 오류가 발생했습니다: {str(e)}'
@@ -130,7 +149,9 @@ def chat():
             'success': True,
             'responses': responses,
             'emotion': emotion_result,
-            'roleplay_active': state.get("roleplay_active", False)
+            'roleplay_active': state.get("roleplay_active", False),
+            'scenario_slots': state.get("scenario_slots", {}),
+            'scenario_completeness': state.get("scenario_completeness", 0.0)
         })
         
     except Exception as e:
@@ -142,6 +163,13 @@ def end_session():
     try:
         state = get_or_create_session()
         state["session_end"] = True
+        
+        print(f"\n[세션 종료]")
+        print(f"총 메시지 수: {len(state.get('messages', []))}")
+        print(f"마인드풀니스 개입: {state.get('mindfulness_count', 0)}회")
+        print(f"롤플레잉 개입: {state.get('roleplay_count', 0)}회")
+        print(f"최종 슬롯 완성도: {state.get('scenario_completeness', 0) * 100:.0f}%")
+        print()
         
         # 메모리 에이전트로 요약 보고서 생성
         state = memory.run(state)
@@ -160,6 +188,7 @@ def end_session():
         })
         
     except Exception as e:
+        print(f"세션 종료 오류: {str(e)}")
         return jsonify({'error': f'세션 종료 중 오류: {str(e)}'}), 500
 
 @app.route('/trigger_roleplay', methods=['POST'])
@@ -220,6 +249,34 @@ def generate_report():
                     avg_value = sum(emotion_values) / len(emotion_values)
                     emotion_summary += f"- {emotion_name}: 최고 {max_value:.2f}, 평균 {avg_value:.2f}\n"
         
+        # 롤플레잉 정보 추가
+        roleplay_info = ""
+        if data.get('roleplayData'):
+            roleplay_data = data['roleplayData']
+            roleplay_info = f"""
+**롤플레잉 정보:**
+- 롤플레잉 유형: {roleplay_data.get('type', 'N/A')}
+- 사용자 역할: {roleplay_data.get('userRole', 'N/A')}
+- AI 역할: {roleplay_data.get('aiRole', 'N/A')}
+- 시나리오: {roleplay_data.get('situation', 'N/A')}
+- 롤플레잉 턴 수: {roleplay_data.get('turnCount', 0)}
+"""
+        
+        # 시나리오 슬롯 정보 추가
+        scenario_info = ""
+        if data.get('scenarioSlots'):
+            slots = data['scenarioSlots']
+            scenario_info = f"""
+**시나리오 슬롯 정보:**
+- 사건: {slots.get('event', 'N/A')}
+- 상대방: {slots.get('character', 'N/A')}
+- 장소: {slots.get('place', 'N/A')}
+- 감정: {slots.get('emotion', 'N/A')}
+- 원인: {slots.get('why', 'N/A')}
+- 목표: {slots.get('goal', 'N/A')}
+- 완성도: {data.get('scenarioCompleteness', 0):.1%}
+"""
+
         # GPT 프롬프트
         prompt = f"""
 다음은 AI 상담 세션의 내용입니다. 이를 바탕으로 전문적이고 따뜻한 상담 보고서를 작성해주세요.
@@ -229,6 +286,8 @@ def generate_report():
 - 총 메시지 수: {message_count}개
 - 감정 분석 결과:
 {emotion_summary}
+{roleplay_info}
+{scenario_info}
 
 **상담 내용:**
 {conversation_text}
@@ -247,10 +306,17 @@ def generate_report():
 ### 3. 상담 진행 과정
 - 상담의 흐름과 주요 전환점
 - 중요한 대화 내용
+- 롤플레잉 활용 여부 및 효과
 
-### 4. 종합 평가 및 제언
+### 4. 시나리오 분석 (해당시)
+- 시나리오 슬롯 완성도
+- 롤플레잉을 통한 인사이트
+- 역할극을 통한 학습 효과
+
+### 5. 종합 평가 및 제언
 - 상담자의 전반적인 상태 평가
 - 향후 개선 방향 제안
+- 롤플레잉 활용 권장사항
 
 보고서는 전문적이면서도 이해하기 쉽게 작성해주세요.
 """

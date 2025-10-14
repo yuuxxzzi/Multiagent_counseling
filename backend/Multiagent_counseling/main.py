@@ -183,7 +183,10 @@ def load_all_templates_from_directory(dir_path: str) -> List[Dict]:
 
 
 # 프로그램 시작 시 모든 템플릿 로드
-ROLE_PLAYING_TEMPLATES_DIR = "../role_playing_templates"
+import os
+# 현재 파일의 위치를 기준으로 템플릿 디렉토리 찾기
+current_dir = os.path.dirname(os.path.abspath(__file__))
+ROLE_PLAYING_TEMPLATES_DIR = os.path.join(os.path.dirname(current_dir), "role_playing_templates")
 ALL_TEMPLATES = load_all_templates_from_directory(ROLE_PLAYING_TEMPLATES_DIR)
 
 
@@ -363,10 +366,19 @@ def update_scenario_slots(state: Dict[str, Any]) -> Dict[str, Any]:
     conversation_history = "\n".join([f"{msg['role']}: {msg['content']}" for msg in state["messages"][-10:]])
     current_slots_json = json.dumps(state["scenario_slots"], ensure_ascii=False)
 
+    # 대화 내용이 충분한지 확인 (최소 3턴 이상의 구체적인 대화 필요)
+    user_messages = [msg for msg in state["messages"] if msg["role"] == "user"]
+    if len(user_messages) < 2:
+        # 대화가 부족하면 슬롯 업데이트하지 않음
+        return state
+
     prompt = f"""
     당신은 사용자의 상담 대화에서 역할극 시나리오의 핵심 요소를 '추출'하는 전문가입니다.
-    주어진 대화 내용에서 각 슬롯에 해당하는 가장 구체적인 정보를 그대로 가져와 채워주세요.
-    절대 추상적으로 요약하지 마세요. 사용자의 표현을 최대한 활용하세요.
+    
+    ⚠️ 중요: 오직 대화 내용에서 명시적으로 언급된 정보만 추출하세요.
+    - 추측이나 가정은 절대 하지 마세요
+    - 정보가 불분명하면 빈 문자열("")로 남겨두세요
+    - 사용자가 직접 말한 내용만 사용하세요
 
     [상담 대화 내용]
     {conversation_history}
@@ -374,13 +386,15 @@ def update_scenario_slots(state: Dict[str, Any]) -> Dict[str, Any]:
     [현재까지 채워진 슬롯 정보]
     {current_slots_json}
 
-    [추출할 슬롯]
-    - event: 사용자가 겪은 핵심적인 사건의 이름. (예: "친구와의 갈등", "면접 상황")
-    - character: 사건에 관련된 상대방. (예: "나를 놀리는 친구", "압박 질문을 하는 면접관")
-    - place: 사건이 발생한 구체적인 장소. (예: "학교 앞 카페", "팀 회의실")
-    - emotion: 사용자가 그 상황에서 느낀 가장 두드러진 감정. (예: "서운함과 분노", "극심한 불안감")
-    - why: 해당 event가 발생하게 된 '구체적인 행동이나 원인'. (예: "내 실수를 다른 사람에게 말하며 놀려서", "예상치 못한 질문을 받아서")
-    - goal: 사용자가 이 상황을 통해 바라는 결과. (예: "친구에게 내 감정을 솔직하게 표현하기", "침착하게 면접 질문에 답변하기")
+    [추출 규칙]
+    - event: 대화에서 명시적으로 언급된 구체적인 사건만 추출
+    - character: 대화에서 직접 언급된 상대방만 추출
+    - place: 대화에서 구체적으로 말한 장소만 추출
+    - emotion: 사용자가 직접 표현한 감정만 추출
+    - why: 사용자가 직접 설명한 원인만 추출
+    - goal: 사용자가 직접 말한 목표만 추출
+
+    정보가 불분명하거나 추측이 필요한 경우 해당 슬롯은 빈 문자열("")로 남겨두세요.
 
     반드시 아래 JSON 형식만 반환하세요.
     {{
@@ -392,26 +406,78 @@ def update_scenario_slots(state: Dict[str, Any]) -> Dict[str, Any]:
         response = client.chat.completions.create(
             model=OPENAI_MODEL,
             messages=[
-                {"role": "system", "content": "당신은 상담 내용에서 역할극 시나리오의 구체적인 요소를 '추출'하는 분석가입니다. JSON만 반환하세요."},
+                {"role": "system", "content": "당신은 상담 내용에서 명시적으로 언급된 정보만 추출하는 분석가입니다. 추측하지 마세요. JSON만 반환하세요."},
                 {"role": "user", "content": prompt}
             ],
             temperature=0.1, response_format={"type": "json_object"}
         )
         updated_slots = parse_json_safely(response.choices[0].message.content)
 
+        # 사용자 입력 기준으로 슬롯 채우기
+        print(f"[DEBUG] GPT 응답: {updated_slots}")
+        
         for key, new_value in updated_slots.items():
-            if new_value:
+            if new_value and new_value.strip():
                 current_value = state["scenario_slots"].get(key)
-                if current_value is None or len(str(new_value)) > len(str(current_value)):
+                
+                # 현재 슬롯이 비어있으면 바로 채우기
+                if not current_value or current_value.strip() == "":
                     state["scenario_slots"][key] = new_value
+                    print(f"[Slots] {key}: {new_value} (새로 채움)")
+                else:
+                    # 슬롯이 겹칠 때만 신뢰도로 판단
+                    confidence = calculate_slot_confidence(new_value, conversation_history)
+                    current_confidence = calculate_slot_confidence(current_value, conversation_history)
+                    
+                    print(f"[DEBUG] {key}: 기존='{current_value}' (신뢰도: {current_confidence:.2f}), 새로운='{new_value}' (신뢰도: {confidence:.2f})")
+                    
+                    # 새로운 값의 신뢰도가 더 높으면 업데이트
+                    if confidence > current_confidence:
+                        state["scenario_slots"][key] = new_value
+                        print(f"[Slots] {key}: {new_value} (신뢰도로 업데이트: {confidence:.2f} > {current_confidence:.2f})")
+                    else:
+                        print(f"[Slots] {key}: 기존 값 유지 (신뢰도: {current_confidence:.2f} >= {confidence:.2f})")
+            else:
+                print(f"[DEBUG] {key}: 빈 값 또는 공백")
 
     except Exception as e:
         print(f"[Warn] 슬롯 채우기 실패: {e}")
 
-    filled_count = sum(1 for value in state["scenario_slots"].values() if value)
+    filled_count = sum(1 for value in state["scenario_slots"].values() if value and value.strip())
     total_slots = len(state["scenario_slots"])
     state["scenario_completeness"] = round(filled_count / total_slots, 2) if total_slots > 0 else 0.0
     return state
+
+
+def calculate_slot_confidence(slot_value: str, conversation: str) -> float:
+    """슬롯 값이 실제 대화에서 언급되었는지 신뢰도 계산"""
+    if not slot_value or not slot_value.strip():
+        return 0.0
+    
+    # 슬롯 값이 대화 내용에 포함되어 있는지 확인
+    slot_lower = slot_value.lower()
+    conversation_lower = conversation.lower()
+    
+    # 직접적인 언급 확인
+    if slot_lower in conversation_lower:
+        return 1.0
+    
+    # 부분적인 일치 확인 (더 관대하게)
+    slot_words = slot_value.split()
+    matched_words = 0
+    for word in slot_words:
+        if len(word) > 1 and word in conversation_lower:  # 1글자 이상 단어도 포함
+            matched_words += 1
+    
+    if len(slot_words) > 0:
+        base_confidence = matched_words / len(slot_words)
+        # 의미적 유사성도 고려 (간단한 키워드 매칭)
+        semantic_boost = 0.0
+        if any(keyword in conversation_lower for keyword in ['친구', '트러블', '갈등', '문제']):
+            semantic_boost = 0.2
+        return min(1.0, base_confidence + semantic_boost)
+    
+    return 0.0
 
 
 def generate_rag_prompt(slots: Dict[str, str], template: Dict[str, Any]) -> str:
@@ -891,9 +957,13 @@ def analyze_and_update_state(state: Dict[str, Any]) -> Tuple[Dict[str, Any], Dic
     latest_msg["emotion"] = result
     state["emotion_score"] = result["emotion_score"]
 
-    # 롤플레잉 중에도 슬롯을 계속 업데이트하여 더 정확한 정보 수집
-    state = update_scenario_slots(state)
-    print(f"[Slots] Completeness: {state['scenario_completeness'] * 100:.0f}% | {state['scenario_slots']}")
+    # 슬롯 업데이트는 사용자 메시지가 충분할 때만 실행
+    user_messages = [msg for msg in state["messages"] if msg["role"] == "user"]
+    if len(user_messages) >= 2:  # 최소 2개 이상의 사용자 메시지가 있을 때만
+        state = update_scenario_slots(state)
+        print(f"[Slots] Completeness: {state['scenario_completeness'] * 100:.0f}% | {state['scenario_slots']}")
+    else:
+        print(f"[Slots] 대화 내용 부족으로 슬롯 업데이트 건너뜀 (사용자 메시지: {len(user_messages)}개)")
 
     if result["extreme"] or result["emotion_score"] > 0.85:
         state["next_node"] = "mindfulness"

@@ -5,7 +5,10 @@ AI 멀티에이전트 상담 시스템 웹 애플리케이션 실행 스크립�
 
 import os
 import sys
-from app import app
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), 'backend'))
+
+from backend.app import app
 
 if __name__ == '__main__':
     # 환경 변수 확인

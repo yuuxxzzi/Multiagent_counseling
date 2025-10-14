@@ -387,8 +387,213 @@
             background: #28a745;
         }
 
+        /* 시나리오 슬롯 스타일 */
+        .scenario-slots {
+            margin-bottom: var(--space-4);
+        }
+
+        .slot-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-2) 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .slot-item:last-child {
+            border-bottom: none;
+        }
+
+        .slot-label {
+            font-weight: 500;
+            color: var(--gray-700);
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+        }
+
+        .slot-label i {
+            width: 16px;
+            color: var(--primary);
+        }
+
+        .slot-value {
+            color: var(--gray-600);
+            font-size: 0.9em;
+            text-align: right;
+            max-width: 60%;
+            word-break: break-word;
+        }
+
+        .scenario-progress {
+            margin-top: var(--space-3);
+            padding-top: var(--space-3);
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .progress-label {
+            font-size: 0.9em;
+            color: var(--gray-600);
+            margin-bottom: var(--space-2);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--gray-200);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: var(--space-1);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 0.8em;
+            color: var(--gray-500);
+            text-align: center;
+            display: block;
+        }
+
+        /* 롤플레잉 상태 표시 스타일 */
+        .roleplay-status {
+            background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+            color: white;
+            padding: var(--space-4);
+            margin: var(--space-3) 0;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideInFromTop 0.5s ease-out;
+        }
+
+        .roleplay-info {
+            flex: 1;
+        }
+
+        .roleplay-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .roleplay-details {
+            display: flex;
+            gap: var(--space-4);
+            margin-bottom: var(--space-2);
+        }
+
+        .role-info {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-1);
+        }
+
+        .role-label {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        .role-value {
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.2);
+            padding: var(--space-1) var(--space-2);
+            border-radius: var(--radius);
+            font-size: 0.9em;
+        }
+
+        .roleplay-situation {
+            font-size: 0.9em;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        .end-roleplay-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: var(--space-2) var(--space-3);
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.2s ease;
+        }
+
+        .end-roleplay-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        @keyframes slideInFromTop {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
         .status-indicator.inactive {
             background: #6c757d;
+        }
+
+        /* 감정 범례 스타일 */
+        .emotion-legend {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-2);
+            margin-top: var(--space-3);
+        }
+
+        .emotion-legend-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-2);
+            background: var(--gray-50);
+            border-radius: var(--radius);
+            border: 1px solid var(--gray-200);
+            transition: all 0.2s ease;
+        }
+
+        .emotion-legend-item:hover {
+            background: var(--gray-100);
+            transform: translateY(-1px);
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .legend-shape {
+            font-size: 0.9em;
+            color: var(--gray-600);
+            min-width: 16px;
+            text-align: center;
+        }
+
+        .legend-label {
+            font-size: 0.85em;
+            font-weight: 500;
+            color: var(--gray-700);
+            flex: 1;
         }
 
         .chat-container {
@@ -956,6 +1161,37 @@
             margin: var(--space-3) 0;
             box-shadow: var(--shadow-md);
             border-left: 4px solid var(--error);
+        }
+
+        /* 마인드풀니스 개입 표시 */
+        .mindfulness-intervention {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 2px solid #f59e0b;
+            border-radius: var(--radius-lg);
+            padding: var(--space-4);
+            margin: var(--space-3) 0;
+            box-shadow: var(--shadow-lg);
+            animation: mindfulnessPulse 2s ease-in-out infinite;
+        }
+
+        .mindfulness-intervention .intervention-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            margin-bottom: var(--space-3);
+            color: #92400e;
+            font-weight: 600;
+        }
+
+        .mindfulness-intervention .intervention-content {
+            color: #78350f;
+            line-height: 1.6;
+            font-size: 1.1em;
+        }
+
+        @keyframes mindfulnessPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
         }
 
         /* 위기 상황 감지 팝업 스타일 */
@@ -1750,11 +1986,106 @@
                 </div>
                 <div class="agent-status">
                     <span><i class="fas fa-theater-masks"></i> 역할극</span>
-                    <div class="status-indicator inactive"></div>
+                    <div class="status-indicator inactive" id="roleplayStatus"></div>
                 </div>
                 <div class="agent-status">
                     <span><i class="fas fa-leaf"></i> 마인드풀니스</span>
-                    <div class="status-indicator inactive"></div>
+                    <div class="status-indicator inactive" id="mindfulnessStatus"></div>
+                </div>
+            </div>
+            
+            <!-- 감정 범례 -->
+            <div class="sidebar-section">
+                <h3><i class="fas fa-palette"></i> 감정 범례</h3>
+                <div class="emotion-legend">
+                    <div class="emotion-legend-item">
+                        <div class="legend-color" style="background: #10b981;"></div>
+                        <div class="legend-shape">●</div>
+                        <span class="legend-label">기쁨</span>
+                    </div>
+                    <div class="emotion-legend-item">
+                        <div class="legend-color" style="background: #3b82f6;"></div>
+                        <div class="legend-shape">●</div>
+                        <span class="legend-label">슬픔</span>
+                    </div>
+                    <div class="emotion-legend-item">
+                        <div class="legend-color" style="background: #ef4444;"></div>
+                        <div class="legend-shape">▲</div>
+                        <span class="legend-label">분노</span>
+                    </div>
+                    <div class="emotion-legend-item">
+                        <div class="legend-color" style="background: #f97316;"></div>
+                        <div class="legend-shape">■</div>
+                        <span class="legend-label">불안</span>
+                    </div>
+                    <div class="emotion-legend-item">
+                        <div class="legend-color" style="background: #6b7280;"></div>
+                        <div class="legend-shape">▢</div>
+                        <span class="legend-label">무기력</span>
+                    </div>
+                    <div class="emotion-legend-item">
+                        <div class="legend-color" style="background: #8b5cf6;"></div>
+                        <div class="legend-shape">★</div>
+                        <span class="legend-label">중립</span>
+                    </div>
+                    <div class="emotion-legend-item">
+                        <div class="legend-color" style="background: #dc2626;"></div>
+                        <div class="legend-shape">◆</div>
+                        <span class="legend-label">두려움</span>
+                    </div>
+                    <div class="emotion-legend-item">
+                        <div class="legend-color" style="background: #fbbf24;"></div>
+                        <div class="legend-shape">✚</div>
+                        <span class="legend-label">놀람</span>
+                    </div>
+                    <div class="emotion-legend-item">
+                        <div class="legend-color" style="background: #7c3aed;"></div>
+                        <div class="legend-shape">✖</div>
+                        <span class="legend-label">혐오</span>
+                    </div>
+                    <div class="emotion-legend-item">
+                        <div class="legend-color" style="background: #ec4899;"></div>
+                        <div class="legend-shape">▬</div>
+                        <span class="legend-label">수치심</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 시나리오 슬롯 정보 -->
+            <div class="sidebar-section" id="scenarioSection" style="display: none;">
+                <h3><i class="fas fa-clipboard-list"></i> 시나리오 정보</h3>
+                <div class="scenario-slots">
+                    <div class="slot-item">
+                        <span class="slot-label"><i class="fas fa-calendar"></i> 사건:</span>
+                        <span class="slot-value" id="slotEvent">-</span>
+                    </div>
+                    <div class="slot-item">
+                        <span class="slot-label"><i class="fas fa-user"></i> 상대방:</span>
+                        <span class="slot-value" id="slotCharacter">-</span>
+                    </div>
+                    <div class="slot-item">
+                        <span class="slot-label"><i class="fas fa-map-marker-alt"></i> 장소:</span>
+                        <span class="slot-value" id="slotPlace">-</span>
+                    </div>
+                    <div class="slot-item">
+                        <span class="slot-label"><i class="fas fa-heart"></i> 감정:</span>
+                        <span class="slot-value" id="slotEmotion">-</span>
+                    </div>
+                    <div class="slot-item">
+                        <span class="slot-label"><i class="fas fa-question-circle"></i> 원인:</span>
+                        <span class="slot-value" id="slotWhy">-</span>
+                    </div>
+                    <div class="slot-item">
+                        <span class="slot-label"><i class="fas fa-target"></i> 목표:</span>
+                        <span class="slot-value" id="slotGoal">-</span>
+                    </div>
+                </div>
+                <div class="scenario-progress">
+                    <div class="progress-label">시나리오 완성도</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="scenarioProgress" style="width: 0%"></div>
+                    </div>
+                    <span class="progress-text" id="scenarioProgressText">0%</span>
                 </div>
             </div>
         </div>
@@ -1785,8 +2116,35 @@
             <div>처리 중...</div>
         </div>
         
+        <!-- 롤플레잉 상태 표시 -->
+        <div class="roleplay-status" id="roleplayStatusBar" style="display: none;">
+            <div class="roleplay-info">
+                <div class="roleplay-title">
+                    <i class="fas fa-theater-masks"></i>
+                    <span>롤플레잉 진행 중</span>
+                </div>
+                <div class="roleplay-details">
+                    <div class="role-info">
+                        <span class="role-label">당신:</span>
+                        <span class="role-value" id="userRole">본인</span>
+                    </div>
+                    <div class="role-info">
+                        <span class="role-label">AI:</span>
+                        <span class="role-value" id="aiRole">상대방</span>
+                    </div>
+                </div>
+                <div class="roleplay-situation" id="roleplaySituation">
+                    상황이 설정되지 않았습니다.
+                </div>
+            </div>
+            <button onclick="endRoleplay()" class="end-roleplay-btn">
+                <i class="fas fa-stop"></i>
+                롤플레잉 종료
+            </button>
+        </div>
+
         <div class="controls">
-            <button onclick="triggerRoleplay()">
+            <button onclick="triggerRoleplay()" id="roleplayBtn">
                 <i class="fas fa-theater-masks"></i>
                 롤플레잉 시작
             </button>
@@ -1936,7 +2294,7 @@
     </div>
 
     <!-- Chart.js 라이브러리 -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js?v=2"></script>
     
     <!-- jsPDF 라이브러리 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -1986,10 +2344,18 @@
         let mindfulnessTimer = null;
         let mindfulnessCountdown = 5;
         
-        // 감정 데이터 저장 (빈 그래프로 초기화)
+        // 감정 데이터 저장 (빈 그래프로 초기화) - v2.0
         let emotionData = {
             labels: [],
             datasets: [
+                {
+                    label: '기쁨',
+                    data: [],
+                    borderColor: '#10b981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    tension: 0.4,
+                    pointStyle: 'circle'
+                },
                 {
                     label: '슬픔',
                     data: [],
@@ -1997,6 +2363,14 @@
                     backgroundColor: 'rgba(59, 130, 246, 0.1)',
                     tension: 0.4,
                     pointStyle: 'circle'
+                },
+                {
+                    label: '분노',
+                    data: [],
+                    borderColor: '#ef4444',
+                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                    tension: 0.4,
+                    pointStyle: 'triangle'
                 },
                 {
                     label: '불안',
@@ -2007,12 +2381,52 @@
                     pointStyle: 'rect'
                 },
                 {
-                    label: '분노',
+                    label: '무기력',
                     data: [],
-                    borderColor: '#ef4444',
-                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                    borderColor: '#6b7280',
+                    backgroundColor: 'rgba(107, 114, 128, 0.1)',
                     tension: 0.4,
-                    pointStyle: 'triangle'
+                    pointStyle: 'rectRot'
+                },
+                {
+                    label: '중립',
+                    data: [],
+                    borderColor: '#8b5cf6',
+                    backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                    tension: 0.4,
+                    pointStyle: 'star'
+                },
+                {
+                    label: '두려움',
+                    data: [],
+                    borderColor: '#dc2626',
+                    backgroundColor: 'rgba(220, 38, 38, 0.1)',
+                    tension: 0.4,
+                    pointStyle: 'diamond'
+                },
+                {
+                    label: '놀람',
+                    data: [],
+                    borderColor: '#fbbf24',
+                    backgroundColor: 'rgba(251, 191, 36, 0.1)',
+                    tension: 0.4,
+                    pointStyle: 'cross'
+                },
+                {
+                    label: '혐오',
+                    data: [],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    tension: 0.4,
+                    pointStyle: 'crossRot'
+                },
+                {
+                    label: '수치심',
+                    data: [],
+                    borderColor: '#ec4899',
+                    backgroundColor: 'rgba(236, 72, 153, 0.1)',
+                    tension: 0.4,
+                    pointStyle: 'line'
                 }
             ]
         };
@@ -2179,15 +2593,27 @@
                             case 'emotion':
                                 // 감정 분석 결과를 그래프에 업데이트
                                 updateEmotionData(response.content.emotion_class, response.content.emotion_score);
+                                // 극단성 탐지 표시
+                                if (response.content.extreme) {
+                                    addSystemMessage(`⚠️ 극단적 감정이 감지되었습니다. 마인드풀니스 개입이 필요할 수 있습니다.`, 'emotion');
+                                }
                                 break;
                             case 'mindfulness':
-                                // 마인드풀니스 팝업만 표시 (채팅창 메시지는 제거)
+                                // 마인드풀니스 상태 표시
+                                document.getElementById('mindfulnessStatus').classList.remove('inactive');
+                                document.getElementById('mindfulnessStatus').style.background = '#ff6b6b';
+                                // 마인드풀니스 개입 메시지 표시
+                                addMindfulnessIntervention(response.content);
                                 setTimeout(() => {
                                     showMindfulnessPopup();
                                 }, 500);
                                 break;
                             case 'roleplay':
                                 addSystemMessage(`🎭 롤플레잉: ${response.content}`, 'roleplay');
+                                // 롤플레잉 상태 표시
+                                document.getElementById('roleplayStatus').classList.remove('inactive');
+                                document.getElementById('roleplayStatus').style.background = '#8b5cf6';
+                                showRoleplayStatus();
                                 break;
                             case 'assistant':
                                 addMessage(response.content, 'assistant');
@@ -2197,6 +2623,16 @@
                                 break;
                         }
                     });
+                    
+                    // 시나리오 슬롯 정보 업데이트
+                    if (data.scenario_slots) {
+                        updateScenarioSlots(data.scenario_slots);
+                    }
+                    
+                    // 시나리오 완성도 업데이트
+                    if (data.scenario_completeness !== undefined) {
+                        updateScenarioProgress(data.scenario_completeness);
+                    }
                     
                     roleplayActive = data.roleplay_active;
                 } else {
@@ -2550,14 +2986,7 @@
                     },
                     plugins: {
                         legend: {
-                            position: 'bottom',
-                            labels: {
-                                usePointStyle: true,
-                                padding: 15,
-                                font: {
-                                    size: 11
-                                }
-                            }
+                            display: false  // 범례 숨김
                         }
                     }
                 }
@@ -2571,6 +3000,27 @@
             
             // 감정 점수를 0.0~1.0 범위로 제한
             const normalizedScore = Math.min(Math.max(emotionScore, 0.0), 1.0);
+            
+            // 새로운 감정 클래스가 기존에 없으면 추가
+            const existingDataset = currentSession.emotionData.datasets.find(dataset => dataset.label === emotionClass);
+            if (!existingDataset) {
+                // 새로운 감정 데이터셋 추가
+                const colors = [
+                    '#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', 
+                    '#06b6d4', '#84cc16', '#f97316', '#ec4899', '#6366f1'
+                ];
+                const colorIndex = currentSession.emotionData.datasets.length % colors.length;
+                
+                const newDataset = {
+                    label: emotionClass,
+                    data: new Array(currentSession.emotionData.labels.length).fill(0),
+                    borderColor: colors[colorIndex],
+                    backgroundColor: colors[colorIndex] + '20',
+                    tension: 0.4,
+                    fill: false
+                };
+                currentSession.emotionData.datasets.push(newDataset);
+            }
             
             // 새로운 데이터 포인트 추가
             const newLabel = `#${currentSession.emotionData.labels.length + 1}`;
@@ -2587,8 +3037,8 @@
                 }
             });
             
-            // 최대 10개 데이터 포인트만 유지
-            if (currentSession.emotionData.labels.length > 10) {
+            // 최대 15개 데이터 포인트만 유지
+            if (currentSession.emotionData.labels.length > 15) {
                 currentSession.emotionData.labels.shift();
                 currentSession.emotionData.datasets.forEach(dataset => {
                     dataset.data.shift();
@@ -2600,6 +3050,64 @@
                 emotionChart.data = currentSession.emotionData;
                 emotionChart.update();
             }
+        }
+
+        function updateScenarioSlots(slots) {
+            // 시나리오 섹션 표시
+            document.getElementById('scenarioSection').style.display = 'block';
+            
+            // 각 슬롯 값 업데이트
+            document.getElementById('slotEvent').textContent = slots.event || '-';
+            document.getElementById('slotCharacter').textContent = slots.character || '-';
+            document.getElementById('slotPlace').textContent = slots.place || '-';
+            document.getElementById('slotEmotion').textContent = slots.emotion || '-';
+            document.getElementById('slotWhy').textContent = slots.why || '-';
+            document.getElementById('slotGoal').textContent = slots.goal || '-';
+        }
+
+        function updateScenarioProgress(completeness) {
+            const percentage = Math.round(completeness * 100);
+            document.getElementById('scenarioProgress').style.width = percentage + '%';
+            document.getElementById('scenarioProgressText').textContent = percentage + '%';
+        }
+
+        function showRoleplayStatus() {
+            document.getElementById('roleplayStatusBar').style.display = 'flex';
+            document.getElementById('roleplayBtn').style.display = 'none';
+        }
+
+        function hideRoleplayStatus() {
+            document.getElementById('roleplayStatusBar').style.display = 'none';
+            document.getElementById('roleplayBtn').style.display = 'inline-flex';
+        }
+
+        function updateRoleplayInfo(userRole, aiRole, situation) {
+            document.getElementById('userRole').textContent = userRole || '본인';
+            document.getElementById('aiRole').textContent = aiRole || '상대방';
+            document.getElementById('roleplaySituation').textContent = situation || '상황이 설정되지 않았습니다.';
+        }
+
+        function endRoleplay() {
+            hideRoleplayStatus();
+            addSystemMessage('🎭 롤플레잉이 종료되었습니다.', 'roleplay');
+        }
+
+
+        function addMindfulnessIntervention(content) {
+            const chatMessages = document.getElementById('chatMessages');
+            const interventionDiv = document.createElement('div');
+            interventionDiv.className = 'mindfulness-intervention';
+            interventionDiv.innerHTML = `
+                <div class="intervention-header">
+                    <i class="fas fa-leaf"></i>
+                    <span>마인드풀니스 개입</span>
+                </div>
+                <div class="intervention-content">
+                    ${content}
+                </div>
+            `;
+            chatMessages.appendChild(interventionDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
         // 새 상담 시작
@@ -2616,12 +3124,28 @@
                     labels: [],
                     datasets: [
                         {
+                            label: '기쁨',
+                            data: [],
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            tension: 0.4,
+                            pointStyle: 'circle'
+                        },
+                        {
                             label: '슬픔',
                             data: [],
                             borderColor: '#3b82f6',
                             backgroundColor: 'rgba(59, 130, 246, 0.1)',
                             tension: 0.4,
                             pointStyle: 'circle'
+                        },
+                        {
+                            label: '분노',
+                            data: [],
+                            borderColor: '#ef4444',
+                            backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                            tension: 0.4,
+                            pointStyle: 'triangle'
                         },
                         {
                             label: '불안',
@@ -2632,12 +3156,52 @@
                             pointStyle: 'rect'
                         },
                         {
-                            label: '분노',
+                            label: '무기력',
                             data: [],
-                            borderColor: '#ef4444',
-                            backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                            borderColor: '#6b7280',
+                            backgroundColor: 'rgba(107, 114, 128, 0.1)',
                             tension: 0.4,
-                            pointStyle: 'triangle'
+                            pointStyle: 'rectRot'
+                        },
+                        {
+                            label: '중립',
+                            data: [],
+                            borderColor: '#8b5cf6',
+                            backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                            tension: 0.4,
+                            pointStyle: 'star'
+                        },
+                        {
+                            label: '두려움',
+                            data: [],
+                            borderColor: '#dc2626',
+                            backgroundColor: 'rgba(220, 38, 38, 0.1)',
+                            tension: 0.4,
+                            pointStyle: 'diamond'
+                        },
+                        {
+                            label: '놀람',
+                            data: [],
+                            borderColor: '#fbbf24',
+                            backgroundColor: 'rgba(251, 191, 36, 0.1)',
+                            tension: 0.4,
+                            pointStyle: 'cross'
+                        },
+                        {
+                            label: '혐오',
+                            data: [],
+                            borderColor: '#7c3aed',
+                            backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                            tension: 0.4,
+                            pointStyle: 'crossRot'
+                        },
+                        {
+                            label: '수치심',
+                            data: [],
+                            borderColor: '#ec4899',
+                            backgroundColor: 'rgba(236, 72, 153, 0.1)',
+                            tension: 0.4,
+                            pointStyle: 'line'
                         }
                     ]
                 }
