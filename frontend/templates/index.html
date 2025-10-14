@@ -443,8 +443,8 @@
             <div class="hero-nav">
                 <button class="nav-btn" onclick="showFeatures()">기능</button>
                 <button class="nav-btn" onclick="showAbout()">소개</button>
-                <button class="nav-btn" onclick="showContact()">문의</button>
-                <button class="hero-login-btn" onclick="startCounseling()">상담 시작</button>
+                <button class="nav-btn" id="loginBtn" onclick="goToLogin()" style="display: none;">로그인</button>
+                <button class="hero-login-btn" id="authBtn" onclick="handleAuthAction()">회원가입</button>
                 </div>
             </div>
             
@@ -532,9 +532,98 @@
     </div>
 
     <script>
-        // Hero Section Functions
+        // 인증 상태 확인
+        let isLoggedIn = false;
+        let userInfo = null;
+
+        // 페이지 로드 시 인증 상태 확인
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuthStatus();
+            setupEventListeners();
+        });
+
+        // 인증 상태 확인 함수
+        async function checkAuthStatus() {
+            try {
+                const response = await fetch('/api/auth/status');
+                if (response.ok) {
+                    const data = await response.json();
+                    isLoggedIn = data.isLoggedIn;
+                    userInfo = data.user;
+                    updateAuthButtons();
+                }
+            } catch (error) {
+                console.log('인증 상태 확인 실패:', error);
+                updateAuthButtons();
+            }
+        }
+
+        // 인증 상태에 따른 버튼 업데이트
+        function updateAuthButtons() {
+            const authBtn = document.getElementById('authBtn');
+            const loginBtn = document.getElementById('loginBtn');
+            
+            if (isLoggedIn) {
+                // 로그인된 상태
+                authBtn.textContent = '로그아웃';
+                authBtn.onclick = logout;
+                loginBtn.style.display = 'none';
+            } else {
+                // 로그인되지 않은 상태
+                authBtn.textContent = '회원가입';
+                authBtn.onclick = goToSignup;
+                loginBtn.style.display = 'inline-block';
+            }
+        }
+
+        // 인증 액션 핸들러
+        function handleAuthAction() {
+            if (isLoggedIn) {
+                logout();
+            } else {
+                goToSignup();
+            }
+        }
+
+        // 회원가입 페이지로 이동
+        function goToSignup() {
+            window.location.href = '/signup';
+        }
+
+        // 로그인 페이지로 이동
+        function goToLogin() {
+            window.location.href = '/login';
+        }
+
+        // 로그아웃
+        async function logout() {
+            try {
+                const response = await fetch('/api/logout', {
+                    method: 'POST'
+                });
+                
+                if (response.ok) {
+                    isLoggedIn = false;
+                    userInfo = null;
+                    updateAuthButtons();
+                    alert('로그아웃되었습니다.');
+                } else {
+                    alert('로그아웃에 실패했습니다.');
+                }
+            } catch (error) {
+                alert('네트워크 오류가 발생했습니다.');
+            }
+        }
+
+        // 상담 시작 함수 (로그인 체크)
         function startCounseling() {
-            window.location.href = '/counseling';
+            if (isLoggedIn) {
+                window.location.href = '/counseling';
+            } else {
+                if (confirm('상담을 시작하려면 로그인이 필요합니다.\n로그인 페이지로 이동하시겠습니까?')) {
+                    goToLogin();
+                }
+            }
         }
 
         function showFeatures() {
@@ -547,9 +636,6 @@
             alert('AI 멀티에이전트 상담 시스템에 대해:\n\n최첨단 AI 기술을 활용하여 더욱 정확하고 개인화된 상담 서비스를 제공합니다.');
         }
 
-        function showContact() {
-            alert('문의사항이 있으시면 언제든 연락주세요.\n\n이메일: support@ai-counseling.com\n전화: 1588-0000');
-        }
 
         // Hero Search Function
         function handleHeroSearch() {
@@ -557,20 +643,22 @@
             const message = input.value.trim();
             
             if (message) {
-                // 상담 페이지로 이동하면서 메시지 전달
-                window.location.href = `/counseling?message=${encodeURIComponent(message)}`;
+                if (isLoggedIn) {
+                    // 로그인된 상태: 상담 페이지로 이동하면서 메시지 전달
+                    window.location.href = `/counseling?message=${encodeURIComponent(message)}`;
+                } else {
+                    // 로그인되지 않은 상태: 로그인 페이지로 이동
+                    if (confirm('상담을 시작하려면 로그인이 필요합니다.\n로그인 페이지로 이동하시겠습니까?')) {
+                        goToLogin();
+                    }
+                }
             } else {
                 startCounseling();
             }
         }
 
-        // 상담 시작 함수
-        function startCounseling() {
-            window.location.href = '/counseling';
-        }
-
-        // Hero Search Event Listeners
-        document.addEventListener('DOMContentLoaded', function() {
+        // 이벤트 리스너 설정
+        function setupEventListeners() {
             const heroSearchInput = document.getElementById('heroSearchInput');
             
             if (heroSearchInput) {
@@ -580,7 +668,7 @@
                     }
                 });
             }
-        });
+        }
     </script>
 </body>
 </html>

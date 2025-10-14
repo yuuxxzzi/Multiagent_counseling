@@ -1,7 +1,9 @@
-from flask import Flask, render_template, request, jsonify, session
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 import json
 import uuid
 import os
+import hashlib
+import re
 from datetime import datetime
 from openai import OpenAI
 from Multiagent_counseling.main import (
@@ -29,6 +31,31 @@ roleplay_summary = RoleplaySummaryAgent()
 
 # 세션별 상태 저장
 user_sessions = {}
+
+# 간단한 사용자 데이터베이스 (실제 프로덕션에서는 데이터베이스 사용)
+users_db = {}
+
+def hash_password(password):
+    """비밀번호 해시화"""
+    return hashlib.sha256(password.encode()).hexdigest()
+
+def validate_email(email):
+    """이메일 형식 검증"""
+    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    return re.match(pattern, email) is not None
+
+def validate_password(password):
+    """비밀번호 강도 검증"""
+    if len(password) < 8:
+        return False, "비밀번호는 최소 8자 이상이어야 합니다."
+    
+    if not re.search(r'[A-Za-z]', password):
+        return False, "비밀번호는 영문자를 포함해야 합니다."
+    
+    if not re.search(r'\d', password):
+        return False, "비밀번호는 숫자를 포함해야 합니다."
+    
+    return True, "유효한 비밀번호입니다."
 
 def get_or_create_session():
     """사용자 세션을 가져오거나 새로 생성"""
@@ -76,6 +103,14 @@ def index():
 @app.route('/counseling')
 def counseling():
     return render_template('counseling.html')
+
+@app.route('/login')
+def login_page():
+    return render_template('login.html')
+
+@app.route('/signup')
+def signup_page():
+    return render_template('signup.html')
 
 @app.route('/chat', methods=['POST'])
 def chat():
@@ -407,6 +442,141 @@ def generate_session_title():
     except Exception as e:
         print(f"제목 생성 중 오류: {e}")
         return jsonify({'error': f'제목 생성 중 오류가 발생했습니다: {str(e)}'}), 500
+
+# 인증 관련 API 라우트들
+@app.route('/api/signup', methods=['POST'])
+def api_signup():
+    """회원가입 API"""
+    try:
+        data = request.get_json()
+        name = data.get('name', '').strip()
+        email = data.get('email', '').strip().lower()
+        password = data.get('password', '')
+        
+        # 유효성 검사
+        if not name:
+            return jsonify({'message': '이름을 입력해주세요.'}), 400
+        
+        if not email:
+            return jsonify({'message': '이메일을 입력해주세요.'}), 400
+            
+        if not validate_email(email):
+            return jsonify({'message': '올바른 이메일 형식을 입력해주세요.'}), 400
+            
+        if not password:
+            return jsonify({'message': '비밀번호를 입력해주세요.'}), 400
+            
+        is_valid, message = validate_password(password)
+        if not is_valid:
+            return jsonify({'message': message}), 400
+        
+        # 이메일 중복 확인
+        if email in users_db:
+            return jsonify({'message': '이미 가입된 이메일입니다.'}), 400
+        
+        # 사용자 생성
+        user_id = str(uuid.uuid4())
+        users_db[email] = {
+            'id': user_id,
+            'name': name,
+            'email': email,
+            'password': hash_password(password),
+            'created_at': datetime.now().isoformat()
+        }
+        
+        return jsonify({
+            'success': True,
+            'message': '회원가입이 완료되었습니다.'
+        })
+        
+    except Exception as e:
+        print(f"회원가입 오류: {e}")
+        return jsonify({'message': '회원가입 중 오류가 발생했습니다.'}), 500
+
+@app.route('/api/login', methods=['POST'])
+def api_login():
+    """로그인 API"""
+    try:
+        data = request.get_json()
+        email = data.get('email', '').strip().lower()
+        password = data.get('password', '')
+        
+        # 유효성 검사
+        if not email:
+            return jsonify({'message': '이메일을 입력해주세요.'}), 400
+            
+        if not password:
+            return jsonify({'message': '비밀번호를 입력해주세요.'}), 400
+        
+        # 사용자 확인
+        if email not in users_db:
+            return jsonify({'message': '이메일 또는 비밀번호가 올바르지 않습니다.'}), 401
+        
+        user = users_db[email]
+        hashed_password = hash_password(password)
+        
+        if user['password'] != hashed_password:
+            return jsonify({'message': '이메일 또는 비밀번호가 올바르지 않습니다.'}), 401
+        
+        # 세션에 사용자 정보 저장
+        session['user_id'] = user['id']
+        session['user_email'] = user['email']
+        session['user_name'] = user['name']
+        session['is_logged_in'] = True
+        
+        return jsonify({
+            'success': True,
+            'message': '로그인 성공',
+            'user': {
+                'id': user['id'],
+                'name': user['name'],
+                'email': user['email']
+            }
+        })
+        
+    except Exception as e:
+        print(f"로그인 오류: {e}")
+        return jsonify({'message': '로그인 중 오류가 발생했습니다.'}), 500
+
+@app.route('/api/logout', methods=['POST'])
+def api_logout():
+    """로그아웃 API"""
+    try:
+        session.clear()
+        return jsonify({
+            'success': True,
+            'message': '로그아웃되었습니다.'
+        })
+    except Exception as e:
+        print(f"로그아웃 오류: {e}")
+        return jsonify({'message': '로그아웃 중 오류가 발생했습니다.'}), 500
+
+@app.route('/api/auth/status')
+def api_auth_status():
+    """인증 상태 확인 API"""
+    try:
+        is_logged_in = session.get('is_logged_in', False)
+        
+        if is_logged_in:
+            user = {
+                'id': session.get('user_id'),
+                'name': session.get('user_name'),
+                'email': session.get('user_email')
+            }
+        else:
+            user = None
+        
+        return jsonify({
+            'isLoggedIn': is_logged_in,
+            'user': user
+        })
+        
+    except Exception as e:
+        print(f"인증 상태 확인 오류: {e}")
+        return jsonify({
+            'isLoggedIn': False,
+            'user': None
+        })
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
