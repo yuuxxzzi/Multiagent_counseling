@@ -73,6 +73,10 @@ def get_or_create_session():
 def index():
     return render_template('index.html')
 
+@app.route('/counseling')
+def counseling():
+    return render_template('counseling.html')
+
 @app.route('/chat', methods=['POST'])
 def chat():
     try:
