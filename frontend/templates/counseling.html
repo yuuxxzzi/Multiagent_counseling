@@ -101,11 +101,8 @@
 
         /* Main Content Area */
         .content-area {
-            display: grid;
-            grid-template-columns: 300px 1fr 350px;
-            grid-template-rows: 1fr;
+            display: flex;
             height: 100vh;
-            gap: 0;
             background: var(--bg-primary);
             position: relative;
         }
@@ -122,6 +119,398 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             overflow-y: auto;
             height: 100vh;
+            width: 300px;
+            min-width: 300px;
+            max-width: 300px;
+            flex-shrink: 0;
+            resize: none;
+        }
+
+        /* 사이드바 최소화 상태 */
+        .sidebar.minimized {
+            width: 60px !important;
+            min-width: 60px !important;
+            max-width: 60px !important;
+        }
+
+        /* 최소화 상태 강제 적용 */
+        #leftSidebar.minimized {
+            width: 60px !important;
+            min-width: 60px !important;
+            max-width: 60px !important;
+        }
+
+        .sidebar.minimized .sidebar-header {
+            padding: 20px 10px;
+            justify-content: center;
+        }
+
+        .sidebar.minimized .logo-container {
+            display: none !important; /* 로고 컨테이너 완전히 숨김 */
+        }
+
+        .sidebar.minimized .sidebar-title {
+            display: none !important;
+        }
+
+        .sidebar.minimized .sidebar-header {
+            padding: 10px 5px !important;
+            justify-content: center !important;
+            height: 60px !important;
+            min-height: 60px !important;
+            position: relative !important;
+        }
+
+        .sidebar.minimized .sidebar-toggle-btn {
+            position: absolute !important;
+            left: 50% !important;
+            top: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            width: 35px !important;
+            height: 35px !important;
+            border-radius: 50% !important;
+            background: var(--primary) !important;
+            border: none !important;
+            color: white !important;
+            font-size: 16px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            transition: all 0.3s ease !important;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3) !important;
+        }
+
+        /* 햄버거 버튼 강제 적용 */
+        #leftSidebar.minimized .sidebar-toggle-btn {
+            position: absolute !important;
+            left: 50% !important;
+            top: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            width: 35px !important;
+            height: 35px !important;
+            border-radius: 50% !important;
+            background: var(--primary) !important;
+            border: none !important;
+            color: white !important;
+            font-size: 16px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            min-width: 35px !important;
+            max-width: 35px !important;
+            flex-direction: row !important;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3) !important;
+        }
+
+        /* 햄버거 버튼 아이콘 강제 표시 */
+        #leftSidebar.minimized .sidebar-toggle-btn i {
+            display: block !important;
+            font-size: 16px !important;
+            color: white !important;
+        }
+
+        .sidebar.minimized .sidebar-toggle-btn:hover {
+            background: var(--primary-dark) !important;
+            transform: translate(-50%, -50%) scale(1.1) !important;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4) !important;
+        }
+
+        .sidebar.minimized .new-session-btn {
+            width: 35px !important;
+            height: 35px !important;
+            border-radius: 50% !important;
+            padding: 0 !important;
+            margin: 15px auto !important;
+            justify-content: center !important;
+            align-items: center !important;
+            background: var(--primary) !important;
+            color: white !important;
+            border: none !important;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3) !important;
+            transition: all 0.3s ease !important;
+            position: relative !important;
+            z-index: 10 !important;
+            display: flex !important;
+            flex-direction: row !important;
+            min-width: 35px !important;
+            max-width: 35px !important;
+            align-self: center !important;
+        }
+
+        /* 새 상담 버튼 강제 적용 */
+        #leftSidebar.minimized .new-session-btn {
+            width: 35px !important;
+            height: 35px !important;
+            border-radius: 50% !important;
+            padding: 0 !important;
+            margin: 15px auto !important;
+            background: var(--primary) !important;
+            color: white !important;
+            border: none !important;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            min-width: 35px !important;
+            max-width: 35px !important;
+            flex-direction: row !important;
+            align-self: center !important;
+        }
+
+        /* 새 상담 버튼 아이콘 강제 표시 */
+        #leftSidebar.minimized .new-session-btn i {
+            display: block !important;
+            font-size: 14px !important;
+            color: white !important;
+        }
+
+        .sidebar.minimized .new-session-btn:hover {
+            background: var(--primary-dark) !important;
+            transform: scale(1.1) !important;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4) !important;
+        }
+
+        .sidebar.minimized .new-session-btn .btn-text {
+            display: none !important;
+        }
+
+        .sidebar.minimized .new-session-btn span {
+            display: none !important;
+        }
+
+        .sidebar.minimized .new-session-btn i {
+            font-size: 16px;
+        }
+
+        .sidebar.minimized .sidebar-section {
+            margin: 8px 6px !important;
+            position: relative !important;
+        }
+
+        .sidebar.minimized .sidebar-section h3 {
+            display: none !important; /* 제목 완전히 숨김 */
+        }
+
+        .sidebar.minimized .sidebar-section h3 i {
+            display: none !important; /* 제목 아이콘도 숨김 */
+        }
+
+        /* Agents Status 섹션만 표시 */
+        .sidebar.minimized .sidebar-section:has(.agent-status) {
+            display: block !important;
+        }
+
+        /* Agents Status 섹션 직접 선택 */
+        .sidebar.minimized .sidebar-section:nth-child(3) {
+            display: block !important;
+            margin: 8px 6px !important;
+        }
+
+        .sidebar.minimized .agent-status {
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 8px !important;
+            margin-top: 10px !important;
+            display: flex !important; /* 에이전트 상태 섹션 표시 */
+            width: 100% !important;
+        }
+
+        /* 에이전트 상태 섹션 강제 표시 */
+        #leftSidebar.minimized .agent-status {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 8px !important;
+            margin-top: 10px !important;
+            width: 100% !important;
+        }
+
+        /* Agents Status 섹션 강제 표시 */
+        #leftSidebar.minimized .sidebar-section:has(.agent-status) {
+            display: block !important;
+            margin: 8px 6px !important;
+        }
+
+        /* Agents Status 섹션 직접 강제 표시 */
+        #leftSidebar.minimized .sidebar-section:nth-child(3) {
+            display: block !important;
+            margin: 8px 6px !important;
+        }
+
+        /* 상담 내역 섹션은 숨김 */
+        #leftSidebar.minimized .sidebar-section:has(.session-list) {
+            display: none !important;
+        }
+
+        /* 상담 내역 섹션 직접 숨김 */
+        #leftSidebar.minimized .sidebar-section:nth-child(4) {
+            display: none !important;
+        }
+
+        .sidebar.minimized .agent-item {
+            width: 35px !important;
+            height: 35px !important;
+            border-radius: 50% !important;
+            padding: 0 !important;
+            justify-content: center !important;
+            background: rgba(102, 126, 234, 0.2) !important;
+            border: 1px solid rgba(102, 126, 234, 0.3) !important;
+            transition: all 0.3s ease !important;
+            margin: 3px auto !important;
+            display: flex !important; /* 에이전트 아이템들 표시 */
+            align-items: center !important;
+            box-shadow: 0 2px 4px rgba(102, 126, 234, 0.2) !important;
+            align-self: center !important;
+        }
+
+        /* 에이전트 아이템 강제 적용 */
+        #leftSidebar.minimized .agent-item {
+            width: 35px !important;
+            height: 35px !important;
+            border-radius: 50% !important;
+            padding: 0 !important;
+            margin: 3px auto !important;
+            background: rgba(102, 126, 234, 0.2) !important;
+            border: 1px solid rgba(102, 126, 234, 0.3) !important;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            min-width: 35px !important;
+            max-width: 35px !important;
+            flex-direction: row !important;
+            box-shadow: 0 2px 4px rgba(102, 126, 234, 0.2) !important;
+            align-self: center !important;
+        }
+
+        /* 에이전트 아이템 직접 강제 표시 */
+        #leftSidebar.minimized .sidebar-section:nth-child(3) .agent-item {
+            width: 35px !important;
+            height: 35px !important;
+            border-radius: 50% !important;
+            padding: 0 !important;
+            margin: 3px auto !important;
+            background: rgba(102, 126, 234, 0.2) !important;
+            border: 1px solid rgba(102, 126, 234, 0.3) !important;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            box-shadow: 0 2px 4px rgba(102, 126, 234, 0.2) !important;
+            align-self: center !important;
+        }
+
+        /* 에이전트 아이템 아이콘 강제 표시 */
+        #leftSidebar.minimized .agent-item i {
+            display: block !important;
+            font-size: 14px !important;
+            color: white !important;
+        }
+
+        /* 에이전트 아이템 아이콘 직접 강제 표시 */
+        #leftSidebar.minimized .sidebar-section:nth-child(3) .agent-item i {
+            display: block !important;
+            font-size: 14px !important;
+            color: white !important;
+        }
+
+        /* 에이전트 아이템 호버 효과 강화 */
+        #leftSidebar.minimized .agent-item:hover {
+            background: rgba(102, 126, 234, 0.4) !important;
+            transform: scale(1.1) !important;
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3) !important;
+        }
+
+        .sidebar.minimized .agent-item:hover {
+            background: rgba(102, 126, 234, 0.4) !important;
+            transform: scale(1.1) !important;
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3) !important;
+        }
+
+        .sidebar.minimized .agent-item span {
+            display: none !important; /* 텍스트 완전히 숨김 */
+        }
+
+        .sidebar.minimized .agent-item .status-dot {
+            display: none !important; /* 상태 점 숨김 */
+        }
+
+        .sidebar.minimized .agent-item i {
+            font-size: 14px !important;
+            color: white !important;
+            display: block !important; /* 아이콘만 표시 */
+        }
+
+        .sidebar.minimized .new-session-btn i {
+            font-size: 14px !important;
+            color: white !important;
+        }
+
+        .sidebar.minimized .session-list {
+            display: none !important;
+        }
+
+        .sidebar.minimized .session-item {
+            display: none !important;
+        }
+
+        .sidebar.minimized .session-title {
+            display: none !important;
+        }
+
+        .sidebar.minimized .session-time {
+            display: none !important;
+        }
+
+        .sidebar.minimized .session-count {
+            display: none !important;
+        }
+
+        /* 최소화 상태에서 툴팁 */
+        .sidebar.minimized .sidebar-toggle-btn:hover::after,
+        .sidebar.minimized .new-session-btn:hover::after,
+        .sidebar.minimized .agent-item:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            left: 70px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            white-space: nowrap;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .sidebar.minimized .sidebar-toggle-btn:hover::after {
+            content: "사이드바 확장";
+        }
+
+        .sidebar.minimized .new-session-btn:hover::after {
+            content: "새 상담";
+        }
+
+        .sidebar.minimized .agent-item:hover::after {
+            content: attr(data-agent-name);
+        }
+
+        /* 에이전트 아이템 툴팁 강제 적용 */
+        #leftSidebar.minimized .agent-item:hover::after {
+            content: attr(data-agent-name);
+            position: absolute;
+            left: 70px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            white-space: nowrap;
+            z-index: 1000;
+            pointer-events: none;
         }
 
         .right-sidebar {
@@ -135,6 +524,10 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             overflow-y: auto;
             height: 100vh;
+            width: 350px;
+            min-width: 250px;
+            max-width: 600px;
+            flex-shrink: 0;
         }
 
         /* Chat Container */
@@ -145,6 +538,8 @@
             position: relative;
             overflow: hidden;
             height: 100vh;
+            flex: 1;
+            min-width: 300px;
         }
 
         /* Chat Messages */
@@ -279,24 +674,26 @@
         }
 
         /* 사이드바 스타일 */
-        .sidebar-resize-handle {
+
+        /* 오른쪽 사이드바 리사이즈 핸들 */
+        .right-sidebar-resize-handle {
             position: absolute;
-            right: -2px;
+            left: -5px;
             top: 0;
             bottom: 0;
-            width: 4px;
+            width: 10px;
             background: transparent;
             cursor: col-resize;
             z-index: 20;
             transition: background 0.2s ease;
         }
 
-        .sidebar-resize-handle:hover {
-            background: #5a6fd8;
+        .right-sidebar-resize-handle:hover {
+            background: rgba(90, 111, 216, 0.3);
         }
 
-        .sidebar-resize-handle:active {
-            background: #5a6fd8;
+        .right-sidebar-resize-handle:active {
+            background: rgba(90, 111, 216, 0.5);
         }
 
         .sidebar-header {
@@ -821,10 +1218,10 @@
 
         /* Premium Right Sidebar */
         .right-sidebar .sidebar-header {
-            background: var(--secondary-gradient);
+            background: var(--primary-gradient);
             color: white;
             padding: 24px 20px;
-            box-shadow: 0 4px 20px rgba(6, 182, 212, 0.3);
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
             position: relative;
             overflow: hidden;
         }
@@ -1232,6 +1629,11 @@
             font-weight: 600;
         }
 
+        .sidebar-tab:hover {
+            background: rgba(102, 126, 234, 0.1);
+            color: var(--primary);
+        }
+
         .sidebar-tab.active {
             background: var(--primary);
             color: white;
@@ -1256,7 +1658,6 @@
     <div class="content-area">
         <!-- 왼쪽 사이드바 -->
         <div class="sidebar" id="leftSidebar">
-            <div class="sidebar-resize-handle" id="leftResizeHandle"></div>
             <div class="sidebar-header">
                 <div class="logo-container">
                     <img src="/images/img/logo4.png" class="sidebar-icon" onclick="toggleSidebar()" style="width: 45px; height: 45px; object-fit: contain; border-radius: 10px; transition: all 0.3s ease; cursor: pointer; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); margin-right: 8px;">
@@ -1275,22 +1676,22 @@
             <div class="sidebar-section">
                 <h3><i class="fas fa-robot"></i> Agents Status</h3>
                 <div class="agent-status">
-                    <div class="agent-item">
+                    <div class="agent-item" data-agent-name="상담">
                         <i class="fas fa-comments"></i>
                         <span>상담</span>
                         <div class="status-dot active"></div>
                     </div>
-                    <div class="agent-item">
+                    <div class="agent-item" data-agent-name="감정">
                         <i class="fas fa-heart"></i>
                         <span>감정</span>
                         <div class="status-dot active"></div>
                     </div>
-                    <div class="agent-item">
+                    <div class="agent-item" data-agent-name="역할극">
                         <i class="fas fa-theater-masks"></i>
                         <span>역할극</span>
                         <div class="status-dot"></div>
                     </div>
-                    <div class="agent-item">
+                    <div class="agent-item" data-agent-name="마인드풀니스">
                         <i class="fas fa-leaf"></i>
                         <span>마인드풀니스</span>
                         <div class="status-dot"></div>
@@ -1605,6 +2006,9 @@
         document.addEventListener('DOMContentLoaded', function() {
             // 감정 차트 초기화
             initEmotionChart();
+            
+            // 오른쪽 사이드바 리사이즈 기능 초기화
+            initRightSidebarResize();
             
             // 초기 환영 메시지 추가
             addWelcomeMessage();
@@ -2246,7 +2650,26 @@
         // 기타 필요한 함수들
         function toggleSidebar() {
             const sidebar = document.getElementById('leftSidebar');
-            sidebar.classList.toggle('minimized');
+            const toggleBtn = document.getElementById('sidebarToggleBtn');
+            const isMinimized = sidebar.classList.contains('minimized');
+            
+            if (isMinimized) {
+                // 최소화 해제 (원래 크기로)
+                sidebar.classList.remove('minimized');
+                sidebar.style.width = '300px';
+                sidebar.style.minWidth = '300px';
+                sidebar.style.maxWidth = '300px';
+                toggleBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                toggleBtn.setAttribute('aria-label', '사이드바 최소화');
+            } else {
+                // 최소화
+                sidebar.classList.add('minimized');
+                sidebar.style.width = '60px';
+                sidebar.style.minWidth = '60px';
+                sidebar.style.maxWidth = '60px';
+                toggleBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+                toggleBtn.setAttribute('aria-label', '사이드바 확장');
+            }
         }
 
         function toggleRightSidebar() {
@@ -2480,6 +2903,57 @@
                 neutral: Math.random()
             };
         }
+
+        // 오른쪽 사이드바 리사이즈 기능
+        function initRightSidebarResize() {
+            const rightSidebar = document.getElementById('rightSidebar');
+            const rightResizeHandle = document.getElementById('rightResizeHandle');
+            const chatContainer = document.querySelector('.chat-container');
+            const leftSidebar = document.getElementById('leftSidebar');
+            let isResizing = false;
+
+            rightResizeHandle.addEventListener('mousedown', (e) => {
+                isResizing = true;
+                
+                // 드래그 중 커서 스타일 변경
+                document.body.style.cursor = 'col-resize';
+                document.body.style.userSelect = 'none';
+                
+                document.addEventListener('mousemove', handleResize);
+                document.addEventListener('mouseup', stopResize);
+                
+                e.preventDefault();
+            });
+
+            function handleResize(e) {
+                if (!isResizing) return;
+                
+                // 화면 오른쪽 끝에서 마우스 위치까지의 거리로 사이드바 너비 계산
+                const windowWidth = window.innerWidth;
+                const newRightWidth = windowWidth - e.clientX;
+                
+                const minWidth = 250;
+                const maxWidth = 600;
+                
+                // 범위 내에서만 적용
+                if (newRightWidth >= minWidth && newRightWidth <= maxWidth) {
+                    // 오른쪽 사이드바 너비만 설정 (flex 레이아웃이 자동으로 채팅 영역 조절)
+                    rightSidebar.style.width = newRightWidth + 'px';
+                }
+            }
+
+            function stopResize() {
+                isResizing = false;
+                
+                // 커서 스타일 복원
+                document.body.style.cursor = '';
+                document.body.style.userSelect = '';
+                
+                document.removeEventListener('mousemove', handleResize);
+                document.removeEventListener('mouseup', stopResize);
+            }
+        }
+
     </script>
 </body>
 </html>
