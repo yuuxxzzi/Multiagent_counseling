@@ -6,6 +6,7 @@
     <title>AI 멀티에이전트 상담 시스템</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             /* Gooroomee-inspired Color Palette */
@@ -393,10 +394,10 @@
         }
 
         .new-session-btn {
-            background: var(--primary);
-            color: white;
+            background: transparent;
+            color: var(--gray-700);
             border: none;
-            padding: var(--space-2) var(--space-3);
+            padding: var(--space-3) var(--space-4);
             border-radius: var(--radius-md);
             font-size: 0.875rem;
             font-weight: 500;
@@ -405,13 +406,17 @@
             display: flex;
             align-items: center;
             gap: var(--space-2);
-            box-shadow: var(--shadow-sm);
+            box-shadow: none;
+            width: auto;
+            min-width: 200px;
+            justify-content: flex-start;
+            margin: var(--space-3) 0;
         }
 
         .new-session-btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-md);
+            background: var(--gray-100);
+            transform: none;
+            box-shadow: none;
         }
 
         .session-list {
@@ -563,39 +568,7 @@
             box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
         }
 
-        /* Emotion Legend */
-        .emotion-legend {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
 
-        .emotion-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 8px 12px;
-            border-radius: 8px;
-            background: var(--bg-tertiary);
-            transition: all 0.3s ease;
-        }
-
-        .emotion-item:hover {
-            background: var(--bg-secondary);
-            transform: translateX(4px);
-        }
-
-        .emotion-color {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-
-        .emotion-item span {
-            font-size: 0.875rem;
-            color: var(--gray-700);
-        }
 
         /* Premium Chat Header */
         .chat-header {
@@ -913,6 +886,8 @@
             border-radius: 12px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
             min-height: 200px;
+            max-height: calc(100vh - 300px);
+            overflow-y: auto;
         }
 
         .tab-content {
@@ -939,7 +914,9 @@
 
         #emotionChart {
             max-width: 100%;
-            height: auto;
+            height: 250px;
+            width: 100%;
+            max-height: 250px;
         }
 
         .report-container {
@@ -1066,6 +1043,213 @@
                 padding: 12px 16px;
             }
         }
+
+        /* 상담 보고서 스타일 - 모던 디자인 */
+        .report-container {
+            padding: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .report-header {
+            background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+            color: white;
+            padding: 20px 24px;
+            margin: 0;
+            border-bottom: none;
+        }
+
+        .report-header h3 {
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .report-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .report-btn {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .generate-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .generate-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .save-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            cursor: not-allowed;
+        }
+
+        .save-btn:not(:disabled) {
+            background: rgba(16, 185, 129, 0.9);
+            color: white;
+            border: 2px solid rgba(16, 185, 129, 1);
+            cursor: pointer;
+        }
+
+        .save-btn:not(:disabled):hover {
+            background: rgba(16, 185, 129, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        .report-btn i {
+            font-size: 1rem;
+        }
+
+        .report-btn span {
+            font-size: 0.875rem;
+            line-height: 1.2;
+        }
+
+        .report-content {
+            min-height: 400px;
+            background: white;
+            border-radius: 0;
+            border: none;
+            overflow: hidden;
+        }
+
+        .report-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 400px;
+            color: var(--gray-500);
+            text-align: center;
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+        }
+
+        .report-placeholder i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.4;
+            color: var(--gray-400);
+        }
+
+        .report-placeholder p {
+            font-size: 1.1rem;
+            margin: 0;
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        .report-generated {
+            padding: 24px;
+            line-height: 1.7;
+            background: white;
+        }
+
+        .report-section {
+            margin-bottom: 32px;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .report-section h4 {
+            color: var(--gray-800);
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .report-section p {
+            color: var(--gray-700);
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+
+        .report-chart {
+            text-align: center;
+            margin: 24px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .report-chart canvas {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        /* 탭 디자인 개선 */
+        .sidebar-tabs {
+            background: white;
+            border-radius: 12px 12px 0 0;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .sidebar-tab {
+            background: #f8fafc;
+            color: var(--gray-600);
+            border: 1px solid var(--gray-200);
+            border-right: none;
+            font-weight: 600;
+        }
+
+        .sidebar-tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .sidebar-tab:first-child {
+            border-radius: 12px 0 0 0;
+        }
+
+        .sidebar-tab:last-child {
+            border-radius: 0 12px 0 0;
+            border-right: 1px solid var(--gray-200);
+        }
+
+        .sidebar-tab.active:last-child {
+            border-right: 1px solid var(--primary);
+        }
     </style>
 </head>
 <body>
@@ -1083,77 +1267,10 @@
                 </button>
             </div>
             
-            <div class="sidebar-section">
-                <div class="section-header">
-                    <h3><i class="fas fa-history"></i> 상담 내역</h3>
-                    <button onclick="startNewSession()" class="new-session-btn">
-                        <i class="fas fa-plus"></i>
-                        <span class="btn-text">새 상담</span>
-                    </button>
-                </div>
-                <div id="sessionList" class="session-list">
-                    <div class="session-item active" data-session-id="current">
-                        <div class="session-content">
-                            <div class="session-title">현재 상담</div>
-                            <div class="session-meta">
-                                <span class="message-count">
-                                    <i class="fas fa-comments"></i>
-                                    16
-                                </span>
-                                <span class="session-time">방금 전</span>
-                            </div>
-                        </div>
-                        <div class="session-status">
-                            <div class="status-indicator active"></div>
-                        </div>
-                    </div>
-                    <div class="session-item" data-session-id="session-1">
-                        <div class="session-content">
-                            <div class="session-title">스트레스 상담</div>
-                            <div class="session-meta">
-                                <span class="message-count">
-                                    <i class="fas fa-comments"></i>
-                                    24
-                                </span>
-                                <span class="session-time">2시간 전</span>
-                            </div>
-                        </div>
-                        <div class="session-status">
-                            <div class="status-indicator"></div>
-                        </div>
-                    </div>
-                    <div class="session-item" data-session-id="session-2">
-                        <div class="session-content">
-                            <div class="session-title">인간관계 고민</div>
-                            <div class="session-meta">
-                                <span class="message-count">
-                                    <i class="fas fa-comments"></i>
-                                    18
-                                </span>
-                                <span class="session-time">어제</span>
-                            </div>
-                        </div>
-                        <div class="session-status">
-                            <div class="status-indicator"></div>
-                        </div>
-                    </div>
-                    <div class="session-item" data-session-id="session-3">
-                        <div class="session-content">
-                            <div class="session-title">직장 스트레스</div>
-                            <div class="session-meta">
-                                <span class="message-count">
-                                    <i class="fas fa-comments"></i>
-                                    31
-                                </span>
-                                <span class="session-time">3일 전</span>
-                            </div>
-                        </div>
-                        <div class="session-status">
-                            <div class="status-indicator"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <button onclick="startNewSession()" class="new-session-btn">
+                <i class="fas fa-plus"></i>
+                <span class="btn-text">새 상담</span>
+            </button>
             
             <div class="sidebar-section">
                 <h3><i class="fas fa-robot"></i> Agents Status</h3>
@@ -1182,26 +1299,27 @@
             </div>
             
             <div class="sidebar-section">
-                <h3><i class="fas fa-lightbulb"></i> 감정 범례</h3>
-                <div class="emotion-legend">
-                    <div class="emotion-item">
-                        <div class="emotion-color" style="background: #10b981;"></div>
-                        <span>기쁨</span>
-                    </div>
-                    <div class="emotion-item">
-                        <div class="emotion-color" style="background: #3b82f6;"></div>
-                        <span>슬픔</span>
-                    </div>
-                    <div class="emotion-item">
-                        <div class="emotion-color" style="background: #ef4444;"></div>
-                        <span>분노</span>
-                    </div>
-                    <div class="emotion-item">
-                        <div class="emotion-color" style="background: #f59e0b;"></div>
-                        <span>불안</span>
+                <h3><i class="fas fa-history"></i> 상담 내역</h3>
+                <div id="sessionList" class="session-list">
+                    <div class="session-item active" data-session-id="current">
+                        <div class="session-content">
+                            <div class="session-title">현재 상담</div>
+                            <div class="session-meta">
+                                <span class="message-count">
+                                    <i class="fas fa-comments"></i>
+                                    <span id="currentMessageCount">0</span>
+                                </span>
+                                <span class="session-time">방금 전</span>
+                            </div>
+                        </div>
+                        <div class="session-status">
+                            <div class="status-indicator active"></div>
+                        </div>
                     </div>
                 </div>
             </div>
+            
+            
         </div>
 
         <!-- 중앙 채팅 영역 -->
@@ -1296,8 +1414,25 @@
                 
                 <div id="reportTab" class="tab-content" role="tabpanel" aria-labelledby="report-tab">
                     <div class="report-container">
-                        <h3>상담 보고서</h3>
-                        <p>상담이 진행되면 여기에 보고서가 표시됩니다.</p>
+                        <div class="report-header">
+                            <h3><i class="fas fa-file-alt"></i> 상담 보고서</h3>
+                            <div class="report-actions">
+                                <button class="report-btn generate-btn" onclick="generateReport()" title="보고서 생성">
+                                    <i class="fas fa-plus"></i>
+                                    <span>보고서 생성</span>
+                                </button>
+                                <button class="report-btn save-btn" onclick="saveReportAsPDF()" title="PDF 저장" disabled>
+                                    <i class="fas fa-download"></i>
+                                    <span>PDF 저장</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div id="reportContent" class="report-content">
+                            <div class="report-placeholder">
+                                <i class="fas fa-file-alt"></i>
+                                <p>보고서를 생성하려면 "보고서 생성" 버튼을 클릭하세요.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1305,16 +1440,195 @@
     </div>
 
     <script>
+        // 감정 분석 차트 관련 전역 변수
+        let emotionChart = null;
+        let chatCount = 0;
+        let emotionData = {
+            joy: [],
+            sadness: [],
+            anger: [],
+            anxiety: [],
+            apathy: [],
+            neutral: []
+        };
+
         // URL 파라미터에서 메시지 가져오기
         function getMessageFromURL() {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get('message');
         }
 
+        // 감정 차트 초기화
+        function initEmotionChart() {
+            const ctx = document.getElementById('emotionChart');
+            if (!ctx) return;
+
+            emotionChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: '기쁨',
+                            data: [],
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.4,
+                            fill: false
+                        },
+                        {
+                            label: '슬픔',
+                            data: [],
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.4,
+                            fill: false
+                        },
+                        {
+                            label: '분노',
+                            data: [],
+                            borderColor: '#ef4444',
+                            backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.4,
+                            fill: false
+                        },
+                        {
+                            label: '불안',
+                            data: [],
+                            borderColor: '#f59e0b',
+                            backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.4,
+                            fill: false
+                        },
+                        {
+                            label: '무기력',
+                            data: [],
+                            borderColor: '#6b7280',
+                            backgroundColor: 'rgba(107, 114, 128, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.4,
+                            fill: false
+                        },
+                        {
+                            label: '중립',
+                            data: [],
+                            borderColor: '#8b5cf6',
+                            backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.4,
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: '실시간 감정 변화',
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            },
+                            color: '#374151'
+                        },
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 15,
+                                font: {
+                                    size: 11
+                                }
+                            }
+                        }
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: '채팅 순서',
+                                font: {
+                                    size: 12,
+                                    weight: 'bold'
+                                },
+                                color: '#6b7280'
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: '감정 점수',
+                                font: {
+                                    size: 12,
+                                    weight: 'bold'
+                                },
+                                color: '#6b7280'
+                            },
+                            min: 0,
+                            max: 1.0,
+                            ticks: {
+                                stepSize: 0.1,
+                                callback: function(value) {
+                                    return value.toFixed(1);
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        }
+                    },
+                    elements: {
+                        point: {
+                            radius: 4,
+                            hoverRadius: 6
+                        }
+                    }
+                }
+            });
+        }
+
         // 페이지 로드 시 자동 메시지 전송
         document.addEventListener('DOMContentLoaded', function() {
+            // 감정 차트 초기화
+            initEmotionChart();
+            
             // 초기 환영 메시지 추가
             addWelcomeMessage();
+            
+            // 초기 메시지 수 설정
+            updateMessageCount();
+            
+            // 상담 세션 클릭 이벤트 추가
+            document.addEventListener('click', function(e) {
+                const sessionItem = e.target.closest('.session-item');
+                if (sessionItem) {
+                    const sessionId = sessionItem.getAttribute('data-session-id');
+                    handleSessionClick(sessionId);
+                }
+            });
+            
+            // 상담 세션 더블클릭으로 제목 편집
+            document.addEventListener('dblclick', function(e) {
+                const sessionItem = e.target.closest('.session-item');
+                if (sessionItem) {
+                    const sessionId = sessionItem.getAttribute('data-session-id');
+                    editSessionTitle(sessionId);
+                }
+            });
             
             const message = getMessageFromURL();
             if (message) {
@@ -1344,6 +1658,433 @@
             }
         }
 
+        // 메시지 수 업데이트 함수
+        function updateMessageCount() {
+            const messageCount = document.getElementById('currentMessageCount');
+            const messages = document.querySelectorAll('.message');
+            const userMessages = document.querySelectorAll('.message.user');
+            messageCount.textContent = userMessages.length;
+        }
+
+        // 상담 내용 기반 제목 생성 함수
+        function generateSessionTitle() {
+            const userMessages = document.querySelectorAll('.message.user .message-text');
+            if (userMessages.length === 0) return '새 상담';
+            
+            // 사용자 메시지들을 하나의 텍스트로 합치기
+            const conversationText = Array.from(userMessages)
+                .map(msg => msg.textContent.trim())
+                .join(' ');
+            
+            // 간단한 키워드 기반 제목 생성
+            const keywords = extractKeywords(conversationText);
+            return generateTitleFromKeywords(keywords);
+        }
+
+        // 키워드 추출 함수
+        function extractKeywords(text) {
+            const commonWords = ['그', '이', '저', '것', '수', '있', '하', '되', '되다', '이다', '있다', '하다', '되다', '그것', '이것', '저것', '그런', '이런', '저런', '그렇게', '이렇게', '저렇게'];
+            
+            // 단어들을 추출하고 공통 단어 제거
+            const words = text.split(/\s+/)
+                .filter(word => word.length > 1)
+                .filter(word => !commonWords.includes(word))
+                .slice(0, 10); // 상위 10개 단어만
+            
+            return words;
+        }
+
+        // 키워드 기반 제목 생성
+        function generateTitleFromKeywords(keywords) {
+            if (keywords.length === 0) return '새 상담';
+            
+            // 감정/상황 관련 키워드 매핑
+            const emotionMap = {
+                '스트레스': '스트레스 상담',
+                '불안': '불안 상담',
+                '우울': '우울 상담',
+                '걱정': '걱정 상담',
+                '힘들': '힘든 상황 상담',
+                '고민': '고민 상담',
+                '문제': '문제 해결 상담',
+                '관계': '인간관계 상담',
+                '직장': '직장 상담',
+                '가족': '가족 상담',
+                '친구': '친구 상담',
+                '연애': '연애 상담',
+                '결혼': '결혼 상담',
+                '이혼': '이혼 상담',
+                '취업': '취업 상담',
+                '진로': '진로 상담',
+                '학업': '학업 상담',
+                '시험': '시험 상담',
+                '성적': '성적 상담',
+                '미래': '미래 상담'
+            };
+            
+            // 키워드에서 감정/상황 키워드 찾기
+            for (const keyword of keywords) {
+                for (const [key, title] of Object.entries(emotionMap)) {
+                    if (keyword.includes(key)) {
+                        return title;
+                    }
+                }
+            }
+            
+            // 매칭되는 키워드가 없으면 첫 번째 키워드 사용
+            return `${keywords[0]} 상담`;
+        }
+
+        // 상담 제목 업데이트 함수
+        function updateSessionTitle() {
+            const currentSession = document.querySelector('.session-item.active');
+            if (currentSession) {
+                const titleElement = currentSession.querySelector('.session-title');
+                const newTitle = generateSessionTitle();
+                
+                // 제목이 변경되었을 때만 업데이트
+                if (titleElement.textContent !== newTitle) {
+                    titleElement.textContent = newTitle;
+                    
+                    // 제목 변경 애니메이션
+                    titleElement.style.transition = 'all 0.3s ease';
+                    titleElement.style.color = '#3b82f6';
+                    setTimeout(() => {
+                        titleElement.style.color = '';
+                    }, 1000);
+                }
+            }
+        }
+
+        // 상담 제목 편집 함수
+        function editSessionTitle(sessionId) {
+            const session = document.querySelector(`[data-session-id="${sessionId}"]`);
+            if (!session) return;
+            
+            const titleElement = session.querySelector('.session-title');
+            const currentTitle = titleElement.textContent;
+            
+            // 편집 모드로 전환
+            titleElement.innerHTML = `
+                <input type="text" value="${currentTitle}" 
+                       style="width: 100%; border: 1px solid #3b82f6; border-radius: 4px; padding: 2px 4px; font-size: inherit;"
+                       onblur="saveSessionTitle('${sessionId}', this.value)"
+                       onkeypress="if(event.key==='Enter') saveSessionTitle('${sessionId}', this.value)"
+                       autofocus>
+            `;
+            
+            // 입력 필드에 포커스
+            const input = titleElement.querySelector('input');
+            input.focus();
+            input.select();
+        }
+
+        // 상담 제목 저장 함수
+        function saveSessionTitle(sessionId, newTitle) {
+            const session = document.querySelector(`[data-session-id="${sessionId}"]`);
+            if (!session) return;
+            
+            const titleElement = session.querySelector('.session-title');
+            titleElement.textContent = newTitle.trim() || '새 상담';
+        }
+
+        // 보고서 생성 함수
+        function generateReport() {
+            const reportContent = document.getElementById('reportContent');
+            const saveBtn = document.querySelector('.save-btn');
+            
+            // 상담 데이터 수집
+            const messages = document.querySelectorAll('.message');
+            const userMessages = document.querySelectorAll('.message.user');
+            const assistantMessages = document.querySelectorAll('.message.assistant');
+            
+            if (userMessages.length === 0) {
+                alert('상담 내용이 없습니다. 먼저 상담을 진행해주세요.');
+                return;
+            }
+            
+            // 보고서 HTML 생성
+            const reportHTML = createReportHTML(messages, userMessages, assistantMessages);
+            
+            // 보고서 표시
+            reportContent.innerHTML = reportHTML;
+            reportContent.classList.add('report-generated');
+            
+            // 저장 버튼 활성화
+            saveBtn.disabled = false;
+            
+            // 보고서 생성 완료 알림
+            showNotification('보고서가 생성되었습니다.', 'success');
+        }
+
+        // 보고서 HTML 생성 함수
+        function createReportHTML(messages, userMessages, assistantMessages) {
+            const currentDate = new Date().toLocaleDateString('ko-KR');
+            const sessionTitle = document.querySelector('.session-item.active .session-title').textContent;
+            
+            // 상담 요약 생성
+            const conversationSummary = generateConversationSummary(userMessages, assistantMessages);
+            
+            // 감정 분석 요약
+            const emotionSummary = generateEmotionSummary();
+            
+            return `
+                <div class="report-generated">
+                    <div class="report-section">
+                        <h4><i class="fas fa-info-circle"></i> 상담 기본 정보</h4>
+                        <p><strong>상담 제목:</strong> ${sessionTitle}</p>
+                        <p><strong>상담 일시:</strong> ${currentDate}</p>
+                        <p><strong>총 메시지 수:</strong> ${messages.length}개 (사용자: ${userMessages.length}개, AI: ${assistantMessages.length}개)</p>
+                    </div>
+                    
+                    <div class="report-section">
+                        <h4><i class="fas fa-comments"></i> 상담 요약</h4>
+                        <p>${conversationSummary}</p>
+                    </div>
+                    
+                    <div class="report-section">
+                        <h4><i class="fas fa-heart"></i> 감정 분석</h4>
+                        <p>${emotionSummary}</p>
+                        <div class="report-chart">
+                            <canvas id="reportEmotionChart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="report-section">
+                        <h4><i class="fas fa-lightbulb"></i> 상담사 의견</h4>
+                        <p>이번 상담을 통해 사용자는 다양한 감정을 표현하며 상담을 진행했습니다. 감정 변화 추이를 통해 상담의 효과를 확인할 수 있으며, 지속적인 상담을 통해 더 나은 결과를 기대할 수 있습니다.</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 상담 요약 생성 함수
+        function generateConversationSummary(userMessages, assistantMessages) {
+            const userTexts = Array.from(userMessages).map(msg => msg.querySelector('.message-text').textContent);
+            const firstMessage = userTexts[0] || '';
+            const lastMessage = userTexts[userTexts.length - 1] || '';
+            
+            return `상담은 "${firstMessage.substring(0, 50)}..."로 시작하여 "${lastMessage.substring(0, 50)}..."로 마무리되었습니다. 총 ${userMessages.length}번의 대화를 통해 상담이 진행되었습니다.`;
+        }
+
+        // 감정 분석 요약 생성 함수
+        function generateEmotionSummary() {
+            if (!emotionData || Object.keys(emotionData).length === 0) {
+                return '감정 분석 데이터가 충분하지 않습니다. 더 많은 상담을 진행해주세요.';
+            }
+            
+            const emotions = ['joy', 'sadness', 'anger', 'anxiety', 'apathy', 'neutral'];
+            const emotionNames = {
+                'joy': '기쁨',
+                'sadness': '슬픔', 
+                'anger': '분노',
+                'anxiety': '불안',
+                'apathy': '무기력',
+                'neutral': '중립'
+            };
+            
+            let summary = '상담 중 감정 변화를 분석한 결과, ';
+            const dominantEmotions = [];
+            
+            emotions.forEach(emotion => {
+                if (emotionData[emotion] && emotionData[emotion].length > 0) {
+                    const avgScore = emotionData[emotion].reduce((a, b) => a + b, 0) / emotionData[emotion].length;
+                    if (avgScore > 0.3) {
+                        dominantEmotions.push(`${emotionNames[emotion]}(${(avgScore * 100).toFixed(1)}%)`);
+                    }
+                }
+            });
+            
+            if (dominantEmotions.length > 0) {
+                summary += dominantEmotions.join(', ') + ' 감정이 주로 나타났습니다.';
+            } else {
+                summary += '감정 변화가 안정적인 상태를 보였습니다.';
+            }
+            
+            return summary;
+        }
+
+        // PDF 저장 함수 (인쇄 기능 사용)
+        function saveReportAsPDF() {
+            const reportContent = document.getElementById('reportContent');
+            if (!reportContent.classList.contains('report-generated')) {
+                alert('먼저 보고서를 생성해주세요.');
+                return;
+            }
+            
+            // 인쇄용 스타일이 적용된 새 창 열기
+            openPrintWindow();
+        }
+
+        // 인쇄 창 열기 함수
+        function openPrintWindow() {
+            const reportContent = document.getElementById('reportContent');
+            const sessionTitle = document.querySelector('.session-item.active .session-title').textContent;
+            const currentDate = new Date().toLocaleDateString('ko-KR');
+            
+            // 인쇄용 HTML 생성
+            const printHTML = '<!DOCTYPE html>' +
+                '<html lang="ko">' +
+                '<head>' +
+                    '<meta charset="UTF-8">' +
+                    '<meta name="viewport" content="width=device-width, initial-scale=1.0">' +
+                    '<title>상담 보고서</title>' +
+                    '<style>' +
+                        '@page { margin: 20mm; size: A4; }' +
+                        'body { font-family: "Malgun Gothic", "맑은 고딕", Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }' +
+                        '.print-header { text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 2px solid #3b82f6; }' +
+                        '.print-title { font-size: 24px; font-weight: bold; color: #3b82f6; margin-bottom: 10px; }' +
+                        '.print-date { font-size: 14px; color: #666; }' +
+                        '.print-section { margin-bottom: 25px; page-break-inside: avoid; }' +
+                        '.print-section h4 { font-size: 18px; font-weight: bold; color: #3b82f6; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 1px solid #e5e7eb; }' +
+                        '.print-section p { margin-bottom: 10px; font-size: 14px; }' +
+                        '.print-chart { text-align: center; margin: 20px 0; page-break-inside: avoid; }' +
+                        '.print-chart img { max-width: 100%; height: auto; border: 1px solid #e5e7eb; border-radius: 8px; }' +
+                        '.print-info { background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 20px; }' +
+                        '.print-info p { margin: 5px 0; font-size: 14px; }' +
+                        '.print-info strong { color: #3b82f6; }' +
+                        '@media print { body { -webkit-print-color-adjust: exact; } .print-header { page-break-after: avoid; } .print-section { page-break-inside: avoid; } }' +
+                    '</style>' +
+                '</head>' +
+                '<body>' +
+                    '<div class="print-header">' +
+                        '<div class="print-title">AI 멀티에이전트 상담 보고서</div>' +
+                        '<div class="print-date">생성일: ' + currentDate + '</div>' +
+                    '</div>' +
+                    reportContent.innerHTML
+                '</body>' +
+                '</html>';
+            
+            // 새 창 열기
+            const printWindow = window.open('', '_blank', 'width=800,height=600');
+            printWindow.document.write(printHTML);
+            printWindow.document.close();
+            
+            // 자동 인쇄 (새 창이 로드된 후)
+            setTimeout(() => {
+                printWindow.print();
+            }, 1000);
+            
+            showNotification('인쇄 창이 열렸습니다. 인쇄 → PDF로 저장하세요.', 'success');
+        }
+
+
+        // 알림 표시 함수
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#10b981' : '#3b82f6'};
+                color: white;
+                padding: 12px 20px;
+                border-radius: 6px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                z-index: 10000;
+                font-size: 14px;
+                font-weight: 500;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // 상담 내역에 세션 추가 함수
+        function addSessionToHistory() {
+            const sessionList = document.getElementById('sessionList');
+            const currentSession = document.querySelector('.session-item.active');
+            
+            if (currentSession) {
+                // 현재 상담을 비활성화하고 상담 내역에 추가
+                currentSession.classList.remove('active');
+                currentSession.querySelector('.status-indicator').classList.remove('active');
+                
+                // 상담 제목 업데이트 (예: "상담 세션 1", "상담 세션 2" 등)
+                const sessionTitle = currentSession.querySelector('.session-title');
+                const sessionCount = document.querySelectorAll('.session-item').length;
+                sessionTitle.textContent = `상담 세션 ${sessionCount}`;
+                
+                // 시간 업데이트
+                const sessionTime = currentSession.querySelector('.session-time');
+                sessionTime.textContent = '방금 전';
+                
+                // 새로운 현재 상담 세션 생성
+                createNewCurrentSession();
+            }
+        }
+
+        // 새로운 현재 상담 세션 생성
+        function createNewCurrentSession() {
+            const sessionList = document.getElementById('sessionList');
+            const newSession = document.createElement('div');
+            newSession.className = 'session-item active';
+            newSession.setAttribute('data-session-id', 'current');
+            
+            newSession.innerHTML = `
+                <div class="session-content">
+                    <div class="session-title">현재 상담</div>
+                    <div class="session-meta">
+                        <span class="message-count">
+                            <i class="fas fa-comments"></i>
+                            <span id="currentMessageCount">0</span>
+                        </span>
+                        <span class="session-time">방금 전</span>
+                    </div>
+                </div>
+                <div class="session-status">
+                    <div class="status-indicator active"></div>
+                </div>
+            `;
+            
+            // 맨 위에 새로운 현재 상담 세션 추가
+            sessionList.insertBefore(newSession, sessionList.firstChild);
+        }
+
+        // 상담 세션 클릭 이벤트 처리
+        function handleSessionClick(sessionId) {
+            if (sessionId === 'current') {
+                return; // 현재 상담은 클릭 불가
+            }
+            
+            // 모든 세션 비활성화
+            document.querySelectorAll('.session-item').forEach(item => {
+                item.classList.remove('active');
+                item.querySelector('.status-indicator').classList.remove('active');
+            });
+            
+            // 선택된 세션 활성화
+            const selectedSession = document.querySelector(`[data-session-id="${sessionId}"]`);
+            if (selectedSession) {
+                selectedSession.classList.add('active');
+                selectedSession.querySelector('.status-indicator').classList.add('active');
+            }
+            
+            // 해당 세션의 대화 내용 로드 (실제 구현에서는 서버에서 데이터를 가져와야 함)
+            loadSessionData(sessionId);
+        }
+
+        // 세션 데이터 로드 함수
+        function loadSessionData(sessionId) {
+            // 실제 구현에서는 서버에서 해당 세션의 데이터를 가져와야 함
+            document.getElementById('chatMessages').innerHTML = `
+                <div class="message assistant">
+                    <div class="message-content">
+                        <div class="message-header">
+                            <span class="message-sender">AI 상담사</span>
+                            <span class="message-time">방금 전</span>
+                        </div>
+                        <div class="message-text">${sessionId} 세션의 대화 내용을 불러왔습니다.</div>
+                    </div>
+                </div>
+            `;
+        }
+
         // 메시지 전송 함수
         function sendMessage() {
             const input = document.getElementById('messageInput');
@@ -1353,6 +2094,15 @@
                 // 사용자 메시지 추가
                 addMessage('user', message);
                 input.value = '';
+                
+                // 메시지 수 업데이트
+                updateMessageCount();
+                
+                // 상담 제목 업데이트 (3번째 메시지부터)
+                const userMessages = document.querySelectorAll('.message.user');
+                if (userMessages.length >= 3) {
+                    updateSessionTitle();
+                }
                 
                 // 타이핑 인디케이터 표시
                 showTypingIndicator();
@@ -1381,9 +2131,39 @@
                             }
                         });
                         
+                        // 메시지 수 업데이트
+                        updateMessageCount();
+                        
+                        // 상담 제목 업데이트 (3번째 메시지부터)
+                        const userMessages = document.querySelectorAll('.message.user');
+                        if (userMessages.length >= 3) {
+                            updateSessionTitle();
+                        }
+                        
                         // 감정 분석 결과 업데이트
-                        if (data.emotion) {
-                            updateEmotionChart(data.emotion);
+                        console.log('서버 응답 데이터:', data);
+                        
+                        // responses 배열에서 감정 데이터 찾기
+                        let emotionData = null;
+                        if (data.responses) {
+                            for (const response of data.responses) {
+                                if (response.type === 'emotion') {
+                                    emotionData = response.content;
+                                    break;
+                                }
+                            }
+                        }
+                        
+                        if (emotionData) {
+                            console.log('감정 데이터:', emotionData);
+                            // 서버에서 받은 감정 데이터를 6가지 감정 점수로 변환
+                            const emotionScores = convertEmotionToScores(emotionData);
+                            updateEmotionChart(emotionScores);
+                        } else {
+                            console.log('감정 데이터 없음, 샘플 데이터 사용');
+                            // 서버에서 감정 데이터가 없을 경우 샘플 데이터 사용 (테스트용)
+                            const sampleEmotion = generateSampleEmotionData();
+                            updateEmotionChart(sampleEmotion);
                         }
                     } else {
                         addMessage('assistant', '죄송합니다. 오류가 발생했습니다.');
@@ -1561,7 +2341,23 @@
 
         function startNewSession() {
             if (confirm('새로운 상담 세션을 시작하시겠습니까? 현재 대화 내용은 저장됩니다.')) {
+                // 현재 상담을 상담 내역에 추가
+                addSessionToHistory();
+                
+                // 채팅 메시지 초기화
                 document.getElementById('chatMessages').innerHTML = '';
+                
+                // 메시지 수 초기화
+                updateMessageCount();
+                
+                // 감정 차트 초기화
+                initEmotionChart();
+                
+                // 환영 메시지 추가
+                addWelcomeMessage();
+                
+                // 새 상담 시작 알림
+                addMessage('assistant', '새로운 상담 세션이 시작되었습니다. 어떤 이야기든 편하게 나눠주세요.');
             }
         }
 
@@ -1579,9 +2375,110 @@
             }
         }
 
-        function updateEmotionChart(emotionData) {
-            // 감정 차트 업데이트 로직
-            console.log('감정 데이터 업데이트:', emotionData);
+        // 감정 차트 업데이트
+        function updateEmotionChart(emotionScores) {
+            if (!emotionChart) return;
+            
+            chatCount++;
+            
+            // 감정 점수 데이터 추가 (0.0~1.0 범위 그대로 사용)
+            emotionData.joy.push(emotionScores.joy || 0);
+            emotionData.sadness.push(emotionScores.sadness || 0);
+            emotionData.anger.push(emotionScores.anger || 0);
+            emotionData.anxiety.push(emotionScores.anxiety || 0);
+            emotionData.apathy.push(emotionScores.apathy || 0);
+            emotionData.neutral.push(emotionScores.neutral || 0);
+            
+            // 최대 20개 데이터 포인트만 유지 (슬라이딩 윈도우)
+            const maxDataPoints = 20;
+            if (emotionData.joy.length > maxDataPoints) {
+                emotionData.joy.shift();
+                emotionData.sadness.shift();
+                emotionData.anger.shift();
+                emotionData.anxiety.shift();
+                emotionData.apathy.shift();
+                emotionData.neutral.shift();
+            }
+            
+            // 차트 데이터 업데이트
+            const labels = [];
+            for (let i = 0; i < emotionData.joy.length; i++) {
+                labels.push(`#${chatCount - emotionData.joy.length + i + 1}`);
+            }
+            
+            emotionChart.data.labels = labels;
+            emotionChart.data.datasets[0].data = emotionData.joy;
+            emotionChart.data.datasets[1].data = emotionData.sadness;
+            emotionChart.data.datasets[2].data = emotionData.anger;
+            emotionChart.data.datasets[3].data = emotionData.anxiety;
+            emotionChart.data.datasets[4].data = emotionData.apathy;
+            emotionChart.data.datasets[5].data = emotionData.neutral;
+            
+            // 차트 업데이트
+            emotionChart.update('active');
+            
+            console.log('감정 차트 업데이트:', {
+                chatCount: chatCount,
+                dataPoints: emotionData.joy.length,
+                emotions: emotionScores
+            });
+        }
+
+        // 서버 감정 데이터를 6가지 감정 점수로 변환
+        function convertEmotionToScores(emotionData) {
+            const emotionClass = emotionData.emotion_class || emotionData.class || '중립';
+            const emotionScore = emotionData.emotion_score || emotionData.score || 0.0;
+            
+            console.log('감정 데이터 변환:', { emotionClass, emotionScore });
+            
+            // 기본값: 모든 감정을 0으로 초기화
+            const scores = {
+                joy: 0.0,
+                sadness: 0.0,
+                anger: 0.0,
+                anxiety: 0.0,
+                apathy: 0.0,
+                neutral: 0.0
+            };
+            
+            // 감정 분류에 따라 해당 감정에 점수 할당
+            switch (emotionClass) {
+                case '기쁨':
+                    scores.joy = emotionScore;
+                    break;
+                case '슬픔':
+                    scores.sadness = emotionScore;
+                    break;
+                case '분노':
+                    scores.anger = emotionScore;
+                    break;
+                case '불안':
+                    scores.anxiety = emotionScore;
+                    break;
+                case '무기력':
+                    scores.apathy = emotionScore;
+                    break;
+                case '중립':
+                    scores.neutral = emotionScore;
+                    break;
+                default:
+                    scores.neutral = emotionScore;
+            }
+            
+            console.log('변환된 감정 점수:', scores);
+            return scores;
+        }
+
+        // 샘플 감정 데이터 생성 (테스트용)
+        function generateSampleEmotionData() {
+            return {
+                joy: Math.random(), // 0.0~1.0
+                sadness: Math.random(),
+                anger: Math.random(),
+                anxiety: Math.random(),
+                apathy: Math.random(),
+                neutral: Math.random()
+            };
         }
     </script>
 </body>

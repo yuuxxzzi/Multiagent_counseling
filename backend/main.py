@@ -187,17 +187,25 @@ ROLEPLAY_KEYWORDS = (
 
 def should_trigger_roleplay(user_text: str, emotion: Dict[str, Any], state: Dict[str, Any]) -> Tuple[bool, str]:
     t = user_text.strip().lower()
+    
+    # 사용자 메시지 수 확인 (5번 이상 입력했을 때만 롤플레잉 트리거 허용)
+    user_messages = [msg for msg in state.get("messages", []) if msg.get("role") == "user"]
+    user_message_count = len(user_messages)
+    
+    # 5번 미만 입력 시 롤플레잉 트리거 비활성화
+    if user_message_count < 5:
+        return False, f"롤플레잉 트리거 비활성화 (사용자 메시지: {user_message_count}/5)"
 
-    # 1) 사용자 키워드 요청 → 항상 허용
+    # 1) 사용자 키워드 요청 → 5번 이상 입력 시 허용
     if any(k in t for k in ROLEPLAY_KEYWORDS):
         return True, "사용자 요청 기반 롤플레잉"
 
-    # 2) 외부 플래그 → 항상 허용 (한 번 실행 뒤 자동 해제 권장)
+    # 2) 외부 플래그 → 5번 이상 입력 시 허용 (한 번 실행 뒤 자동 해제 권장)
     if state.get("trigger_roleplay"):
         topic = state.get("roleplay_topic") or "불안 상황 다루기"
         return True, f"플래그 기반 롤플레잉: {topic}"
 
-    # 3) (옵션) 휴리스틱 자동 실행
+    # 3) (옵션) 휴리스틱 자동 실행 → 5번 이상 입력 시 허용
     if state.get("auto_roleplay", False):
         cls = emotion.get("emotion_class")
         score = float(emotion.get("emotion_score", 0.0))

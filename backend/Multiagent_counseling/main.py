@@ -664,16 +664,15 @@ class RoleplayAgent:
             ai_role = best_template.get('roles', {}).get('rp_agent_role', '상대방')
             
             situation_description = f"""
-🎭 롤플레잉을 시작합니다!
+롤플레잉을 시작하겠습니다.
 
-📋 상황: {situation_prompt}
+상황: {situation_prompt}
 
-👥 역할 분담:
+역할 분담:
 - 당신: {user_role}
 - AI: {ai_role}
 
-💡 이제 상황에 맞게 자연스럽게 대화를 시작해주세요!
-({user_role} 역할로 첫 마디를 해주세요)
+이제 상황에 맞게 자연스럽게 대화를 시작해주세요. {user_role} 역할로 첫 마디를 해주세요.
 """
             
             reply = situation_description
@@ -853,28 +852,28 @@ class RoleplaySummaryAgent:
         
         # 상담 정리 프롬프트
         prompt = f"""
-        방금 진행된 롤플레잉 상담을 바탕으로 다음과 같이 정리해주세요:
+        방금 진행된 롤플레잉 상담을 바탕으로 사용자에게 도움이 되는 정리를 해주세요.
 
         시나리오: {scenario_title}
         
         롤플레잉 내용:
         {roleplay_transcript}
 
-        다음 형식으로 응답해주세요:
+        다음 내용을 자연스럽게 대화하듯이 정리해주세요:
         1. 롤플레잉에서 다룬 핵심 이슈와 감정
         2. 사용자가 표현한 주요 감정과 반응
         3. 롤플레잉을 통해 얻은 인사이트나 깨달음
         4. 앞으로의 상담 방향 제안
         5. 사용자에게 전달할 격려나 조언
 
-        상담사로서 따뜻하고 전문적인 톤으로 작성해주세요.
+        상담사로서 따뜻하고 자연스러운 톤으로, 이모티콘 없이 작성해주세요.
         """
         
         try:
             response = client.chat.completions.create(
                 model=OPENAI_MODEL,
                 messages=[
-                    {"role": "system", "content": "당신은 전문 상담사입니다. 롤플레잉을 통해 얻은 인사이트를 바탕으로 사용자에게 도움이 되는 정리와 조언을 제공해주세요."},
+                    {"role": "system", "content": "당신은 전문 상담사입니다. 롤플레잉을 통해 얻은 인사이트를 바탕으로 사용자에게 도움이 되는 정리와 조언을 자연스럽고 따뜻한 톤으로, 이모티콘 없이 제공해주세요."},
                     {"role": "user", "content": prompt}
                 ],
                 temperature=0.7
@@ -885,7 +884,7 @@ class RoleplaySummaryAgent:
             # 롤플레잉 정리 메시지를 대화에 추가
             state["messages"].append({
                 "role": "assistant", 
-                "content": f"🎭 **롤플레잉 상담 정리**\n\n{summary_content}"
+                "content": f"롤플레잉 상담 정리\n\n{summary_content}"
             })
             
             print(f"\n[Roleplay Summary] 롤플레잉 상담 정리 완료")
