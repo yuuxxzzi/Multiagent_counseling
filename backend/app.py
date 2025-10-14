@@ -9,7 +9,15 @@ from Multiagent_counseling.main import (
     analyze_and_update_state, emotion_branch, gpt_emotion_analysis
 )
 
-app = Flask(__name__, template_folder='../frontend/templates')
+app = Flask(__name__, 
+           template_folder='../frontend/templates',
+           static_folder='../images/static',
+           static_url_path='/static')
+
+# 정적 파일 경로 추가 설정
+@app.route('/images/<path:filename>')
+def images(filename):
+    return app.send_static_file(filename)
 app.secret_key = os.getenv('FLASK_SECRET_KEY', 'your-secret-key-here')  # 환경변수에서 시크릿 키 가져오기
 
 # 에이전트 초기화
