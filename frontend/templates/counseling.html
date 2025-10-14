@@ -253,7 +253,6 @@
             min-width: 35px !important;
             max-width: 35px !important;
             flex-direction: row !important;
-            align-self: center !important;
         }
 
         /* 새 상담 버튼 아이콘 강제 표시 */
@@ -1660,8 +1659,8 @@
         <div class="sidebar" id="leftSidebar">
             <div class="sidebar-header">
                 <div class="logo-container">
-                    <img src="/images/img/logo4.png" class="sidebar-icon" onclick="goToHome()" style="width: 45px; height: 45px; object-fit: contain; border-radius: 10px; transition: all 0.3s ease; cursor: pointer; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); margin-right: 8px;">
-                    <img src="/images/img/logo.png" class="sidebar-title" onclick="goToHome()" style="height: 30px; object-fit: contain; transition: all 0.3s ease; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1)); cursor: pointer;">
+                    <img src="/images/img/logo4.png" class="sidebar-icon" onclick="toggleSidebar()" style="width: 45px; height: 45px; object-fit: contain; border-radius: 10px; transition: all 0.3s ease; cursor: pointer; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); margin-right: 8px;">
+                    <img src="/images/img/logo.png" class="sidebar-title" style="height: 30px; object-fit: contain; transition: all 0.3s ease; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));">
                 </div>
                 <button class="sidebar-toggle-btn" onclick="toggleSidebar()" id="sidebarToggleBtn" aria-label="사이드바 토글">
                     <i class="fas fa-bars"></i>
@@ -2648,10 +2647,6 @@
         }
 
         // 기타 필요한 함수들
-        function goToHome() {
-            window.location.href = '/';
-        }
-
         function toggleSidebar() {
             const sidebar = document.getElementById('leftSidebar');
             const toggleBtn = document.getElementById('sidebarToggleBtn');

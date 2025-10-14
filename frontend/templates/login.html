@@ -75,20 +75,33 @@
 
         .auth-container {
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            border-radius: 24px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15);
             overflow: hidden;
             width: 100%;
-            max-width: 400px;
+            max-width: 450px;
             position: relative;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .auth-header {
             background: var(--primary-gradient);
-            padding: 40px 30px;
+            padding: 48px 40px;
             text-align: center;
             color: white;
             position: relative;
+            overflow: hidden;
         }
 
         .auth-header::before {
@@ -108,67 +121,136 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            margin-bottom: 20px;
+            gap: 16px;
+            margin-bottom: 24px;
         }
 
         .auth-logo img {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             object-fit: contain;
-            border-radius: 10px;
+            border-radius: 12px;
             filter: brightness(0) invert(1);
+            transition: transform 0.3s ease;
+        }
+
+        .auth-logo img:hover {
+            transform: scale(1.05);
         }
 
         .auth-title {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
             position: relative;
             z-index: 2;
         }
 
         .auth-subtitle {
-            font-size: 1rem;
+            font-size: 1.1rem;
             opacity: 0.9;
             position: relative;
             z-index: 2;
         }
 
         .auth-form {
-            padding: 40px 30px;
+            padding: 48px 40px;
         }
 
         .form-group {
             margin-bottom: 24px;
+            position: relative;
         }
 
         .form-label {
             display: block;
-            font-weight: 500;
+            font-weight: 600;
             color: var(--gray-700);
             margin-bottom: 8px;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
         }
 
         .form-input {
             width: 100%;
-            padding: 16px 20px;
+            padding: 18px 20px;
             border: 2px solid var(--gray-200);
-            border-radius: 12px;
+            border-radius: 14px;
             font-size: 1rem;
             transition: all 0.3s ease;
             background: var(--bg-primary);
+            position: relative;
         }
 
         .form-input:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+            transform: translateY(-1px);
         }
 
         .form-input::placeholder {
             color: var(--gray-400);
+            transition: color 0.3s ease;
+        }
+
+        .form-input:focus::placeholder {
+            color: var(--gray-500);
+        }
+
+        .form-input.error {
+            border-color: var(--error);
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+        }
+
+        .form-input.success {
+            border-color: var(--success);
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-400);
+            transition: color 0.3s ease;
+        }
+
+        .form-input:focus + .input-icon {
+            color: var(--primary);
+        }
+
+        .form-input.error + .input-icon {
+            color: var(--error);
+        }
+
+        .form-input.success + .input-icon {
+            color: var(--success);
+        }
+
+        .validation-message {
+            margin-top: 6px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            opacity: 0;
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+        }
+
+        .validation-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .validation-message.error {
+            color: var(--error);
+        }
+
+        .validation-message.success {
+            color: var(--success);
         }
 
         .login-btn {
@@ -176,29 +258,55 @@
             background: var(--primary-gradient);
             color: white;
             border: none;
-            padding: 16px;
-            border-radius: 12px;
+            padding: 18px;
+            border-radius: 14px;
             font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .login-btn:hover::before {
+            left: 100%;
         }
 
         .login-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+            box-shadow: 0 12px 30px rgba(37, 99, 235, 0.4);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
         }
 
         .login-btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
             transform: none;
+            box-shadow: none;
+        }
+
+        .login-btn:disabled::before {
+            display: none;
         }
 
         .divider {
             text-align: center;
-            margin: 24px 0;
+            margin: 32px 0;
             position: relative;
         }
 
@@ -214,37 +322,49 @@
 
         .divider span {
             background: white;
-            padding: 0 16px;
+            padding: 0 20px;
             color: var(--gray-500);
             font-size: 0.9rem;
+            font-weight: 500;
         }
 
         .signup-link {
             text-align: center;
-            margin-top: 24px;
+            margin-top: 32px;
         }
 
         .signup-link a {
             color: var(--primary);
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 600;
             transition: all 0.3s ease;
+            position: relative;
         }
 
-        .signup-link a:hover {
-            color: var(--primary-dark);
-            text-decoration: underline;
+        .signup-link a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .signup-link a:hover::after {
+            width: 100%;
         }
 
         .back-btn {
             position: absolute;
-            top: 20px;
-            left: 20px;
+            top: 24px;
+            left: 24px;
             background: rgba(255, 255, 255, 0.2);
             border: none;
             color: white;
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -252,6 +372,7 @@
             align-items: center;
             justify-content: center;
             z-index: 3;
+            backdrop-filter: blur(10px);
         }
 
         .back-btn:hover {
@@ -262,52 +383,168 @@
         .error-message {
             background: #fef2f2;
             color: var(--error);
-            padding: 12px 16px;
-            border-radius: 8px;
-            margin-bottom: 20px;
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-bottom: 24px;
             font-size: 0.9rem;
             border: 1px solid #fecaca;
             display: none;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
         }
 
         .success-message {
             background: #f0fdf4;
             color: var(--success);
-            padding: 12px 16px;
-            border-radius: 8px;
-            margin-bottom: 20px;
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-bottom: 24px;
             font-size: 0.9rem;
             border: 1px solid #bbf7d0;
             display: none;
+            animation: slideDown 0.5s ease-out;
         }
 
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .loading-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            font-size: 0.9rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--primary);
+        }
+
+        .remember-me label {
+            color: var(--gray-600);
+            cursor: pointer;
+        }
+
+        .forgot-password {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        /* 모바일 최적화 */
         @media (max-width: 480px) {
             .auth-container {
                 margin: 0;
                 border-radius: 0;
                 min-height: 100vh;
+                max-width: 100%;
             }
             
             .auth-header {
-                padding: 30px 20px;
+                padding: 40px 24px;
             }
             
             .auth-form {
-                padding: 30px 20px;
+                padding: 40px 24px;
+            }
+
+            .auth-title {
+                font-size: 1.75rem;
+            }
+
+            .form-input {
+                padding: 16px 18px;
+            }
+
+            .remember-forgot {
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
+        }
+
+        /* 접근성 개선 */
+        .form-input:focus,
+        .login-btn:focus,
+        .back-btn:focus {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        /* 다크모드 지원 */
+        @media (prefers-color-scheme: dark) {
+            .auth-container {
+                background: var(--gray-900);
+                color: white;
+            }
+
+            .form-input {
+                background: var(--gray-800);
+                border-color: var(--gray-700);
+                color: white;
+            }
+
+            .form-input::placeholder {
+                color: var(--gray-400);
+            }
+
+            .divider span {
+                background: var(--gray-900);
             }
         }
     </style>
 </head>
 <body>
     <div class="auth-container">
-        <button class="back-btn" onclick="goToHome()">
+        <button class="back-btn" onclick="goToHome()" aria-label="홈으로 돌아가기">
             <i class="fas fa-arrow-left"></i>
         </button>
         
         <div class="auth-header">
             <div class="auth-logo">
                 <img src="/images/img/logo4.png" alt="AI 상담 시스템">
-                <img src="/images/img/logo.png" alt="AI 멀티에이전트 상담" style="height: 30px;">
+                <img src="/images/img/logo.png" alt="AI 멀티에이전트 상담" style="height: 40px;">
             </div>
             <h1 class="auth-title">로그인</h1>
             <p class="auth-subtitle">AI 멀티에이전트 상담 시스템에 오신 것을 환영합니다</p>
@@ -317,20 +554,35 @@
             <div class="error-message" id="errorMessage"></div>
             <div class="success-message" id="successMessage"></div>
             
-            <form id="loginForm">
+            <form id="loginForm" novalidate>
                 <div class="form-group">
                     <label for="email" class="form-label">이메일</label>
-                    <input type="email" id="email" name="email" class="form-input" placeholder="이메일을 입력하세요" required>
+                    <input type="email" id="email" name="email" class="form-input" placeholder="이메일을 입력하세요" required autocomplete="email">
+                    <i class="fas fa-envelope input-icon"></i>
+                    <div class="validation-message" id="emailValidation"></div>
                 </div>
                 
                 <div class="form-group">
                     <label for="password" class="form-label">비밀번호</label>
-                    <input type="password" id="password" name="password" class="form-input" placeholder="비밀번호를 입력하세요" required>
+                    <input type="password" id="password" name="password" class="form-input" placeholder="비밀번호를 입력하세요" required autocomplete="current-password">
+                    <i class="fas fa-lock input-icon"></i>
+                    <div class="validation-message" id="passwordValidation"></div>
+                </div>
+
+                <div class="remember-forgot">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember" name="remember">
+                        <label for="remember">로그인 상태 유지</label>
+                    </div>
+                    <a href="#" class="forgot-password" onclick="showForgotPassword()">비밀번호 찾기</a>
                 </div>
                 
                 <button type="submit" class="login-btn" id="loginBtn">
-                    <i class="fas fa-sign-in-alt"></i>
-                    로그인
+                    <span class="btn-text">
+                        <i class="fas fa-sign-in-alt"></i>
+                        로그인
+                    </span>
+                    <div class="loading-spinner"></div>
                 </button>
             </form>
             
@@ -345,41 +597,134 @@
     </div>
 
     <script>
-        function goToHome() {
-            window.location.href = '/';
+        // 전역 변수
+        let isSubmitting = false;
+        let validationTimeout = {};
+
+        // DOM 로드 완료 시 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeForm();
+            setupEventListeners();
+        });
+
+        // 폼 초기화
+        function initializeForm() {
+            const form = document.getElementById('loginForm');
+            const inputs = form.querySelectorAll('input[type="email"], input[type="password"]');
+            
+            inputs.forEach(input => {
+                // 입력 시 실시간 유효성 검사
+                input.addEventListener('input', function() {
+                    clearTimeout(validationTimeout[this.id]);
+                    validationTimeout[this.id] = setTimeout(() => {
+                        validateField(this);
+                    }, 300);
+                });
+
+                // 포커스 아웃 시 유효성 검사
+                input.addEventListener('blur', function() {
+                    validateField(this);
+                });
+            });
         }
 
-        function showError(message) {
-            const errorDiv = document.getElementById('errorMessage');
-            const successDiv = document.getElementById('successMessage');
-            errorDiv.textContent = message;
-            errorDiv.style.display = 'block';
-            successDiv.style.display = 'none';
+        // 이벤트 리스너 설정
+        function setupEventListeners() {
+            const form = document.getElementById('loginForm');
+            const loginBtn = document.getElementById('loginBtn');
+
+            // 폼 제출
+            form.addEventListener('submit', handleSubmit);
+
+            // Enter 키로 폼 제출
+            document.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && !isSubmitting) {
+                    form.dispatchEvent(new Event('submit'));
+                }
+            });
         }
 
-        function showSuccess(message) {
-            const successDiv = document.getElementById('successMessage');
-            const errorDiv = document.getElementById('errorMessage');
-            successDiv.textContent = message;
-            successDiv.style.display = 'block';
-            errorDiv.style.display = 'none';
+        // 필드 유효성 검사
+        function validateField(field) {
+            const value = field.value.trim();
+            const fieldName = field.name;
+            const validationDiv = document.getElementById(fieldName + 'Validation');
+            
+            let isValid = true;
+            let message = '';
+
+            switch(fieldName) {
+                case 'email':
+                    if (!value) {
+                        isValid = false;
+                        message = '이메일을 입력해주세요.';
+                    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+                        isValid = false;
+                        message = '올바른 이메일 형식을 입력해주세요.';
+                    } else {
+                        message = '올바른 이메일 형식입니다.';
+                    }
+                    break;
+
+                case 'password':
+                    if (!value) {
+                        isValid = false;
+                        message = '비밀번호를 입력해주세요.';
+                    } else if (value.length < 6) {
+                        isValid = false;
+                        message = '비밀번호는 최소 6자 이상이어야 합니다.';
+                    } else {
+                        message = '비밀번호가 입력되었습니다.';
+                    }
+                    break;
+            }
+
+            // 시각적 피드백
+            field.classList.remove('error', 'success');
+            if (value) {
+                field.classList.add(isValid ? 'success' : 'error');
+            }
+
+            // 메시지 표시
+            showValidationMessage(validationDiv, message, isValid);
+            
+            return isValid;
         }
 
-        function hideMessages() {
-            document.getElementById('errorMessage').style.display = 'none';
-            document.getElementById('successMessage').style.display = 'none';
+        // 유효성 검사 메시지 표시
+        function showValidationMessage(element, message, isValid) {
+            element.className = `validation-message ${isValid ? 'success' : 'error'} show`;
+            element.textContent = message;
         }
 
-        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        // 폼 제출 처리
+        async function handleSubmit(e) {
             e.preventDefault();
             
-            const loginBtn = document.getElementById('loginBtn');
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+            if (isSubmitting) return;
             
-            // 버튼 비활성화
+            const form = document.getElementById('loginForm');
+            const loginBtn = document.getElementById('loginBtn');
+            const btnText = loginBtn.querySelector('.btn-text');
+            const loadingSpinner = loginBtn.querySelector('.loading-spinner');
+            
+            // 모든 필드 유효성 검사
+            const email = document.getElementById('email');
+            const password = document.getElementById('password');
+            
+            const isEmailValid = validateField(email);
+            const isPasswordValid = validateField(password);
+            
+            if (!isEmailValid || !isPasswordValid) {
+                showError('모든 필드를 올바르게 입력해주세요.');
+                return;
+            }
+            
+            // 제출 상태로 변경
+            isSubmitting = true;
             loginBtn.disabled = true;
-            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 로그인 중...';
+            btnText.style.display = 'none';
+            loadingSpinner.style.display = 'block';
             
             try {
                 const response = await fetch('/api/login', {
@@ -387,7 +732,10 @@
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ email, password })
+                    body: JSON.stringify({
+                        email: email.value.trim().toLowerCase(),
+                        password: password.value
+                    })
                 });
                 
                 const data = await response.json();
@@ -396,23 +744,64 @@
                     showSuccess('로그인 성공! 상담 페이지로 이동합니다.');
                     setTimeout(() => {
                         window.location.href = '/counseling';
-                    }, 1500);
+                    }, 2000);
                 } else {
                     showError(data.message || '로그인에 실패했습니다.');
                 }
             } catch (error) {
                 showError('네트워크 오류가 발생했습니다.');
             } finally {
-                // 버튼 활성화
+                // 버튼 상태 복원
+                isSubmitting = false;
                 loginBtn.disabled = false;
-                loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> 로그인';
+                btnText.style.display = 'block';
+                loadingSpinner.style.display = 'none';
             }
-        });
+        }
 
-        // Enter 키로 폼 제출
-        document.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                document.getElementById('loginForm').dispatchEvent(new Event('submit'));
+        // 에러 메시지 표시
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            const successDiv = document.getElementById('successMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            successDiv.style.display = 'none';
+            
+            // 자동 숨김
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        // 성공 메시지 표시
+        function showSuccess(message) {
+            const successDiv = document.getElementById('successMessage');
+            const errorDiv = document.getElementById('errorMessage');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            errorDiv.style.display = 'none';
+        }
+
+        // 메시지 숨김
+        function hideMessages() {
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+        }
+
+        // 비밀번호 찾기
+        function showForgotPassword() {
+            alert('비밀번호 찾기\n\n비밀번호를 잊으셨나요?\n관리자에게 문의하시거나 새 계정을 만드세요.\n\n문의: admin@example.com');
+        }
+
+        // 홈으로 이동
+        function goToHome() {
+            window.location.href = '/';
+        }
+
+        // 키보드 접근성 개선
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                goToHome();
             }
         });
     </script>
