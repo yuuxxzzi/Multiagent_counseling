@@ -10,6 +10,19 @@ from Multiagent_counseling.main import (
     AssistantAgent, MindfulnessAgent, RoleplayAgent, MemoryAgent, RoleplaySummaryAgent,
     analyze_and_update_state, emotion_branch, gpt_emotion_analysis
 )
+from .db import (
+    ensure_session,
+    get_connection,
+    save_message,
+    save_emotion,
+    upsert_slots_kv,
+    save_intervention,
+    start_roleplay_run,
+    end_roleplay_run,
+    save_report,
+    load_session_snapshot,
+    close_session,
+)
 
 app = Flask(__name__, 
            template_folder='../frontend/templates',
@@ -63,6 +76,8 @@ def get_or_create_session():
         session['session_id'] = str(uuid.uuid4())
     
     session_id = session['session_id']
+    # DB에 세션 보장
+    ensure_session(session_id, session.get('user_id'))
     
     if session_id not in user_sessions:
         user_sessions[session_id] = {
@@ -93,6 +108,17 @@ def get_or_create_session():
             },
             "scenario_completeness": 0.0
         }
+        # DB 스냅샷으로 초기 상태 복원 (있을 경우)
+        try:
+            snap = load_session_snapshot(session_id)
+            if snap.get("messages"):
+                user_sessions[session_id]["messages"] = snap["messages"]
+            if snap.get("slots"):
+                user_sessions[session_id]["scenario_slots"].update(snap["slots"])
+            if snap.get("completeness") is not None:
+                user_sessions[session_id]["scenario_completeness"] = snap["completeness"]
+        except Exception as _e:
+            pass
     
     return user_sessions[session_id]
 
@@ -126,9 +152,33 @@ def chat():
         
         # 사용자 메시지 추가
         state["messages"].append({"role": "user", "content": user_message})
+
+        # DB: 사용자 메시지 저장
+        user_msg_id = save_message(session['session_id'], 'user', user_message)
         
         # 감정 분석 및 상태 업데이트
         state, emotion_result = analyze_and_update_state(state)
+
+        # DB: 감정 결과 저장 (메시지 기준)
+        try:
+            save_emotion(
+                user_msg_id,
+                label=emotion_result.get('emotion_class') or emotion_result.get('emotion', {}).get('class', ''),
+                intensity=float(emotion_result.get('emotion_score') if 'emotion_score' in emotion_result else emotion_result.get('emotion', {}).get('score', 0.0)),
+                model_version='gpt-4o-mini'
+            )
+        except Exception as _e:
+            pass
+
+        # DB: 슬롯 upsert (카테고리/값 형태)
+        try:
+            upsert_slots_kv(
+                session['session_id'],
+                state.get('scenario_slots', {}),
+                source_msg_id=user_msg_id,
+            )
+        except Exception as _e:
+            pass
         
         # 슬롯 분석 결과 터미널 출력
         print(f"\n[슬롯 분석 결과]")
@@ -153,6 +203,12 @@ def chat():
         
         if route == "mindfulness":
             state = mindfulness.run(state)
+            # DB: 개입/응답 저장
+            try:
+                save_intervention(session['session_id'], 'mindfulness', state["messages"][-1]["content"], agent='mindfulness')
+                save_message(session['session_id'], 'assistant', state["messages"][-1]["content"])
+            except Exception as _e:
+                pass
             responses.append({
                 'type': 'mindfulness',
                 'content': state["messages"][-1]["content"]
@@ -160,14 +216,35 @@ def chat():
             
             # 롤플레잉 중에 마인드풀니스가 개입된 경우
             if state.get("roleplay_active", False):
+                was_active = True
                 state = roleplay.run(state)
+                # DB: 롤플 응답 저장
+                try:
+                    save_intervention(session['session_id'], 'roleplay', state["messages"][-1]["content"], agent='roleplay')
+                    save_message(session['session_id'], 'assistant', state["messages"][-1]["content"])
+                except Exception as _e:
+                    pass
                 responses.append({
                     'type': 'roleplay',
                     'content': state["messages"][-1]["content"]
                 })
                 
         elif route == "roleplay":
+            was_active = state.get("roleplay_active", False)
             state = roleplay.run(state)
+            # 롤플 시작 시 런 레코드 생성
+            if not was_active and state.get("roleplay_active", False):
+                try:
+                    run_id = start_roleplay_run(session['session_id'], None, {"role": state.get("roleplay_role"), "user_role": state.get("user_role")})
+                    state["roleplay_run_id"] = run_id
+                except Exception as _e:
+                    pass
+            # DB: 롤플 응답 저장
+            try:
+                save_intervention(session['session_id'], 'roleplay', state["messages"][-1]["content"], agent='roleplay')
+                save_message(session['session_id'], 'assistant', state["messages"][-1]["content"])
+            except Exception as _e:
+                pass
             responses.append({
                 'type': 'roleplay',
                 'content': state["messages"][-1]["content"]
@@ -178,6 +255,10 @@ def chat():
             try:
                 reply = assistant.reply(user_message)
                 state["messages"].append({"role": "assistant", "content": reply})
+                try:
+                    save_message(session['session_id'], 'assistant', reply)
+                except Exception as _e:
+                    pass
                 responses.append({
                     'type': 'assistant',
                     'content': reply
@@ -224,6 +305,14 @@ def end_session():
         # 세션 정리
         session_id = session['session_id']
         report = state.get("report", {})
+        try:
+            save_report(session_id, report)
+        except Exception as _e:
+            pass
+        try:
+            close_session(session_id)
+        except Exception as _e:
+            pass
         
         # 세션 데이터 삭제 (선택사항)
         if session_id in user_sessions:
@@ -577,6 +666,21 @@ def api_auth_status():
             'isLoggedIn': False,
             'user': None
         })
+
+@app.route('/api/health/db')
+def api_health_db():
+    """DB 연결 상태 헬스체크: SELECT 1 결과를 반환"""
+    try:
+        with get_connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute('SELECT 1')
+                row = cur.fetchone()
+        return jsonify({
+            'ok': True,
+            'select1': row[0] if row else None
+        })
+    except Exception as e:
+        return jsonify({'ok': False, 'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
