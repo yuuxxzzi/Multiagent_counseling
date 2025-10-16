@@ -4,6 +4,7 @@ import uuid
 import psycopg2
 import psycopg2.extras
 from datetime import datetime
+import hashlib
 
 
 def _first(keys):
@@ -298,5 +299,156 @@ def load_session_snapshot(session_id: str) -> dict:
             except Exception:
                 pass
     return snapshot
+
+
+# ==================== 회원가입 및 사용자 관리 ====================
+
+def hash_password(password: str) -> str:
+    """비밀번호를 SHA-256으로 해시화"""
+    return hashlib.sha256(password.encode('utf-8')).hexdigest()
+
+
+def create_user(username: str, email: str, password: str, profile_data: dict | None = None) -> str:
+    """
+    새로운 사용자를 생성하고 user_id를 반환.
+    이 함수를 호출하기 전에 이메일 중복 체크가 완료되었다고 가정합니다.
+    """
+    user_id = str(uuid.uuid4())
+    hashed_pw = hash_password(password)
+    profile_json = json.dumps(profile_data or {}, ensure_ascii=False)
+    
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                """
+                INSERT INTO users (user_id, username, email, password_hash, profile, created_at)
+                VALUES (%s, %s, %s, %s, %s, %s)
+                """,
+                (user_id, username, email, hashed_pw, profile_json, datetime.utcnow()),
+            )
+    return user_id
+
+
+def get_user_by_email(email: str) -> dict | None:
+    """이메일로 사용자 정보 조회 (중복 체크 및 로그인에 사용)"""
+    with get_connection() as conn:
+        with conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cur:
+            cur.execute(
+                """
+                SELECT user_id, username, email, password_hash, profile, created_at
+                FROM users
+                WHERE email = %s
+                LIMIT 1
+                """,
+                (email,),
+            )
+            row = cur.fetchone()
+            if row:
+                return {
+                    "user_id": row["user_id"],
+                    "username": row["username"],
+                    "email": row["email"],
+                    "password_hash": row["password_hash"],
+                    "profile": json.loads(row["profile"]) if row["profile"] else {},
+                    "created_at": row["created_at"],
+                }
+    return None
+
+
+def get_user_by_username(username: str) -> dict | None:
+    """사용자명으로 사용자 정보 조회 (중복 체크에 사용)"""
+    with get_connection() as conn:
+        with conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cur:
+            cur.execute(
+                """
+                SELECT user_id, username, email, password_hash, profile, created_at
+                FROM users
+                WHERE username = %s
+                LIMIT 1
+                """,
+                (username,),
+            )
+            row = cur.fetchone()
+            if row:
+                return {
+                    "user_id": row["user_id"],
+                    "username": row["username"],
+                    "email": row["email"],
+                    "password_hash": row["password_hash"],
+                    "profile": json.loads(row["profile"]) if row["profile"] else {},
+                    "created_at": row["created_at"],
+                }
+    return None
+
+
+def get_user_by_id(user_id: str) -> dict | None:
+    """user_id로 사용자 정보 조회"""
+    with get_connection() as conn:
+        with conn.cursor(cursor_factory=psycopg2.extras.DictCursor) as cur:
+            cur.execute(
+                """
+                SELECT user_id, username, email, profile, created_at
+                FROM users
+                WHERE user_id = %s
+                LIMIT 1
+                """,
+                (user_id,),
+            )
+            row = cur.fetchone()
+            if row:
+                return {
+                    "user_id": row["user_id"],
+                    "username": row["username"],
+                    "email": row["email"],
+                    "profile": json.loads(row["profile"]) if row["profile"] else {},
+                    "created_at": row["created_at"],
+                }
+    return None
+
+
+def verify_user_credentials(email: str, password: str) -> dict | None:
+    """
+    로그인 검증: 이메일과 비밀번호가 일치하면 사용자 정보 반환
+    
+    Args:
+        email: 이메일 주소
+        password: 평문 비밀번호
+    
+    Returns:
+        인증 성공 시 사용자 정보 (password_hash 제외), 실패 시 None
+    """
+    user = get_user_by_email(email)
+    if user and user["password_hash"] == hash_password(password):
+        # 비밀번호 해시는 반환하지 않음
+        return {
+            "user_id": user["user_id"],
+            "username": user["username"],
+            "email": user["email"],
+            "profile": user["profile"],
+            "created_at": user["created_at"],
+        }
+    return None
+
+
+def update_user_profile(user_id: str, profile_data: dict) -> bool:
+    """사용자 프로필 정보 업데이트"""
+    profile_json = json.dumps(profile_data, ensure_ascii=False)
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                "UPDATE users SET profile = %s, updated_at = %s WHERE user_id = %s",
+                (profile_json, datetime.utcnow(), user_id),
+            )
+            return cur.rowcount > 0
+
+
+def check_email_exists(email: str) -> bool:
+    """이메일 중복 체크"""
+    return get_user_by_email(email) is not None
+
+
+def check_username_exists(username: str) -> bool:
+    """사용자명 중복 체크"""
+    return get_user_by_username(username) is not None
 
 

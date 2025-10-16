@@ -5,6 +5,7 @@ import os
 import hashlib
 import re
 from datetime import datetime
+from psycopg2 import Error as Psycopg2Error
 from openai import OpenAI
 from Multiagent_counseling.main import (
     AssistantAgent, MindfulnessAgent, RoleplayAgent, MemoryAgent, RoleplaySummaryAgent,
@@ -22,6 +23,10 @@ from .db import (
     save_report,
     load_session_snapshot,
     close_session,
+    create_user,
+    get_user_by_email,
+    verify_user_credentials,
+    check_email_exists
 )
 
 app = Flask(__name__, 
@@ -46,7 +51,7 @@ roleplay_summary = RoleplaySummaryAgent()
 user_sessions = {}
 
 # 간단한 사용자 데이터베이스 (실제 프로덕션에서는 데이터베이스 사용)
-users_db = {}
+# users_db = {} # 더 이상 사용하지 않음
 
 def hash_password(password):
     """비밀번호 해시화"""
@@ -559,28 +564,31 @@ def api_signup():
         if not is_valid:
             return jsonify({'message': message}), 400
         
-        # 이메일 중복 확인
-        if email in users_db:
+        # 이메일 중복 확인 (DB 사용)
+        if check_email_exists(email):
             return jsonify({'message': '이미 가입된 이메일입니다.'}), 400
         
-        # 사용자 생성
-        user_id = str(uuid.uuid4())
-        users_db[email] = {
-            'id': user_id,
-            'name': name,
-            'email': email,
-            'password': hash_password(password),
-            'created_at': datetime.now().isoformat()
-        }
+        # 사용자 생성 (DB 사용)
+        create_user(
+            username=name,
+            email=email,
+            password=password,
+            profile_data={}  # 초기 프로필은 비어있음
+        )
         
         return jsonify({
             'success': True,
             'message': '회원가입이 완료되었습니다.'
         })
         
+    except Psycopg2Error as db_error:
+        # 데이터베이스 관련 모든 오류를 여기서 처리
+        print(f"회원가입 DB 오류: {db_error}") # 서버 로그에 상세 오류 출력
+        # 사용자에게는 일반적인 메시지 표시
+        return jsonify({'message': '데이터베이스 처리 중 문제가 발생했습니다.'}), 500
     except Exception as e:
-        print(f"회원가입 오류: {e}")
-        return jsonify({'message': '회원가입 중 오류가 발생했습니다.'}), 500
+        print(f"회원가IP 오류: {e}")
+        return jsonify({'message': '회원가입 중 알 수 없는 오류가 발생했습니다.'}), 500
 
 @app.route('/api/login', methods=['POST'])
 def api_login():
@@ -597,28 +605,23 @@ def api_login():
         if not password:
             return jsonify({'message': '비밀번호를 입력해주세요.'}), 400
         
-        # 사용자 확인
-        if email not in users_db:
-            return jsonify({'message': '이메일 또는 비밀번호가 올바르지 않습니다.'}), 401
-        
-        user = users_db[email]
-        hashed_password = hash_password(password)
-        
-        if user['password'] != hashed_password:
+        # 사용자 확인 (DB 사용)
+        user = verify_user_credentials(email, password)
+        if not user:
             return jsonify({'message': '이메일 또는 비밀번호가 올바르지 않습니다.'}), 401
         
         # 세션에 사용자 정보 저장
-        session['user_id'] = user['id']
+        session['user_id'] = user['user_id']
         session['user_email'] = user['email']
-        session['user_name'] = user['name']
+        session['user_name'] = user['username']
         session['is_logged_in'] = True
         
         return jsonify({
             'success': True,
             'message': '로그인 성공',
             'user': {
-                'id': user['id'],
-                'name': user['name'],
+                'id': user['user_id'],
+                'name': user['username'],
                 'email': user['email']
             }
         })
