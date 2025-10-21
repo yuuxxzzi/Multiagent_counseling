@@ -119,6 +119,12 @@
             height: 100vh;
             background: var(--bg-primary);
             position: relative;
+            transition: grid-template-columns 0.3s ease;
+        }
+
+        /* 사이드바 최소화 시 메인화면 확장 */
+        .content-area:has(.sidebar.minimized) {
+            grid-template-columns: 60px 1fr;
         }
 
         /* Premium Sidebar Styles */
@@ -132,13 +138,41 @@
             position: relative;
             z-index: 10;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow-y: auto;
+            overflow: hidden;
             height: 100vh;
             width: 350px;
             min-width: 350px;
             max-width: 350px;
             flex-shrink: 0;
             resize: none;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 사이드바 헤더 고정 */
+        .sidebar-header {
+            position: sticky !important;
+            top: 0 !important;
+            z-index: 100 !important;
+            background: var(--primary-gradient) !important;
+            backdrop-filter: var(--glass-blur) !important;
+            -webkit-backdrop-filter: var(--glass-blur) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        /* 사이드바 컨텐츠 영역 */
+        .sidebar-content {
+            overflow-y: auto;
+            flex: 1;
+            padding: 0;
+        }
+
+        /* 사이드바 내부 스크롤 영역 */
+        .sidebar-scrollable {
+            overflow-y: auto;
+            flex: 1;
+            height: 0;
         }
 
         /* 사이드바 최소화 상태 */
@@ -146,6 +180,79 @@
             width: 60px !important;
             min-width: 60px !important;
             max-width: 60px !important;
+            height: 100vh !important;
+            min-height: 100vh !important;
+            max-height: 100vh !important;
+        }
+
+        /* 사이드바 최소화 시 스크롤 영역 숨김 */
+        .sidebar.minimized .sidebar-scrollable {
+            display: none !important;
+        }
+
+        /* 사이드바 최소화 시 핵심 버튼들만 표시 */
+        .sidebar.minimized .new-session-btn,
+        .sidebar.minimized .report-generate-btn {
+            display: flex !important;
+            width: 35px !important;
+            height: 35px !important;
+            border-radius: 50% !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            background: var(--primary) !important;
+            color: white !important;
+            border: none !important;
+            justify-content: center !important;
+            align-items: center !important;
+            position: relative !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .sidebar.minimized .new-session-btn i,
+        .sidebar.minimized .report-generate-btn i {
+            font-size: 16px !important;
+            color: white !important;
+        }
+
+        .sidebar.minimized .new-session-btn .btn-text,
+        .sidebar.minimized .report-generate-btn .btn-text {
+            display: none !important;
+        }
+
+        /* 사이드바 버튼 컨테이너 - 항상 표시 */
+        .sidebar-minimized-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 0;
+            gap: 8px;
+            height: auto;
+            justify-content: flex-start;
+        }
+
+        /* 사이드바 확장 시 버튼들 숨김 */
+        .sidebar:not(.minimized) .sidebar-minimized-buttons {
+            display: none !important;
+        }
+
+        /* 사이드바 최소화 시 버튼들 표시 */
+        .sidebar.minimized .sidebar-minimized-buttons {
+            display: flex !important;
+        }
+
+        /* 사이드바 확장 시 버튼 컨테이너 */
+        .sidebar-expanded-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 10px 20px;
+            background: white;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        /* 사이드바 최소화 시 확장 버튼들 숨김 */
+        .sidebar.minimized .sidebar-expanded-buttons {
+            display: none !important;
         }
 
         /* 최소화 상태 강제 적용 */
@@ -171,9 +278,12 @@
         .sidebar.minimized .sidebar-header {
             padding: 10px 5px !important;
             justify-content: center !important;
-            height: 60px !important;
-            min-height: 60px !important;
+            height: 80px !important;
+            min-height: 80px !important;
+            max-height: 80px !important;
             position: relative !important;
+            display: flex !important;
+            flex-shrink: 0 !important;
         }
 
         .sidebar.minimized .sidebar-toggle-btn {
@@ -226,8 +336,8 @@
 
         .sidebar.minimized .sidebar-toggle-btn:hover {
             background: var(--primary-dark) !important;
-            transform: translate(-50%, -50%) scale(1.1) !important;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4) !important;
+            transform: translate(-50%, -50%) !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
         }
 
         .sidebar.minimized .new-session-btn,
@@ -283,8 +393,8 @@
         .sidebar.minimized .new-session-btn:hover,
         .sidebar.minimized .report-generate-btn:hover {
             background: var(--primary-dark) !important;
-            transform: scale(1.1) !important;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4) !important;
+            transform: none !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
         }
 
         .sidebar.minimized .new-session-btn .btn-text,
@@ -514,7 +624,7 @@
         }
 
         .sidebar.minimized .report-generate-btn:hover::after {
-            content: "결과보고서 생성";
+            content: "";
         }
 
         .sidebar.minimized .agent-item:hover::after {
@@ -603,7 +713,7 @@
             background: transparent;
             color: var(--gray-700);
             border: none;
-            padding: var(--space-3) var(--space-4);
+            padding: 8px 16px;
             border-radius: var(--radius-md);
             font-size: 0.875rem;
             font-weight: 500;
@@ -844,7 +954,7 @@
         }
 
         .sidebar-header {
-            padding: 24px 20px;
+            padding: 24px 32px;
             background: var(--primary-gradient);
             color: white;
             font-weight: 600;
@@ -853,8 +963,13 @@
             align-items: center;
             justify-content: space-between;
             box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
-            position: relative;
+            position: sticky !important;
+            top: 0 !important;
+            z-index: 100 !important;
             overflow: hidden;
+            height: 80px !important;
+            min-height: 80px !important;
+            max-height: 80px !important;
         }
 
         .sidebar-header::before {
@@ -889,7 +1004,7 @@
         .sidebar-toggle-btn:hover {
             opacity: 1;
             background: rgba(255, 255, 255, 0.2);
-            transform: scale(1.05);
+            transform: none;
         }
 
         .sidebar-section {
@@ -941,7 +1056,7 @@
             background: transparent;
             color: var(--gray-700);
             border: none;
-            padding: var(--space-3) var(--space-4);
+            padding: 8px 16px;
             border-radius: var(--radius-md);
             font-size: 0.875rem;
             font-weight: 500;
@@ -1126,6 +1241,9 @@
             position: relative;
             overflow: hidden;
             z-index: 5;
+            height: 80px !important;
+            min-height: 80px !important;
+            max-height: 80px !important;
         }
 
         .chat-header::before {
@@ -1389,6 +1507,71 @@
             font-size: 0.75rem;
         }
 
+        /* 입력 필드 컨테이너 고정 */
+        .input-field-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        /* 입력 필드 자체 고정 */
+        .input-field {
+            position: relative;
+            width: 100%;
+            height: 48px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 12px 40px 12px 16px;
+            font-size: 16px;
+            transition: border-color 0.2s ease;
+        }
+
+        /* 입력 필드 아이콘 고정 위치 */
+        .input-icon,
+        .email-icon,
+        .lock-icon {
+            position: absolute !important;
+            right: 16px !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            color: #6b7280 !important;
+            font-size: 16px !important;
+            pointer-events: none !important;
+            z-index: 10 !important;
+            transition: none !important;
+        }
+
+
+        /* 경고메시지 스타일 - 레이아웃 시프트 방지 */
+        .error-message {
+            color: #ef4444;
+            font-size: 0.75rem;
+            margin-top: 4px;
+            display: block;
+            min-height: 18px;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+        }
+
+        /* 입력 필드 포커스 시 */
+        .input-field:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        /* 입력 필드 에러 상태 */
+        .input-field.error {
+            border-color: #ef4444;
+        }
+
+        .input-field.error:focus {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        }
+
+
         /* Controls */
         .controls {
             display: flex;
@@ -1445,10 +1628,13 @@
         .right-sidebar .sidebar-header {
             background: var(--primary-gradient);
             color: white;
-            padding: 24px 20px;
+            padding: 24px 32px;
             box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
             position: relative;
             overflow: hidden;
+            height: 80px !important;
+            min-height: 80px !important;
+            max-height: 80px !important;
         }
 
         .right-sidebar .sidebar-header::before {
@@ -1566,6 +1752,9 @@
             .sidebar-header,
             .chat-header {
                 padding: 20px 16px;
+                height: 70px !important;
+                min-height: 70px !important;
+                max-height: 70px !important;
             }
             
             .chat-input {
@@ -1650,6 +1839,16 @@
         @media (max-width: 480px) {
             .chat-header {
                 padding: 16px 20px;
+                height: 60px !important;
+                min-height: 60px !important;
+                max-height: 60px !important;
+            }
+            
+            .sidebar-header {
+                padding: 16px 20px;
+                height: 60px !important;
+                min-height: 60px !important;
+                max-height: 60px !important;
             }
             
             .chat-input {
@@ -2620,16 +2819,34 @@
                 </button>
             </div>
             
-            <button onclick="startNewSession()" class="new-session-btn">
-                <i class="fas fa-plus"></i>
-                <span class="btn-text">새 상담</span>
-            </button>
+            <!-- 사이드바 최소화 시 표시될 버튼들 -->
+            <div class="sidebar-minimized-buttons">
+                <button onclick="startNewSession()" class="new-session-btn">
+                    <i class="fas fa-plus"></i>
+                    <span class="btn-text">새 상담</span>
+                </button>
+                
+                <!-- 결과보고서 생성 버튼 -->
+                <button onclick="generateReport()" class="report-generate-btn">
+                    <i class="fas fa-file-alt"></i>
+                    <span class="btn-text">결과보고서 생성</span>
+                </button>
+            </div>
             
-            <!-- 결과보고서 생성 버튼 -->
-            <button onclick="generateReport()" class="report-generate-btn">
-                <i class="fas fa-file-alt"></i>
-                <span class="btn-text">결과보고서 생성</span>
-            </button>
+            <div class="sidebar-scrollable">
+            <!-- 사이드바 확장 시 표시될 버튼들 -->
+            <div class="sidebar-expanded-buttons">
+                <button onclick="startNewSession()" class="new-session-btn">
+                    <i class="fas fa-plus"></i>
+                    <span class="btn-text">새 상담</span>
+                </button>
+                
+                <!-- 결과보고서 생성 버튼 -->
+                <button onclick="generateReport()" class="report-generate-btn">
+                    <i class="fas fa-file-alt"></i>
+                    <span class="btn-text">결과보고서 생성</span>
+                </button>
+            </div>
             
             <!-- 감정 그래프 섹션 -->
             <div class="sidebar-section">
@@ -2662,6 +2879,7 @@
                     </div>
                 </div>
             </div>
+            </div> <!-- sidebar-scrollable 닫기 -->
         </div>
 
 
@@ -2671,7 +2889,7 @@
                 <div class="chat-title">
                     <div class="title-main">
                         <i class="fas fa-comments"></i>
-                        <span>AI 상담 대화</span>
+                        <span>벼리와의 대화</span>
                     </div>
                     <div class="subtitle">실시간 감정 분석 및 멀티에이전트 상담</div>
                 </div>
@@ -2715,7 +2933,7 @@
                 </div>
                 <div class="input-footer">
                     <div class="typing-indicator" id="typingIndicator" style="display: none;">
-                        <span>AI가 응답을 준비하고 있습니다...</span>
+                        <span>벼리가 생각을 하고 있습니다...</span>
                     </div>
                     <div class="input-hints">
                         <span>Enter로 전송, Shift+Enter로 줄바꿈</span>
@@ -3139,7 +3357,7 @@
         function addWelcomeMessage() {
             const chatMessages = document.getElementById('chatMessages');
             if (chatMessages.children.length === 0) {
-                addMessage('assistant', '안녕하세요! 저는 AI 상담사입니다. 어떤 이야기든 편하게 나눠주세요. 마음이 무겁거나 힘든 일이 있으시면 언제든 말씀해 주세요. 😊');
+                addMessage('assistant', '안녕하세요! 저는 벼리입니다. 어떤 이야기든 편하게 나눠주세요. 마음이 무겁거나 힘든 일이 있으시면 언제든 말씀해 주세요. 😊');
             }
         }
 
@@ -3749,7 +3967,7 @@
                 <div class="message assistant">
                     <div class="message-content">
                         <div class="message-header">
-                            <span class="message-sender">AI 상담사</span>
+                            <span class="message-sender">벼리</span>
                             <span class="message-time">방금 전</span>
                         </div>
                         <div class="message-text">${sessionId} 세션의 대화 내용을 불러왔습니다.</div>
@@ -3882,12 +4100,12 @@
                 `;
             } else {
                 const senderName = type === 'mindfulness' ? '마인드풀니스' : 
-                                 type === 'roleplay' ? '역할극' : 'AI 상담사';
+                                 type === 'roleplay' ? '역할극' : '벼리';
                 const icon = type === 'mindfulness' ? 'fas fa-leaf' :
                            type === 'roleplay' ? 'fas fa-theater-masks' : 'fas fa-robot';
                 
                 messageDiv.innerHTML = `
-                    <img src="/images/img/character.png" class="message-profile" alt="AI 상담사">
+                    <img src="/images/img/character.png" class="message-profile" alt="벼리">
                     <div class="message-info">
                         <div class="message-header">
                             <span class="message-sender">${senderName}</span>
@@ -3929,14 +4147,16 @@
         function toggleSidebar() {
             const sidebar = document.getElementById('leftSidebar');
             const toggleBtn = document.getElementById('sidebarToggleBtn');
+            const contentArea = document.querySelector('.content-area');
             const isMinimized = sidebar.classList.contains('minimized');
             
             if (isMinimized) {
                 // 최소화 해제 (원래 크기로)
                 sidebar.classList.remove('minimized');
-                sidebar.style.width = '300px';
-                sidebar.style.minWidth = '300px';
-                sidebar.style.maxWidth = '300px';
+                sidebar.style.width = '350px';
+                sidebar.style.minWidth = '350px';
+                sidebar.style.maxWidth = '350px';
+                contentArea.style.gridTemplateColumns = '350px 1fr';
                 toggleBtn.innerHTML = '<i class="fas fa-bars"></i>';
                 toggleBtn.setAttribute('aria-label', '사이드바 최소화');
             } else {
@@ -3945,6 +4165,7 @@
                 sidebar.style.width = '60px';
                 sidebar.style.minWidth = '60px';
                 sidebar.style.maxWidth = '60px';
+                contentArea.style.gridTemplateColumns = '60px 1fr';
                 toggleBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
                 toggleBtn.setAttribute('aria-label', '사이드바 확장');
             }
@@ -3975,10 +4196,10 @@
 
         function exportChat() {
             const messages = document.querySelectorAll('#chatMessages .message');
-            let chatContent = 'AI 상담 대화 내역\n\n';
+            let chatContent = '벼리와의 대화 내역\n\n';
             
             messages.forEach(msg => {
-                const role = msg.classList.contains('user') ? '사용자' : 'AI 상담사';
+                const role = msg.classList.contains('user') ? '사용자' : '벼리';
                 const content = msg.querySelector('.message-content').textContent;
                 chatContent += `${role}: ${content}\n\n`;
             });
