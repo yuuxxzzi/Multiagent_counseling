@@ -23,7 +23,10 @@ if not api_key:
 
 # 파인튜닝된 모델 사용 (환경변수에서 가져오거나 기본값 사용)
 OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+# 롤플레잉 대화 전용 모델: ROLEPLAY_MODEL 우선, 없으면 OPENAI_MODEL 사용
+ROLEPLAY_MODEL = os.getenv("ROLEPLAY_MODEL") or OPENAI_MODEL
 print(f"[Info] 사용할 모델: {OPENAI_MODEL}")
+print(f"[Info] 롤플레잉 모델: {ROLEPLAY_MODEL}")
 
 client = OpenAI(api_key=api_key)
 
@@ -743,7 +746,7 @@ class RoleplayAgent:
             [{ai_role}의 자연스러운 응답]
             """
             response = client.chat.completions.create(
-                model=OPENAI_MODEL,
+                model=ROLEPLAY_MODEL,
                 messages=[
                     {"role": "system", 
                      "content": f"""당신은 {ai_role} 역할을 맡은 전문 연기자입니다. 
@@ -871,7 +874,7 @@ class RoleplaySummaryAgent:
         
         try:
             response = client.chat.completions.create(
-                model=OPENAI_MODEL,
+                model=ROLEPLAY_MODEL,
                 messages=[
                     {"role": "system", "content": "당신은 전문 상담사입니다. 롤플레잉을 통해 얻은 인사이트를 바탕으로 사용자에게 도움이 되는 정리와 조언을 자연스럽고 따뜻한 톤으로, 이모티콘 없이 제공해주세요."},
                     {"role": "user", "content": prompt}

@@ -18,6 +18,10 @@ if not api_key:
     raise RuntimeError("OPENAI_API_KEY 가 설정되어 있지 않습니다.")
 client = OpenAI(api_key=api_key)
 
+# 롤플레잉 대화 전용 모델: .env의 ROLEPLAY_MODEL을 우선 사용
+# (미설정 시 OPENAI_MODEL 또는 기본 베이스 모델로 폴백)
+ROLEPLAY_MODEL = os.getenv("ROLEPLAY_MODEL") or os.getenv("OPENAI_MODEL", "gpt-4o-mini-2024-07-18")
+
 # ───────────────────────────────
 # 유틸
 # ───────────────────────────────
@@ -303,7 +307,7 @@ class RoleplayAgent:
             """
             
             response = client.chat.completions.create(
-                model="gpt-4o-mini",
+                model=ROLEPLAY_MODEL,
                 messages=[
                     {"role": "system", "content": "당신은 롤플레잉 상황극의 상대방 역할을 맡습니다. 자연스럽고 현실적인 대화를 이끌어가세요."},
                     {"role": "user", "content": situation_prompt}
@@ -374,7 +378,7 @@ class RoleplayAgent:
             """
             
             response = client.chat.completions.create(
-                model="gpt-4o-mini",
+                model=ROLEPLAY_MODEL,
                 messages=[
                     {"role": "system", "content": "당신은 롤플레잉의 상대방 역할입니다. 자연스럽고 현실적인 대화를 이어가세요."},
                     {"role": "user", "content": response_prompt}
