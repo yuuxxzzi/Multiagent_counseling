@@ -22,7 +22,7 @@ if not api_key:
     raise RuntimeError("OPENAI_API_KEY 가 설정되어 있지 않습니다.")
 
 # 파인튜닝된 모델 사용 (환경변수에서 가져오거나 기본값 사용)
-OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+OPENAI_MODEL = "gpt-4o-mini"
 # 롤플레잉 대화 전용 모델: ROLEPLAY_MODEL 우선, 없으면 OPENAI_MODEL 사용
 ROLEPLAY_MODEL = os.getenv("ROLEPLAY_MODEL") or OPENAI_MODEL
 print(f"[Info] 사용할 모델: {OPENAI_MODEL}")
@@ -580,22 +580,32 @@ def should_exit_roleplay(state: Dict[str, Any], user_text: str) -> Tuple[bool, s
 def should_trigger_roleplay(user_text: str, state: Dict[str, Any]) -> Tuple[bool, str]:
     # 최소 입력 개수 조건 확인 (5개 미만이면 롤플레잉 실행 안 함)
     user_message_count = len([msg for msg in state.get("messages", []) if msg.get("role") == "user"])
+    print(f"[DEBUG] 롤플레잉 트리거 체크: 사용자 메시지 수={user_message_count}")
+    
     if user_message_count < 5:
+        print(f"[DEBUG] 롤플레잉 트리거 비활성화: {user_message_count}/5")
         return False, f"최소 입력 개수 미달 (현재: {user_message_count}/5)"
     
     t = user_text.strip().lower()
     if any(k in t for k in ROLEPLAY_KEYWORDS):
+        print(f"[DEBUG] 사용자 키워드 기반 롤플레잉 트리거")
         return True, "사용자 요청 기반 롤플레잉"
     if state.get("trigger_roleplay"):
+        print(f"[DEBUG] 플래그 기반 롤플레잉 트리거")
         return True, "플래그 기반 롤플레잉"
 
     if state.get("roleplay_count", 0) > 0 or state.get("roleplay_active", False):
+        print(f"[DEBUG] 이미 롤플레잉 진행 중 또는 완료됨")
         return False, ""
 
     completeness = state.get("scenario_completeness", 0.0)
-    if completeness >= 0.7:
-        return True, f"시나리오 완성도({int(completeness * 100)}%) 기반 자동 롤플레잉"
+    print(f"[DEBUG] 시나리오 완성도: {completeness:.2f}")
+    # 자동 롤플레잉 비활성화 - 사용자가 명시적으로 요청할 때만 시작
+    # if completeness >= 0.7:
+    #     print(f"[DEBUG] 시나리오 완성도 기반 롤플레잉 트리거")
+    #     return True, f"시나리오 완성도({int(completeness * 100)}%) 기반 자동 롤플레잉"
 
+    print(f"[DEBUG] 롤플레잉 트리거 조건 미충족")
     return False, ""
 
 
@@ -751,43 +761,50 @@ class RoleplayAgent:
                     {"role": "system", 
                      "content": f"""당신은 {ai_role} 역할을 맡은 전문 연기자입니다. 
                      
+                     **중요: 한 번에 한 턴씩만 대화하세요. 긴 대화를 한 번에 하지 마세요.**
+                     
                      다음 원칙을 따라 실제 사람처럼 자연스럽고 현실적인 대화를 이어가세요:
                      
-                     1. 자연스러운 말투: 일상적인 표현과 말투를 사용하세요
-                        - "어?", "음...", "아", "그렇구나" 등의 자연스러운 감탄사 사용
+                     1. **간결한 응답**: 한 번에 1-2문장으로 간결하게 응답하세요
+                        - 긴 대화를 한 번에 하지 말고, 한 턴씩 주고받는 대화
+                        - 자연스러운 말투: "어?", "음...", "아", "그렇구나" 등
                         - "~네", "~어", "~지" 등 친근한 어미 사용
-                        - 말을 끊거나 다시 시작하는 자연스러운 패턴
                      
-                     2. 감정적 반응: 상황에 맞는 감정을 자연스럽게 표현하세요
+                     2. **감정적 반응**: 상황에 맞는 감정을 자연스럽게 표현하세요
                         - 놀람: "어? 정말?", "와... 그럴 수가"
                         - 공감: "아... 그럴 수밖에 없었겠다", "정말 힘들었겠어"
                         - 걱정: "괜찮아?", "어떻게 됐어?"
                         - 이해: "음... 그럴 수 있지", "당연한 반응이야"
                      
-                     3. 맥락 이해: 앞서 대화한 내용을 바탕으로 자연스럽게 연결하세요
+                     3. **맥락 이해**: 앞서 대화한 내용을 바탕으로 자연스럽게 연결하세요
                         - 이전에 언급된 내용을 기억하고 언급
                         - 감정의 흐름을 자연스럽게 이어가기
                         - 대화의 주제를 자연스럽게 발전시키기
                      
-                     4. 현실적 반응: 과도하게 연극적이지 않고 실제 사람처럼 반응하세요
+                     4. **현실적 반응**: 과도하게 연극적이지 않고 실제 사람처럼 반응하세요
                         - 완벽한 문장보다는 자연스러운 말투
                         - 감정의 변화를 점진적으로 표현
                         - 실제 사람의 반응 패턴 모방
                      
-                     5. 일관성: {ai_role}의 성격과 말투를 일관되게 유지하세요
+                     5. **일관성**: {ai_role}의 성격과 말투를 일관되게 유지하세요
                         - 이전 대화에서 보여준 성격 유지
                         - 말투와 반응 패턴의 연속성
                         - 캐릭터의 고유한 특성 유지
                      
-                     6. 몸짓과 표정: 대화 중 자연스러운 몸짓이나 표정 변화도 표현하세요
+                     6. **몸짓과 표정**: 대화 중 자연스러운 몸짓이나 표정 변화도 표현하세요
                         - "(고개 끄덕이며)", "(한숨을 쉬며)", "(미소를 지으며)" 등
                         - 상황에 맞는 자연스러운 반응 표현
                      
-                     예시 응답들:
+                     **응답 예시 (간결하게):**
                      - "어? 그런 일이 있었구나... 정말 힘들었겠다" (놀란 표정)
                      - "음... 그럴 수 있지. 누구나 그럴 수 있어" (고개 끄덕이며)
                      - "아, 그때 정말 힘들었겠다. 지금은 좀 어떠해?" (공감하며)
-                     - "그래? 그럼 어떻게 생각하고 있어?" (관심을 보이며)"""},
+                     - "그래? 그럼 어떻게 생각하고 있어?" (관심을 보이며)
+                     
+                     **절대 하지 마세요:**
+                     - 긴 대화를 한 번에 하지 마세요
+                     - 여러 턴의 대화를 한 번에 생성하지 마세요
+                     - 한 번에 한 턴씩만 응답하세요"""},
                     {"role": "user", "content": response_prompt}
                 ],
                 temperature=0.8

@@ -11,7 +11,7 @@ from Multiagent_counseling.main import (
     AssistantAgent, MindfulnessAgent, RoleplayAgent, MemoryAgent, RoleplaySummaryAgent,
     analyze_and_update_state, emotion_branch, gpt_emotion_analysis
 )
-from .db import (
+from db import (
     ensure_session,
     get_connection,
     save_message,
@@ -135,6 +135,11 @@ def index():
 def counseling():
     return render_template('counseling.html')
 
+@app.route('/report')
+def report():
+    """보고서 페이지"""
+    return render_template('report.html')
+
 @app.route('/login')
 def login_page():
     return render_template('login.html')
@@ -204,7 +209,9 @@ def chat():
         })
         
         # 분기 실행
+        print(f"[DEBUG] emotion_branch 호출 전 state: {state.get('next_node', 'None')}")
         route = emotion_branch(state)
+        print(f"[DEBUG] emotion_branch 결과: {route}")
         
         if route == "mindfulness":
             state = mindfulness.run(state)
@@ -258,7 +265,9 @@ def chat():
         # 일반 상담 응답 (롤플레잉 중이 아닐 때만)
         if not state.get("roleplay_active", False):
             try:
+                print(f"[DEBUG] AssistantAgent.reply() 호출 시작: {user_message}")
                 reply = assistant.reply(user_message)
+                print(f"[DEBUG] AssistantAgent.reply() 응답: {reply}")
                 state["messages"].append({"role": "assistant", "content": reply})
                 try:
                     save_message(session['session_id'], 'assistant', reply)
@@ -270,6 +279,7 @@ def chat():
                 })
             except Exception as e:
                 print(f"상담 응답 생성 오류: {str(e)}")
+                print(f"[DEBUG] 오류 상세: {type(e).__name__}: {str(e)}")
                 responses.append({
                     'type': 'error',
                     'content': f'상담 응답 생성 중 오류가 발생했습니다: {str(e)}'
@@ -375,9 +385,20 @@ def generate_report():
         
         # 상담 내용을 텍스트로 변환
         conversation_text = ""
-        for msg in messages:
+        print(f"[DEBUG] 받은 메시지 수: {len(messages)}")
+        for i, msg in enumerate(messages):
             role = "사용자" if msg['type'] == 'user' else "상담사"
-            conversation_text += f"{role}: {msg['content']}\n"
+            content = msg.get('content', '').strip()
+            if content:
+                conversation_text += f"{role}: {content}\n"
+                print(f"[DEBUG] 메시지 {i+1}: {role} - {content[:50]}...")
+        
+        print(f"[DEBUG] 최종 대화 내용 길이: {len(conversation_text)}")
+        print(f"[DEBUG] 대화 내용 미리보기: {conversation_text[:200]}...")
+        
+        # 대화 내용이 없으면 오류 반환
+        if not conversation_text.strip():
+            return jsonify({'error': '상담 내용이 없습니다. 먼저 상담을 진행해주세요.'}), 400
         
         # 감정 데이터 요약
         emotion_summary = ""
@@ -418,11 +439,11 @@ def generate_report():
 - 완성도: {data.get('scenarioCompleteness', 0):.1%}
 """
 
-        # GPT 프롬프트
+        # GPT 프롬프트 (자세하고 전문적인 상담 보고서 작성)
         prompt = f"""
-다음은 AI 상담 세션의 내용입니다. 이를 바탕으로 전문적이고 따뜻한 상담 보고서를 작성해주세요.
+당신은 전문 상담사입니다. 다음 AI 상담 세션의 내용을 바탕으로 매우 자세하고 전문적인 상담 보고서를 작성해주세요.
 
-**상담 정보:**
+상담 정보:
 - 상담 제목: {session_title}
 - 총 메시지 수: {message_count}개
 - 감정 분석 결과:
@@ -430,52 +451,175 @@ def generate_report():
 {roleplay_info}
 {scenario_info}
 
-**상담 내용:**
+=== 상담 대화 내용 (이 내용을 기반으로 보고서 작성) ===
 {conversation_text}
+=== 상담 대화 내용 끝 ===
 
-다음 형식으로 보고서를 작성해주세요:
+다음 형식으로 매우 상세하고 전문적인 보고서를 작성해주세요:
 
-## 📋 상담 보고서
+상담 보고서
 
-### 1. 상담 개요
-- 상담 주제와 주요 내용 요약
+1. 상담 개요
+- 상담 주제와 주요 내용을 구체적으로 요약
+- 상담자의 주요 고민과 문제점 분석
+- 상담 목표와 기대 효과
 
-### 2. 감정 상태 분석
-- 감정 변화 패턴 분석
-- 주요 감정과 그 원인
+2. 감정 상태 분석
+- 감정 변화 패턴을 시간순으로 상세 분석
+- 주요 감정의 강도와 지속 시간 분석
+- 감정 변화의 원인과 맥락 설명
+- 감정 조절 능력 평가
 
-### 3. 상담 진행 과정
-- 상담의 흐름과 주요 전환점
-- 중요한 대화 내용
-- 롤플레잉 활용 여부 및 효과
+3. 상담 진행 과정
+- 상담의 흐름을 단계별로 상세히 기술
+- 중요한 대화 내용과 핵심 인사이트
+- 상담자의 반응과 변화 과정
+- 롤플레잉 활용 여부 및 구체적 효과
+- 마인드풀니스 기법 적용 결과
 
-### 4. 시나리오 분석 (해당시)
-- 시나리오 슬롯 완성도
-- 롤플레잉을 통한 인사이트
-- 역할극을 통한 학습 효과
+4. 시나리오 분석 (해당시)
+- 시나리오 슬롯 완성도 상세 분석
+- 롤플레잉을 통한 구체적 인사이트
+- 역할극을 통한 학습 효과와 변화
+- 시나리오별 대처 능력 평가
 
-### 5. 종합 평가 및 제언
-- 상담자의 전반적인 상태 평가
-- 향후 개선 방향 제안
+5. 상담자의 강점과 자원
+- 상담자가 보여준 긍정적 특성
+- 활용 가능한 내적/외적 자원
+- 성장 가능성과 잠재력
+
+6. 문제 영역과 개선점
+- 상담자가 겪고 있는 구체적 어려움
+- 반복되는 패턴이나 문제 행동
+- 개선이 필요한 영역
+
+7. 종합 평가 및 제언
+- 상담자의 전반적인 심리적 상태 평가
+- 감정 조절 능력과 대처 전략 평가
+- 향후 개선 방향과 구체적 제안
 - 롤플레잉 활용 권장사항
+- 추가 상담 필요성과 방향성
 
-보고서는 전문적이면서도 이해하기 쉽게 작성해주세요.
+보고서 작성 시 다음 사항을 반드시 포함해주세요:
+- 위의 상담 대화 내용을 반드시 참조하여 구체적인 대화 내용 인용
+- 상담자의 실제 발언과 반응을 바탕으로 한 감정 변화 과정 상세 기술
+- 상담 대화에서 나타난 구체적 사례를 바탕으로 한 전문적인 심리학적 분석
+- 상담 내용을 근거로 한 실용적이고 구체적인 제언
+- 상담 대화에서 확인된 상담자의 성장과 변화에 대한 긍정적 평가
+
+중요: 반드시 위의 상담 대화 내용을 참조하여 보고서를 작성하고, 상담자의 실제 발언을 인용하세요.
+각 섹션은 최소 3-4문단으로 구성하고, 매우 자세하고 전문적으로 작성해주세요.
+줄바꿈은 \\n으로 표현하고, 마크다운 문법은 사용하지 마세요.
 """
         
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model="gpt-4o",
             messages=[
-                {"role": "system", "content": "당신은 전문 상담사입니다. 상담 내용을 분석하여 전문적이고 따뜻한 보고서를 작성해주세요."},
+                {"role": "system", "content": "당신은 20년 경력의 전문 상담사입니다. 상담 내용을 매우 상세하고 전문적으로 분석하여 깊이 있는 보고서를 작성해주세요. 각 섹션을 충분히 자세하게 작성하고, 구체적인 근거와 예시를 포함해주세요."},
                 {"role": "user", "content": prompt}
             ],
-            temperature=0.7
+            temperature=0.3,
+            max_tokens=4000
         )
         
         report = response.choices[0].message.content.strip()
         
+        # 종합 평가 및 제언을 별도로 GPT를 통해 상세하게 작성
+        final_assessment_prompt = f"""
+당신은 전문 상담사입니다. 다음 상담 진행 과정과 원본 상담 대화를 바탕으로 매우 상세하고 전문적인 종합 평가 및 제언을 작성해주세요.
+
+상담 진행 과정:
+{report}
+
+원본 상담 대화 내용:
+{conversation_text}
+
+다음 내용을 매우 자세하고 전문적으로 작성해주세요:
+
+1. 상담자의 전반적인 심리적 상태 평가
+- 현재 심리적 상태의 구체적 분석
+- 강점과 약점의 균형적 평가
+- 성장 가능성과 잠재력 분석
+
+2. 감정 조절 능력과 대처 전략 평가
+- 감정 인식 및 표현 능력 평가
+- 감정 조절 전략의 효과성 분석
+- 스트레스 대처 능력 평가
+
+3. 상담 과정에서의 변화와 성장
+- 상담 전후의 구체적 변화
+- 인사이트와 깨달음의 내용
+- 행동 변화와 개선 사항
+
+4. 향후 개선 방향과 구체적 제안
+- 단기적 목표와 실행 계획
+- 장기적 성장 방향
+- 구체적인 실천 방법과 기법
+
+5. 롤플레잉 활용 권장사항 (해당시)
+- 롤플레잉의 효과와 학습 결과
+- 추가 활용 방안과 개선점
+- 실생활 적용 방법
+
+6. 추가 상담 필요성과 방향성
+- 지속적인 상담의 필요성
+- 상담 목표와 방향성
+- 전문적 도움의 필요성
+
+각 섹션은 최소 2-3문단으로 구성하고, 구체적인 근거와 예시를 포함하여 작성해주세요.
+중요: 반드시 위의 원본 상담 대화 내용을 참조하여 상담자의 실제 발언과 반응을 바탕으로 평가하세요.
+전문적이면서도 따뜻하고 격려하는 톤으로 작성하고, 줄바꿈은 \\n으로 표현하세요.
+마크다운 문법은 사용하지 마세요.
+"""
+        
+        try:
+            final_response = client.chat.completions.create(
+                model="gpt-4o",
+                messages=[
+                    {"role": "system", "content": "당신은 20년 경력의 전문 상담사입니다. 상담 내용을 매우 상세하고 전문적으로 분석하여 깊이 있는 종합 평가와 구체적인 제언을 제공해주세요. 각 섹션을 충분히 자세하게 작성하고, 실용적인 조언을 포함해주세요."},
+                    {"role": "user", "content": final_assessment_prompt}
+                ],
+                temperature=0.3,
+                max_tokens=3000
+            )
+            final_assessment = final_response.choices[0].message.content.strip()
+        except Exception as e:
+            print(f"종합 평가 생성 오류: {e}")
+            final_assessment = "상담을 통해 상담자는 자신의 감정을 잘 표현하고 있으며, AI 상담을 통해 새로운 관점을 얻을 수 있었습니다. 향후 지속적인 감정 관리와 상황 대처 능력 향상을 위한 추가 상담을 권장합니다."
+        
+        # 보고서 데이터를 URL 파라미터로 인코딩
+        import urllib.parse
+        
+        # 인터넷 시간 기준으로 날짜 설정 (UTC)
+        from datetime import datetime, timezone
+        current_date = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+        current_datetime = datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC')
+        
+        report_data = {
+            'userName': session.get('user_name', '사용자'),
+            'sessionDate': current_date,
+            'reportDate': current_date,
+            'reportDateTime': current_datetime,
+            'sessionTitle': session_title,
+            'messageCount': message_count,
+            'mindfulnessCount': data.get('mindfulnessCount', 0),
+            'roleplayCount': data.get('roleplayCount', 0),
+            'emotionData': emotion_data,
+            'counselingProcess': report,
+            'roleplayData': data.get('roleplayData'),
+            'scenarioSlots': data.get('scenarioSlots'),
+            'scenarioCompleteness': data.get('scenarioCompleteness', 0),
+            'finalAssessment': final_assessment
+        }
+        
+        # URL 파라미터로 인코딩
+        encoded_data = urllib.parse.quote(json.dumps(report_data, ensure_ascii=False))
+        report_url = f"/report?data={encoded_data}"
+        
         return jsonify({
             'success': True,
-            'report': report
+            'report': report,
+            'reportUrl': report_url
         })
         
     except Exception as e:

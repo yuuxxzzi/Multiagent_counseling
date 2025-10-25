@@ -734,6 +734,54 @@
             box-shadow: none;
         }
 
+        /* PDF 변환 진행도 */
+        .pdf-progress-container {
+            margin-top: 15px;
+            padding: 15px;
+            background: var(--bg-glass);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: var(--glass-blur);
+        }
+
+        .pdf-progress-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .pdf-progress-header i {
+            color: #dc2626;
+        }
+
+        .pdf-progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--gray-200);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .pdf-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .pdf-progress-text {
+            text-align: center;
+            font-size: 12px;
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
         /* Chat Container */
         .chat-container {
             background: var(--glass-bg);
@@ -1959,44 +2007,6 @@
             line-height: 1.2;
         }
 
-        .report-content {
-            min-height: 400px;
-            background: white;
-            border-radius: 0;
-            border: none;
-            overflow: hidden;
-        }
-
-        .report-placeholder {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 400px;
-            color: var(--gray-500);
-            text-align: center;
-            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
-        }
-
-        .report-placeholder i {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            opacity: 0.4;
-            color: var(--gray-400);
-        }
-
-        .report-placeholder p {
-            font-size: 1.1rem;
-            margin: 0;
-            color: var(--gray-600);
-            font-weight: 500;
-        }
-
-        .report-generated {
-            padding: 24px;
-            line-height: 1.7;
-            background: white;
-        }
 
         .report-section {
             margin-bottom: 40px;
@@ -2846,6 +2856,18 @@
                     <i class="fas fa-file-alt"></i>
                     <span class="btn-text">결과보고서 생성</span>
                 </button>
+                
+                <!-- PDF 변환 진행도 -->
+                <div id="pdfProgressContainer" class="pdf-progress-container" style="display: none;">
+                    <div class="pdf-progress-header">
+                        <i class="fas fa-file-pdf"></i>
+                        <span class="pdf-progress-title">PDF 변환 중...</span>
+                    </div>
+                    <div class="pdf-progress-bar">
+                        <div id="pdfProgressBar" class="pdf-progress-fill"></div>
+                    </div>
+                    <div id="pdfProgressText" class="pdf-progress-text">0%</div>
+                </div>
             </div>
             
             <!-- 감정 그래프 섹션 -->
@@ -2858,6 +2880,7 @@
                     <canvas id="emotionChart" width="300" height="300"></canvas>
                 </div>
             </div>
+            
             
             <div class="sidebar-section">
                 <h3><i class="fas fa-history"></i> 상담 내역</h3>
@@ -2940,6 +2963,52 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- 오른쪽 사이드바 -->
+        <div class="right-sidebar" id="rightSidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-title">
+                    <i class="fas fa-chart-line"></i>
+                    <span>분석 결과</span>
+                </div>
+                <button class="sidebar-toggle-btn" onclick="toggleRightSidebar()" aria-label="오른쪽 사이드바 토글">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="sidebar-content">
+                <div class="sidebar-tabs">
+                    <div class="sidebar-tab active" onclick="switchTab('emotion')">
+                        <i class="fas fa-heart"></i>
+                        <span>감정 분석</span>
+                    </div>
+                    <div class="sidebar-tab" onclick="switchTab('report')">
+                        <i class="fas fa-file-alt"></i>
+                        <span>보고서</span>
+                    </div>
+                </div>
+                
+                <div class="tab-content active" id="emotionTab">
+                    <div class="emotion-graph-container">
+                        <div class="emotion-graph-title">
+                            <i class="fas fa-heart"></i>
+                            감정 변화 추이
+                        </div>
+                        <canvas id="emotionChart" width="300" height="300"></canvas>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="reportTab">
+                    <div class="report-container">
+                        <h3>상담 분석 보고서</h3>
+                        <p>상담이 진행되면 자동으로 분석 결과가 표시됩니다.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 리사이즈 핸들 -->
+            <div class="right-sidebar-resize-handle" id="rightResizeHandle"></div>
         </div>
 
     </div>
@@ -3491,11 +3560,55 @@
             titleElement.textContent = newTitle.trim() || '새 상담';
         }
 
-        // 보고서 생성 함수 (화면용 요약본)
-        function generateReport() {
-            const reportContent = document.getElementById('reportContent');
-            const saveBtn = document.querySelector('.save-btn');
+        // PDF 변환 진행도 관리
+        let pdfProgressInterval = null;
+        
+        function startPdfProgress() {
+            const container = document.getElementById('pdfProgressContainer');
+            const progressBar = document.getElementById('pdfProgressBar');
+            const progressText = document.getElementById('pdfProgressText');
             
+            container.style.display = 'block';
+            
+            let progress = 0;
+            const steps = [
+                { progress: 20, text: '데이터 수집 중...' },
+                { progress: 40, text: '보고서 생성 중...' },
+                { progress: 60, text: 'GPT 분석 중...' },
+                { progress: 80, text: '보고서 포맷팅 중...' },
+                { progress: 100, text: '완료!' }
+            ];
+            
+            let currentStep = 0;
+            
+            pdfProgressInterval = setInterval(() => {
+                if (currentStep < steps.length) {
+                    const step = steps[currentStep];
+                    progress = step.progress;
+                    
+                    progressBar.style.width = progress + '%';
+                    progressText.textContent = step.text + ' ' + progress + '%';
+                    
+                    currentStep++;
+                } else {
+                    clearInterval(pdfProgressInterval);
+                    setTimeout(() => {
+                        container.style.display = 'none';
+                    }, 1000);
+                }
+            }, 800);
+        }
+        
+        function stopPdfProgress() {
+            if (pdfProgressInterval) {
+                clearInterval(pdfProgressInterval);
+                pdfProgressInterval = null;
+            }
+            document.getElementById('pdfProgressContainer').style.display = 'none';
+        }
+
+        // 보고서 생성 함수 (서버 API 호출 후 바로 PDF 저장)
+        function generateReport() {
             // 상담 데이터 수집
             const messages = document.querySelectorAll('.message');
             const userMessages = document.querySelectorAll('.message.user');
@@ -3506,18 +3619,107 @@
                 return;
             }
             
-            // 화면용 요약본 HTML 생성
-            const summaryHTML = createSummaryHTML(messages, userMessages, assistantMessages);
+            // PDF 변환 진행도 시작
+            startPdfProgress();
             
-            // 요약본 표시
-            reportContent.innerHTML = summaryHTML;
-            reportContent.classList.add('report-generated');
+            // 로딩 알림
+            showNotification('보고서를 생성하고 있습니다...', 'info');
             
-            // 저장 버튼 활성화
-            saveBtn.disabled = false;
+            // 서버로 전송할 데이터 준비
+            const messageData = Array.from(messages).map(msg => {
+                const isUser = msg.classList.contains('user');
+                const content = msg.querySelector('.message-content').textContent.trim();
+                console.log(`[DEBUG] 메시지 수집: ${isUser ? 'user' : 'assistant'} - ${content.substring(0, 50)}...`);
+                return {
+                    type: isUser ? 'user' : 'assistant',
+                    content: content
+                };
+            });
             
-            // 보고서 생성 완료 알림
-            showNotification('상담 요약이 생성되었습니다. 상세 보고서는 PDF 저장을 이용하세요.', 'success');
+            console.log(`[DEBUG] 총 수집된 메시지 수: ${messageData.length}`);
+            console.log(`[DEBUG] 메시지 데이터:`, messageData);
+            
+            // 감정 데이터 수집
+            const emotionData = {
+                datasets: getEmotionChartData()
+            };
+            
+            // 롤플레잉 데이터 수집
+            const roleplayData = getRoleplayData();
+            
+            // 시나리오 완성도 수집
+            const scenarioCompleteness = getScenarioCompleteness();
+            
+            // 서버에 보고서 생성 요청
+            fetch('/generate_report', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    sessionTitle: 'AI 멀티에이전트 상담',
+                    messageCount: messages.length,
+                    emotionData: emotionData,
+                    messages: messageData,
+                    roleplayData: roleplayData,
+                    scenarioCompleteness: scenarioCompleteness
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // PDF 변환 진행도 중지
+                stopPdfProgress();
+                
+                if (data.success) {
+                    // 보고서 생성 성공 시 새로운 보고서 페이지로 리다이렉트
+                    if (data.reportUrl) {
+                        window.open(data.reportUrl, '_blank');
+                        showNotification('보고서가 생성되었습니다. 새 창에서 보고서를 확인하세요.', 'success');
+                    } else {
+                        // 기존 방식으로 폴백
+                        openPrintWindowWithReport(data.report);
+                        showNotification('보고서가 생성되었습니다. PDF 저장 창이 열렸습니다.', 'success');
+                    }
+                } else {
+                    throw new Error(data.error || '보고서 생성에 실패했습니다.');
+                }
+            })
+            .catch(error => {
+                // PDF 변환 진행도 중지
+                stopPdfProgress();
+                console.error('보고서 생성 오류:', error);
+                showNotification('보고서 생성에 실패했습니다. 다시 시도해주세요.', 'error');
+            });
+        }
+
+        // 감정 차트 데이터 수집 함수
+        function getEmotionChartData() {
+            if (typeof emotionChart !== 'undefined' && emotionChart.data && emotionChart.data.datasets) {
+                return emotionChart.data.datasets;
+            }
+            return [];
+        }
+        
+        // 롤플레잉 데이터 수집 함수
+        function getRoleplayData() {
+            // 롤플레잉 관련 데이터가 있다면 수집
+            const roleplayMessages = document.querySelectorAll('.message.roleplay');
+            if (roleplayMessages.length > 0) {
+                return {
+                    count: roleplayMessages.length,
+                    messages: Array.from(roleplayMessages).map(msg => ({
+                        content: msg.querySelector('.message-content').textContent.trim(),
+                        timestamp: msg.querySelector('.message-time').textContent
+                    }))
+                };
+            }
+            return null;
+        }
+        
+        // 시나리오 완성도 수집 함수
+        function getScenarioCompleteness() {
+            // 시나리오 완성도 데이터가 있다면 수집
+            return 0.0; // 기본값
         }
 
         // 화면용 간단한 요약본 생성 함수
@@ -3794,6 +3996,69 @@
             
             // 인쇄용 스타일이 적용된 새 창 열기
             openPrintWindow();
+        }
+
+        // 보고서와 함께 인쇄 창 열기 함수
+        function openPrintWindowWithReport(reportContent) {
+            const sessionTitle = document.querySelector('.session-item.active .session-title').textContent;
+            const currentDate = new Date().toLocaleDateString('ko-KR');
+            
+            // 인쇄용 HTML 생성
+            const printHTML = '<!DOCTYPE html>' +
+                '<html lang="ko">' +
+                '<head>' +
+                    '<meta charset="UTF-8">' +
+                    '<meta name="viewport" content="width=device-width, initial-scale=1.0">' +
+                    '<title>상담 보고서</title>' +
+                    '<style>' +
+                        '@page { margin: 10mm; size: A4; }' +
+                        'body { font-family: "Malgun Gothic", "맑은 고딕", Arial, sans-serif; line-height: 1.6; color: #2d3748; margin: 0; padding: 0; background: white; }' +
+                        '.print-header { text-align: center; margin-bottom: 30px; padding: 25px; background: linear-gradient(135deg, #1e40af, #3b82f6); color: white; border-radius: 8px; }' +
+                        '.print-title { font-size: 24px; font-weight: 700; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }' +
+                        '.print-subtitle { font-size: 14px; opacity: 0.9; margin-bottom: 5px; }' +
+                        '.print-date { font-size: 12px; opacity: 0.8; }' +
+                        '.print-content { display: flex; flex-direction: column; gap: 20px; }' +
+                        '.print-section { margin-bottom: 25px; padding: 20px; background: #f8fafc; border-radius: 8px; border-left: 4px solid #3b82f6; }' +
+                        '.print-section h4 { color: #1e293b; font-size: 16px; font-weight: 700; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #3b82f6; padding-bottom: 5px; }' +
+                        '.print-section p { margin-bottom: 10px; font-size: 13px; line-height: 1.5; }' +
+                        '.print-section ul { margin: 10px 0; padding-left: 20px; }' +
+                        '.print-section li { margin-bottom: 5px; font-size: 13px; }' +
+                        'h1, h2, h3, h4, h5, h6 { color: #1e293b; margin-top: 20px; margin-bottom: 10px; }' +
+                        'h1 { font-size: 20px; border-bottom: 2px solid #3b82f6; padding-bottom: 5px; }' +
+                        'h2 { font-size: 18px; color: #3b82f6; }' +
+                        'h3 { font-size: 16px; color: #475569; }' +
+                        'p { margin-bottom: 10px; }' +
+                        'ul, ol { margin-bottom: 15px; }' +
+                        'li { margin-bottom: 5px; }' +
+                        'strong { color: #1e293b; }' +
+                        'em { color: #64748b; }' +
+                        '.highlight { background: #fef3c7; padding: 2px 4px; border-radius: 3px; }' +
+                        '.note { background: #e0f2fe; border-left: 4px solid #0ea5e9; padding: 10px; margin: 10px 0; border-radius: 0 4px 4px 0; }' +
+                        '.warning { background: #fef2f2; border-left: 4px solid #ef4444; padding: 10px; margin: 10px 0; border-radius: 0 4px 4px 0; }' +
+                        '.success { background: #f0fdf4; border-left: 4px solid #22c55e; padding: 10px; margin: 10px 0; border-radius: 0 4px 4px 0; }' +
+                    '</style>' +
+                '</head>' +
+                '<body>' +
+                    '<div class="print-header">' +
+                        '<div class="print-title">AI 멀티에이전트 상담 보고서</div>' +
+                        '<div class="print-subtitle">AI Multi-Agent Counseling Report</div>' +
+                        '<div class="print-date">생성일: ' + currentDate + ' | 상담 제목: ' + sessionTitle + '</div>' +
+                    '</div>' +
+                    '<div class="print-content">' +
+                        reportContent.replace(/\n/g, '<br>') +
+                    '</div>' +
+                '</body>' +
+                '</html>';
+            
+            // 새 창 열기
+            const printWindow = window.open('', '_blank', 'width=800,height=600');
+            printWindow.document.write(printHTML);
+            printWindow.document.close();
+            
+            // 자동 인쇄 (새 창이 로드된 후)
+            setTimeout(() => {
+                printWindow.print();
+            }, 1000);
         }
 
         // 인쇄 창 열기 함수

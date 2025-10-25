@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 상담 결과 보고서</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Malgun Gothic', '맑은 고딕', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        .report-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            min-height: 100vh;
+        }
+
+        /* Header Section */
+        .report-header {
+            background: linear-gradient(135deg, #1A2B5B 0%, #2C3E6B 100%);
+            color: white;
+            padding: 40px 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-decoration {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            opacity: 0.8;
+        }
+
+        .decoration-orange {
+            background: #FF8C00;
+            border-radius: 50% 0 0 0;
+            top: 0;
+            right: 0;
+            width: 120px;
+            height: 120px;
+        }
+
+        .decoration-purple {
+            background: #6A1B9A;
+            border-radius: 0 0 50% 0;
+            top: 20px;
+            right: 20px;
+            width: 80px;
+            height: 80px;
+        }
+
+        .decoration-green {
+            background: #A7D97B;
+            border-radius: 50%;
+            top: 40px;
+            right: 40px;
+            width: 60px;
+            height: 60px;
+        }
+
+        .decoration-blue {
+            background: #64B5F6;
+            border-radius: 0 50% 0 0;
+            top: 60px;
+            right: 60px;
+            width: 40px;
+            height: 40px;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .header-subtitle {
+            font-size: 14px;
+            color: #B8C5D1;
+            margin-bottom: 5px;
+        }
+
+        .header-title {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-tm {
+            font-size: 12px;
+            background: rgba(255,255,255,0.2);
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin-left: 10px;
+        }
+
+        .header-main-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .user-info {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .user-info-row {
+            display: flex;
+            margin-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 8px;
+        }
+
+        .user-info-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .user-info-label {
+            font-weight: bold;
+            min-width: 120px;
+            font-size: 14px;
+        }
+
+        .user-info-value {
+            font-size: 14px;
+            color: #E8F0F5;
+        }
+
+        /* Main Content */
+        .report-content {
+            padding: 40px 30px;
+            background: white;
+        }
+
+        .quote-section {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .quote-mark {
+            font-size: 80px;
+            color: #666;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        .quote-text {
+            font-size: 18px;
+            color: #444;
+            margin: 20px 0;
+            line-height: 1.8;
+            font-style: italic;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1A2B5B;
+            margin: 40px 0 20px 0;
+            border-bottom: 2px solid #1A2B5B;
+            padding-bottom: 10px;
+        }
+
+        /* 소제목 스타일링 */
+        .subsection-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2C3E6B;
+            margin: 25px 0 15px 0;
+            padding-left: 10px;
+            border-left: 4px solid #1A2B5B;
+            background: linear-gradient(90deg, rgba(26, 43, 91, 0.1) 0%, transparent 100%);
+            padding: 12px 15px;
+            border-radius: 4px;
+        }
+
+        .content-paragraph {
+            margin-bottom: 15px;
+            font-size: 16px;
+            line-height: 1.7;
+            color: #333;
+        }
+
+        .content-list {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .content-list li {
+            margin-bottom: 8px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .report-section {
+            margin-bottom: 30px;
+        }
+
+        .report-section p {
+            margin-bottom: 15px;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .emotion-chart {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #1A2B5B;
+        }
+
+        .chart-title {
+            font-weight: bold;
+            color: #1A2B5B;
+            margin-bottom: 15px;
+        }
+
+        .emotion-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .emotion-item:last-child {
+            border-bottom: none;
+        }
+
+        .emotion-name {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .emotion-value {
+            background: #1A2B5B;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .roleplay-section {
+            background: #f0f8ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #4A90E2;
+        }
+
+        .roleplay-title {
+            font-weight: bold;
+            color: #4A90E2;
+            margin-bottom: 15px;
+        }
+
+        .scenario-info {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            border-left: 4px solid #ffc107;
+        }
+
+        .scenario-title {
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .scenario-item {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .scenario-label {
+            font-weight: bold;
+            color: #856404;
+            display: inline-block;
+            min-width: 80px;
+        }
+
+        /* Footer */
+        .report-footer {
+            background: #F0F0F0;
+            padding: 30px;
+            border-top: 1px solid #ddd;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #4CAF50, #FF5722);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .logo-image {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            font-weight: bold;
+            color: #666;
+            font-size: 16px;
+        }
+
+        .footer-copyright {
+            text-align: right;
+            color: #666;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        .page-number {
+            position: absolute;
+            right: 30px;
+            bottom: 30px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .report-container {
+                box-shadow: none;
+                max-width: none;
+            }
+            
+            .report-header {
+                background: #1A2B5B !important;
+                -webkit-print-color-adjust: exact;
+                color-adjust: exact;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .report-container {
+                margin: 0;
+                box-shadow: none;
+            }
+            
+            .report-header {
+                padding: 20px 15px;
+            }
+            
+            .header-title {
+                font-size: 36px;
+            }
+            
+            .header-main-title {
+                font-size: 20px;
+            }
+            
+            .report-content {
+                padding: 20px 15px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="report-container">
+        <!-- Header Section -->
+        <div class="report-header">
+            <div class="header-decoration decoration-orange"></div>
+            <div class="header-decoration decoration-purple"></div>
+            <div class="header-decoration decoration-green"></div>
+            <div class="header-decoration decoration-blue"></div>
+            
+            <div class="header-content">
+                <div class="header-subtitle">AI 멀티에이전트 상담</div>
+                <div class="header-title">
+                    AI 상담
+                    <span class="header-tm">TM</span>
+                </div>
+                <div class="header-main-title">해석상담보고서</div>
+                
+                <div class="user-info">
+                    <div class="user-info-row">
+                        <span class="user-info-label">상담자:</span>
+                        <span class="user-info-value" id="userName">홍길동(남/30세)</span>
+                    </div>
+                    <div class="user-info-row">
+                        <span class="user-info-label">상담일:</span>
+                        <span class="user-info-value" id="sessionDate">2024-01-15</span>
+                    </div>
+                    <div class="user-info-row">
+                        <span class="user-info-label">보고서 생성 시간:</span>
+                        <span class="user-info-value" id="reportDateTime">2024-01-15 14:30:25 UTC</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="report-content">
+            <!-- Quote Section -->
+            <div class="quote-section">
+                <div class="quote-mark">"</div>
+                <div class="quote-text">
+                    나의 감정과 생각은 어떻게 변화했을까?<br>
+                    AI 상담을 통해 나를 더 깊이 이해할 수 있을까?<br>
+                    누구나 한 번쯤 이런 생각을 해본 적이 있을 것입니다.<br>
+                    이 질문에 명확한 답을 찾기는 어렵겠지만 AI 상담을 잘 활용한다면 실마리를 찾을 수도 있을 거예요.
+                </div>
+                <div class="quote-mark">"</div>
+            </div>
+
+            <!-- AI 상담이란? -->
+            <div class="report-section">
+                <h2 class="section-title">AI 상담이란?</h2>
+                <p>AI 상담은 인공지능 기술을 활용하여 개인의 감정 상태를 분석하고, 맞춤형 상담 서비스를 제공하는 혁신적인 상담 방식입니다. 감정 분석, 마인드풀니스, 롤플레잉 등 다양한 상담 기법을 통해 사용자의 심리적 안녕을 지원합니다.</p>
+                <p>본 보고서는 AI 멀티에이전트 상담 시스템을 통해 수집된 데이터를 바탕으로 작성되었으며, 상담자의 감정 변화, 상담 진행 과정, 그리고 향후 개선 방향에 대한 종합적인 분석을 제공합니다.</p>
+            </div>
+
+            <!-- 상담 개요 -->
+            <div class="report-section">
+                <h2 class="section-title">상담 개요</h2>
+                <div id="sessionOverview">
+                    <p><strong>상담 주제:</strong> <span id="sessionTitle">일상 스트레스 관리</span></p>
+                    <p><strong>총 대화 수:</strong> <span id="messageCount">15</span>개</p>
+                    <p><strong>상담 시간:</strong> <span id="sessionDuration">약 30분</span></p>
+                    <p><strong>마인드풀니스 개입:</strong> <span id="mindfulnessCount">2</span>회</p>
+                    <p><strong>롤플레잉 개입:</strong> <span id="roleplayCount">1</span>회</p>
+                </div>
+            </div>
+
+            <!-- 감정 상태 분석 -->
+            <div class="report-section">
+                <h2 class="section-title">감정 상태 분석</h2>
+                <div class="emotion-chart">
+                    <div class="chart-title">감정 변화 추이</div>
+                    <div id="emotionAnalysis">
+                        <!-- 감정 분석 데이터가 여기에 동적으로 삽입됩니다 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 상담 진행 과정 -->
+            <div class="report-section">
+                <h2 class="section-title">상담 진행 과정</h2>
+                <div id="counselingProcess">
+                    <!-- 상담 진행 과정이 여기에 동적으로 삽입됩니다 -->
+                </div>
+            </div>
+
+            <!-- 롤플레잉 분석 (해당시) -->
+            <div class="report-section" id="roleplaySection" style="display: none;">
+                <h2 class="section-title">롤플레잉 분석</h2>
+                <div class="roleplay-section">
+                    <div class="roleplay-title">롤플레잉 정보</div>
+                    <div id="roleplayInfo">
+                        <!-- 롤플레잉 정보가 여기에 동적으로 삽입됩니다 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 시나리오 분석 (해당시) -->
+            <div class="report-section" id="scenarioSection" style="display: none;">
+                <h2 class="section-title">시나리오 분석</h2>
+                <div class="scenario-info">
+                    <div class="scenario-title">시나리오 슬롯 정보</div>
+                    <div id="scenarioInfo">
+                        <!-- 시나리오 정보가 여기에 동적으로 삽입됩니다 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 종합 평가 및 제언 -->
+            <div class="report-section">
+                <h2 class="section-title">종합 평가 및 제언</h2>
+                <div id="finalAssessment">
+                    <!-- 종합 평가가 여기에 동적으로 삽입됩니다 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="report-footer">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="/static/img/logo2.png" alt="따숨" class="logo-image">
+                    <div class="logo-text">따숨</div>
+                </div>
+                <div class="footer-copyright">
+                    AI 상담 해석상담 보고서의 저작권은 따숨에 있으며,<br>
+                    보고서의 일부 또는 전부를 게시 배포하는 등의 행위를 절대 금합니다.<br>
+                    Copyright (c) 2024 by 따숨. All Rights Reserved.
+                </div>
+            </div>
+            <div class="page-number">1/1</div>
+        </div>
+    </div>
+
+    <script>
+        // 보고서 데이터 로드 및 렌더링
+        function loadReportData() {
+            // URL 파라미터에서 보고서 데이터 가져오기
+            const urlParams = new URLSearchParams(window.location.search);
+            const reportData = urlParams.get('data');
+            
+            if (reportData) {
+                try {
+                    const data = JSON.parse(decodeURIComponent(reportData));
+                    renderReport(data);
+                } catch (e) {
+                    console.error('보고서 데이터 파싱 오류:', e);
+                    showDefaultReport();
+                }
+            } else {
+                showDefaultReport();
+            }
+        }
+
+        function renderReport(data) {
+            // 기본 정보 설정
+            document.getElementById('userName').textContent = data.userName || '홍길동(남/30세)';
+            document.getElementById('sessionDate').textContent = data.sessionDate || new Date().toISOString().split('T')[0];
+            document.getElementById('reportDate').textContent = data.reportDate || new Date().toISOString().split('T')[0];
+            if (data.reportDateTime) {
+                document.getElementById('reportDateTime').textContent = data.reportDateTime;
+            }
+            
+            // 상담 개요
+            if (data.sessionTitle) {
+                document.getElementById('sessionTitle').textContent = data.sessionTitle;
+            }
+            if (data.messageCount) {
+                document.getElementById('messageCount').textContent = data.messageCount;
+            }
+            if (data.mindfulnessCount) {
+                document.getElementById('mindfulnessCount').textContent = data.mindfulnessCount;
+            }
+            if (data.roleplayCount) {
+                document.getElementById('roleplayCount').textContent = data.roleplayCount;
+            }
+
+            // 감정 분석 렌더링
+            if (data.emotionData && data.emotionData.datasets) {
+                renderEmotionAnalysis(data.emotionData);
+            }
+
+            // 상담 진행 과정 (소제목 구분 및 줄바꿈 처리)
+            if (data.counselingProcess) {
+                const processedContent = parseContentWithSubtitles(data.counselingProcess);
+                document.getElementById('counselingProcess').innerHTML = processedContent;
+            }
+
+            // 롤플레잉 정보
+            if (data.roleplayData) {
+                document.getElementById('roleplaySection').style.display = 'block';
+                renderRoleplayInfo(data.roleplayData);
+            }
+
+            // 시나리오 정보
+            if (data.scenarioSlots) {
+                document.getElementById('scenarioSection').style.display = 'block';
+                renderScenarioInfo(data.scenarioSlots, data.scenarioCompleteness);
+            }
+
+            // 종합 평가 (소제목 구분 및 줄바꿈 처리)
+            if (data.finalAssessment) {
+                const processedAssessment = parseContentWithSubtitles(data.finalAssessment);
+                document.getElementById('finalAssessment').innerHTML = processedAssessment;
+            }
+        }
+
+        function renderEmotionAnalysis(emotionData) {
+            const container = document.getElementById('emotionAnalysis');
+            let html = '';
+
+            emotionData.datasets.forEach(dataset => {
+                const maxValue = Math.max(...dataset.data);
+                const avgValue = dataset.data.reduce((a, b) => a + b, 0) / dataset.data.length;
+                
+                html += `
+                    <div class="emotion-item">
+                        <span class="emotion-name">${dataset.label}</span>
+                        <span class="emotion-value">최고 ${maxValue.toFixed(2)} / 평균 ${avgValue.toFixed(2)}</span>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function renderRoleplayInfo(roleplayData) {
+            const container = document.getElementById('roleplayInfo');
+            const html = `
+                <p><strong>롤플레잉 유형:</strong> ${roleplayData.type || 'N/A'}</p>
+                <p><strong>사용자 역할:</strong> ${roleplayData.userRole || 'N/A'}</p>
+                <p><strong>AI 역할:</strong> ${roleplayData.aiRole || 'N/A'}</p>
+                <p><strong>시나리오:</strong> ${roleplayData.situation || 'N/A'}</p>
+                <p><strong>롤플레잉 턴 수:</strong> ${roleplayData.turnCount || 0}</p>
+            `;
+            container.innerHTML = html;
+        }
+
+        function renderScenarioInfo(scenarioSlots, completeness) {
+            const container = document.getElementById('scenarioInfo');
+            const html = `
+                <div class="scenario-item">
+                    <span class="scenario-label">사건:</span> ${scenarioSlots.event || 'N/A'}
+                </div>
+                <div class="scenario-item">
+                    <span class="scenario-label">상대방:</span> ${scenarioSlots.character || 'N/A'}
+                </div>
+                <div class="scenario-item">
+                    <span class="scenario-label">장소:</span> ${scenarioSlots.place || 'N/A'}
+                </div>
+                <div class="scenario-item">
+                    <span class="scenario-label">감정:</span> ${scenarioSlots.emotion || 'N/A'}
+                </div>
+                <div class="scenario-item">
+                    <span class="scenario-label">원인:</span> ${scenarioSlots.why || 'N/A'}
+                </div>
+                <div class="scenario-item">
+                    <span class="scenario-label">목표:</span> ${scenarioSlots.goal || 'N/A'}
+                </div>
+                <div class="scenario-item">
+                    <span class="scenario-label">완성도:</span> ${(completeness * 100).toFixed(1)}%
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        // 소제목을 구분하여 파싱하는 함수
+        function parseContentWithSubtitles(content) {
+            if (!content) return '';
+            
+            // 줄 단위로 분리
+            const lines = content.split('\n');
+            const processedLines = [];
+            
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i].trim();
+                
+                // 소제목 패턴 감지 (숫자. 공백으로 시작하는 줄)
+                if (line.match(/^\d+\.\s/)) {
+                    processedLines.push(`<div class="subsection-title">${line}</div>`);
+                } else if (line) {
+                    // 일반 텍스트는 paragraph로 감싸기
+                    processedLines.push(`<div class="content-paragraph">${line}</div>`);
+                } else {
+                    // 빈 줄은 그대로 유지
+                    processedLines.push('');
+                }
+            }
+            
+            return processedLines.join('<br>');
+        }
+
+        function showDefaultReport() {
+            // 기본 보고서 내용 표시 (소제목 구분 및 줄바꿈 처리)
+            const counselingContent = `1. 상담 개요\n상담이 진행되면서 사용자는 자신의 감정 상태에 대해 점진적으로 인식하게 되었습니다.\n\n2. 상담 진행 과정\nAI 상담사의 공감적 반응과 적절한 질문을 통해 깊이 있는 자기 탐색이 이루어졌습니다.\n\n3. 주요 개입 기법\n특히 마인드풀니스 기법을 통한 감정 조절과 롤플레잉을 통한 상황 대처 연습이 효과적으로 활용되었습니다.`;
+            document.getElementById('counselingProcess').innerHTML = parseContentWithSubtitles(counselingContent);
+
+            const assessmentContent = `1. 전반적인 평가\n전반적으로 상담자는 자신의 감정을 잘 표현하고 있으며, AI 상담을 통해 새로운 관점을 얻을 수 있었습니다.\n\n2. 향후 제언\n향후 지속적인 감정 관리와 상황 대처 능력 향상을 위한 추가 상담을 권장합니다.\n\n3. 롤플레잉 활용 권장\n특히 롤플레잉을 통한 실전 연습이 효과적이었으므로, 유사한 상황에서의 대처 방법을 더욱 구체적으로 연습해보시기 바랍니다.`;
+            document.getElementById('finalAssessment').innerHTML = parseContentWithSubtitles(assessmentContent);
+        }
+
+        // 페이지 로드 시 보고서 데이터 로드
+        document.addEventListener('DOMContentLoaded', loadReportData);
+
+        // 인쇄 기능
+        function printReport() {
+            window.print();
+        }
+
+        // PDF 다운로드 기능 (추후 구현 가능)
+        function downloadPDF() {
+            // PDF 생성 라이브러리 사용하여 구현 가능
+            alert('PDF 다운로드 기능은 추후 구현 예정입니다.');
+        }
+    </script>
+</body>
+</html>
